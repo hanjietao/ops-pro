@@ -1,18 +1,18 @@
 /**
  * 基于bootstrap-table-mobile修改
  * 修正部分iPhone手机不显示卡片视图
- * Copyright (c) 2019 ruoyi
+ * Copyright (c) 2019 pepper
  */
 !function ($) {
-    
+
     'use strict';
-    
+
     var resetView = function (that) {
         if (that.options.height || that.options.showFooter) {
             setTimeout(that.resetView(), 1);
         }
     };
-    
+
     // 判断是否 iphone
     var isIPhone = function () {
 	    var browserName = navigator.userAgent.toLowerCase();
