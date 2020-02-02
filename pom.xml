@@ -3,14 +3,14 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ruoyi</groupId>
-	<artifactId>RuoYi</artifactId>
+	<groupId>com.pepper</groupId>
+	<artifactId>OpsPro</artifactId>
 	<version>4.1.0</version>
 	<packaging>jar</packaging>
 
-	<name>RuoYi</name>
-	<url>http://www.ruoyi.vip</url>
-	<description>若依管理系统</description>
+	<name>OpsPro</name>
+	<url>http://www.ops.vip</url>
+	<description>社区医院管理系统</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -231,39 +231,39 @@
 			    </exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!--防止进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.21</version>
         </dependency>
-        
+
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>1.5.21</version>
         </dependency>
-        
+
 		<!-- swagger2-UI-->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
-		
+
 		<!-- 获取系统信息 -->
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
 			<version>${oshi.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna-platform</artifactId>
