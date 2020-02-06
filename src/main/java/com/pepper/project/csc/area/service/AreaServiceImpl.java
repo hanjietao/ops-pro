@@ -1,0 +1,26 @@
+package com.pepper.project.csc.area.service;
+
+import com.pepper.project.csc.area.domain.Area;
+import com.pepper.project.csc.area.mapper.AreaMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class AreaServiceImpl implements IAreaService {
+
+    @Autowired
+    private AreaMapper areaDao;
+
+    /**
+     *  @Description: 列表查询
+     *  @author: HanJieTao
+     *  @mail: hjtxyr@163.com
+     *  @Date: 2020/2/6 0:23
+     */
+    @Override
+    public List<Area> selectAreaList(Area area) {
+        return areaDao.selectAreaList(area);
+    }
+}
