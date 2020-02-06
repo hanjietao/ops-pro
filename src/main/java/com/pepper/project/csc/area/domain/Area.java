@@ -19,7 +19,7 @@ public class Area extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
-    private Long id;
+    private Integer id;
 
     /** 区域码Code */
     private String areaCode;
@@ -29,6 +29,9 @@ public class Area extends BaseEntity
 
     /** 经纬度 */
     private String coordinate;
+
+    /** 区域状态（0正常 1关闭） */
+    private String status;
 
     /** 创建时间 */
     private Date createTime;
@@ -42,11 +45,11 @@ public class Area extends BaseEntity
     /** 更新人 */
     private String updateBy;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -72,6 +75,14 @@ public class Area extends BaseEntity
 
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -121,6 +132,7 @@ public class Area extends BaseEntity
                 ", areaCode='" + areaCode + '\'' +
                 ", areaName='" + areaName + '\'' +
                 ", coordinate='" + coordinate + '\'' +
+                ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +

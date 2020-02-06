@@ -1,6 +1,5 @@
 package com.pepper.project.csc.area.controller;
 
-import com.pepper.common.exception.job.TaskException;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
@@ -8,15 +7,10 @@ import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
-import com.pepper.project.monitor.job.domain.Job;
-import com.pepper.project.monitor.online.domain.UserOnline;
-import com.pepper.project.system.notice.domain.Notice;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +23,6 @@ public class AreaController extends BaseController{
 
     @Autowired
     private IAreaService areaService;
-
-
 
     @RequiresPermissions("csc:area:view")
     @GetMapping()

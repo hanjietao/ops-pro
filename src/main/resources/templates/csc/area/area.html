@@ -19,6 +19,12 @@
 						<li>
 							区域名称：<input type="text" name="areaName"/>
 						</li>
+                        <li>
+                            区域状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -50,6 +56,7 @@
 	//var forceFlag = [[${@permission.hasPermi('monitor:online:forceLogout')}]];
 	var editFlag = [[${@permission.hasPermi('csc:area:edit')}]];
 	var removeFlag = [[${@permission.hasPermi('csc:area:remove')}]];
+    var datas = [[${@dict.getType('sys_notice_status')}]];
 	var prefix = ctx + "csc/area";
 
 	$(function() {
@@ -59,11 +66,11 @@
 			createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
-			exportUrl: prefix + "/export",
+			//exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
 			modalName: "区域",
-			showExport: true,
+			//showExport: true,  // bootstrap-table自带的下载图标
 			escape: true,
 			columns: [{
 				checkbox: true
@@ -88,6 +95,14 @@
 					field: 'coordinate',
 					title: '经纬度'
 				},
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(datas, value);
+                    }
+                },
 				{
 					field: 'createTime',
 					title: '创建时间',
