@@ -39,7 +39,7 @@ public class AreaServiceImpl implements IAreaService {
     }
 
     @Override
-    public Object selectAreaById(Long id) {
+    public Object selectAreaById(Integer id) {
         return areaDao.selectAreaById(id);
     }
 

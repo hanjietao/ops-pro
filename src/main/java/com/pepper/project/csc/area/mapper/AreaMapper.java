@@ -5,7 +5,7 @@ import com.pepper.project.csc.area.domain.Area;
 import java.util.List;
 
 public interface AreaMapper {
-    Area selectAreaById(Long id);
+    Area selectAreaById(Integer id);
     List<Area> selectAreaList(Area area);
 
     /**
