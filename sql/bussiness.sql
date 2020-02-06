@@ -16,11 +16,11 @@ CREATE TABLE csc_area(
     PRIMARY KEY (ID)
 ) COMMENT = '社区服务服务中心-区域设置';
 
-
-CREATE TABLE csc_hospital_intro(
-    ID INT NOT NULL   COMMENT '医院ID' ,
+drop table if exists csc_hospital ;
+CREATE TABLE csc_hospital(
+    ID INT NOT NULL AUTO_INCREMENT COMMENT '医院ID' ,
     HOS_NAME VARCHAR(128)    COMMENT '医院名称' ,
-    HOS_CODE VARCHAR(64)    COMMENT '医院名称英文名' ,
+    HOS_CODE VARCHAR(64)    COMMENT '医院英文名' ,
     INTRODUCTION TEXT    COMMENT '医院介绍' ,
     COMMUNITY_IDS VARCHAR(32)    COMMENT '服务的社区IDS 社区1，社区2，。。。' ,
     AREA_ID VARCHAR(32)    COMMENT '所属区域' ,

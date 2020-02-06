@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-	<th:block th:include="include :: header('修改区域')" />
+	<th:block th:include="include :: header('修改医院')" />
 	<th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-area-edit" th:object="${area}">
+        <form class="form-horizontal m" id="form-hospital-edit" th:object="${hospital}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">区域编码：</label>
+                <label class="col-sm-2 control-label is-required">医院名称：</label>
                 <div class="col-sm-10">
-                    <input id="areaCode" name="areaCode" th:field="*{areaCode}" class="form-control" type="text" required>
+                    <input id="hosName" name="hosName" th:field="*{hosName}" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">
-				<label class="col-sm-2 control-label is-required">区域名称：</label>
+				<label class="col-sm-2 control-label is-required">医院英文名：</label>
 				<div class="col-sm-10">
-                    <input id="areaName" name="areaName" th:field="*{areaName}" class="form-control" type="text" required>
+                    <input id="hosCode" name="hosCode" th:field="*{hosCode}" class="form-control" type="text" required>
 				</div>
 			</div>
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">区域经纬度：</label>
+                <label class="col-sm-2 control-label">医院介绍：</label>
                 <div class="col-sm-10">
-                    <input id="coordinate" name="coordinate" th:field="*{coordinate}" class="form-control" type="text" required>
+                    <input id="introduction" name="introduction" th:field="*{introduction}" type="hidden">
+                    <div id="editor" class="summernote"></div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">区域状态：</label>
+                <label class="col-sm-2 control-label is-required">所属社区：</label>
+                <div class="col-sm-10">
+                    <input id="communityIds" name="communityIds" th:field="*{communityIds}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">所属区域：</label>
+                <div class="col-sm-10">
+                    <input id="areaId" name="areaId" th:field="*{areaId}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">医院状态：</label>
                 <div class="col-sm-8">
                     <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
                         <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
@@ -40,7 +53,7 @@
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: summernote-js" />
     <script type="text/javascript">
-        var prefix = ctx + "csc/area";
+        var prefix = ctx + "csc/hospital";
 
 	    $(function() {
 		    $('.summernote').summernote({
@@ -54,7 +67,7 @@
 	                }
 	            }
 		    });
-			var content = $("#noticeContent").val();
+			var content = $("#introduction").val();
 		    $('#editor').summernote('code', content);
 	    });
 
@@ -83,13 +96,15 @@
 	        });
 	    }
 
-		$("#form-area-edit").validate({
+		$("#form-hospital-edit").validate({
 			focusCleanup: true
 		});
 
 		function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-area-edit').serialize());
+                var sHTML = $('.summernote').summernote('code');
+                $("#introduction").val(sHTML);
+                $.operate.save(prefix + "/edit", $('#form-hospital-edit').serialize());
             }
 	    }
 	</script>

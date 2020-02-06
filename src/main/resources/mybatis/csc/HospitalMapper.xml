@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.csc.hospital.mapper.HospitalMapper">
+
+	<resultMap type="Hospital" id="HospitalResult">
+		<id     property="id"         		column="id"         />
+		<result property="hosName"         column="hos_name"        />
+		<result property="hosCode"         column="hos_code"        />
+		<result property="introduction"       column="introduction"         />
+		<result property="communityIds"       column="community_ids"         />
+		<result property="areaId"       column="area_id"         />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+	</resultMap>
+
+	<sql id="selectHospitalVo">
+       select create_time, create_by, update_time, update_by, id,hos_name, hos_code, introduction,community_ids,area_id,status from csc_hospital
+    </sql>
+
+	<select id="selectHospitalById" parameterType="Integer" resultMap="HospitalResult">
+		<include refid="selectHospitalVo"/>
+		where id = #{id}
+	</select>
+
+ 	<select id="selectHospitalList" parameterType="Area" resultMap="HospitalResult">
+		<include refid="selectHospitalVo"/>
+		<where>
+			<if test="hosName != null and hosName != ''">
+				AND name like concat('%', #{hosName}, '%')
+			</if>
+			<if test="hosCode != null and hosCode != ''">
+				AND hos_code like concat('%', #{hosCode}, '%')
+			</if>
+			<if test="areaId != null and areaId != ''">
+				AND area_id = #{areaId}
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertHospital" parameterType="Hospital">
+		insert into csc_hospital (
+		<if test="hosName != null and hosName != '' ">hos_name, </if>
+		<if test="hosCode != null and hosCode != '' ">hos_code, </if>
+		<if test="introduction != null and introduction != '' ">introduction, </if>
+		<if test="communityIds != null and communityIds != '' ">community_ids, </if>
+		<if test="areaId != null and areaId != '' ">area_id, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="hosName != null and hosName != ''">#{hosName}, </if>
+		<if test="hosCode != null and hosCode != ''">#{hosCode}, </if>
+		<if test="introduction != null and introduction != ''">#{introduction}, </if>
+		<if test="communityIds != null and communityIds != ''">#{communityIds}, </if>
+		<if test="areaId != null and areaId != ''">#{areaId}, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateHospital" parameterType="Hospital">
+		update csc_hospital
+		<set>
+			<if test="hosName != null and hosName != ''">hos_name = #{hosName}, </if>
+			<if test="hosCode != null and hosCode != ''">hos_code = #{hosCode}, </if>
+			<if test="introduction != null">introduction = #{introduction}, </if>
+			<if test="communityIds != null">community_ids = #{communityIds}, </if>
+			<if test="areaId != null">area_id = #{areaId}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteHospitalByIds" parameterType="String">
+        delete from csc_hospital where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

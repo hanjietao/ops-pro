@@ -1,34 +1,35 @@
-package com.pepper.project.csc.area.domain;
+package com.pepper.project.csc.hospital.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
-import com.pepper.project.monitor.online.domain.OnlineSession;
-import com.pepper.project.monitor.online.domain.OnlineSession.OnlineStatus;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
 
 /**
- *  @Description: 社区服务服务中心-区域设置  csc_area
+ *  @Description: 社区服务服务中心-医院介绍 csc_hospital
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
- *  @Date: 2020/2/6 0:12
+ *  @Date: 2020/2/6 16:10
  */
-public class Area extends BaseEntity
-{
+public class Hospital extends BaseEntity{
+
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
     private Integer id;
 
     /** 区域码Code */
-    private String areaCode;
+    private String hosName;
 
     /** 区域名称 */
-    private String areaName;
+    private String hosCode;
 
     /** 经纬度 */
-    private String coordinate;
+    private String introduction;
+
+    /** 经纬度 */
+    private String communityIds;
+
+    private String areaId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -53,28 +54,44 @@ public class Area extends BaseEntity
         this.id = id;
     }
 
-    public String getAreaCode() {
-        return areaCode;
+    public String getHosName() {
+        return hosName;
     }
 
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
+    public void setHosName(String hosName) {
+        this.hosName = hosName;
     }
 
-    public String getAreaName() {
-        return areaName;
+    public String getHosCode() {
+        return hosCode;
     }
 
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
+    public void setHosCode(String hosCode) {
+        this.hosCode = hosCode;
     }
 
-    public String getCoordinate() {
-        return coordinate;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setCoordinate(String coordinate) {
-        this.coordinate = coordinate;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getCommunityIds() {
+        return communityIds;
+    }
+
+    public void setCommunityIds(String communityIds) {
+        this.communityIds = communityIds;
+    }
+
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
     }
 
     public String getStatus() {
@@ -127,11 +144,13 @@ public class Area extends BaseEntity
 
     @Override
     public String toString() {
-        return "Area{" +
+        return "Hospital{" +
                 "id=" + id +
-                ", areaCode='" + areaCode + '\'' +
-                ", areaName='" + areaName + '\'' +
-                ", coordinate='" + coordinate + '\'' +
+                ", hosName='" + hosName + '\'' +
+                ", hosCode='" + hosCode + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", communityIds='" + communityIds + '\'' +
+                ", areaId='" + areaId + '\'' +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
