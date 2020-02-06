@@ -17,7 +17,7 @@
                             区域编码：<input type="text" name="areaCode"/>
                         </li>
 						<li>
-							区域名称：<input type="text" name="name"/>
+							区域名称：<input type="text" name="areaName"/>
 						</li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -50,7 +50,7 @@
 			url: prefix + "/list",
 			createUrl: prefix + "/add",
 			exportUrl: prefix + "/export",
-			sortName: "createdTime",
+			sortName: "createTime",
 			sortOrder: "desc",
 			modalName: "区域",
 			showExport: true,
@@ -73,7 +73,7 @@
                     title: '区域编码'
                 },
 				{
-					field: 'name',
+					field: 'areaName',
 					title: '区域名称'
 				},
 				{
@@ -81,21 +81,21 @@
 					title: '经纬度'
 				},
 				{
-					field: 'createdTime',
+					field: 'createTime',
 					title: '创建时间',
 					sortable: true
 				},
 				{
-					field: 'createdBy',
+					field: 'createBy',
 					title: '创建者'
 				},
 				{
-					field: 'updatedTime',
+					field: 'updateTime',
 					title: '更新时间',
 					sortable: true
 				},
 				{
-					field: 'updatedBy',
+					field: 'updateBy',
 					title: '更新人'
 				},
 				{

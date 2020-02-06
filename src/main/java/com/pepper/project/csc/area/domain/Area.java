@@ -25,22 +25,22 @@ public class Area extends BaseEntity
     private String areaCode;
 
     /** 区域名称 */
-    private String name;
+    private String areaName;
 
     /** 经纬度 */
     private String coordinate;
 
     /** 创建时间 */
-    private Date createdTime;
+    private Date createTime;
 
     /** 创建人 */
-    private String createdBy;
+    private String createBy;
 
     /** 更新时间 */
-    private Date updatedTime;
+    private Date updateTime;
 
     /** 更新人 */
-    private String updatedBy;
+    private String updateBy;
 
     public Integer getId() {
         return id;
@@ -58,12 +58,12 @@ public class Area extends BaseEntity
         this.areaCode = areaCode;
     }
 
-    public String getName() {
-        return name;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getCoordinate() {
@@ -74,36 +74,44 @@ public class Area extends BaseEntity
         this.coordinate = coordinate;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    @Override
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    @Override
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    @Override
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    @Override
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    @Override
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public String getUpdatedBy() {
-        return updatedBy;
+    @Override
+    public String getUpdateBy() {
+        return updateBy;
     }
 
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
+    @Override
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
     @Override
@@ -111,12 +119,12 @@ public class Area extends BaseEntity
         return "Area{" +
                 "id=" + id +
                 ", areaCode='" + areaCode + '\'' +
-                ", name='" + name + '\'' +
+                ", areaName='" + areaName + '\'' +
                 ", coordinate='" + coordinate + '\'' +
-                ", createdTime=" + createdTime +
-                ", createdBy='" + createdBy + '\'' +
-                ", updatedTime=" + updatedTime +
-                ", updatedBy='" + updatedBy + '\'' +
+                ", createTime=" + createTime +
+                ", createBy='" + createBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateBy='" + updateBy + '\'' +
                 '}';
     }
 }

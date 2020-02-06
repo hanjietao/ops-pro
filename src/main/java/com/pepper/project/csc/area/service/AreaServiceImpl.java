@@ -1,5 +1,6 @@
 package com.pepper.project.csc.area.service;
 
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,12 @@ public class AreaServiceImpl implements IAreaService {
     @Override
     public List<Area> selectAreaList(Area area) {
         return areaDao.selectAreaList(area);
+    }
+
+    @Override
+    public int insertArea(Area area) {
+        area.setCreateBy(ShiroUtils.getLoginName());
+        area.setUpdateBy(ShiroUtils.getLoginName());
+        return areaDao.insertArea(area);
     }
 }

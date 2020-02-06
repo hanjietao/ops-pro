@@ -7,16 +7,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Area" id="AreaResult">
 		<id     property="id"         column="id"         />
 		<result property="areaCode"         column="area_code"        />
-		<result property="name"         column="name"        />
+		<result property="areaName"         column="area_name"        />
 		<result property="coordinate"          column="coordinate"         />
-		<result property="createdTime"            column="created_time"            />
-		<result property="createdBy"     column="created_by"    />
-		<result property="updatedTime"           column="updated_time"           />
-		<result property="updatedBy"                column="updated_by"                />
+		<result property="createTime"            column="create_time"            />
+		<result property="createBy"     column="create_by"    />
+		<result property="updateTime"           column="update_time"           />
+		<result property="updateBy"                column="update_by"                />
 	</resultMap>
 
 	<sql id="selectAreaVo">
-       select created_time, created_by, updated_time, updated_by, id,area_code, name, coordinate from csc_area
+       select create_time, create_by, update_time, update_by, id,area_code, area_name, coordinate from csc_area
     </sql>
 
 	<select id="selectAreaById" parameterType="Integer" resultMap="AreaResult">
@@ -27,8 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="selectAreaList" parameterType="Area" resultMap="AreaResult">
 		<include refid="selectAreaVo"/>
 		<where>
-			<if test="name != null and name != ''">
-				AND name like concat('%', #{name}, '%')
+			<if test="areaName != null and areaName != ''">
+				AND name like concat('%', #{areaName}, '%')
 			</if>
 			<if test="areaCode != null and areaCode != ''">
 				AND area_code like concat('%', #{areaCode}, '%')
@@ -39,6 +39,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
+	<insert id="insertArea" parameterType="Area">
+		insert into csc_area (
+		<if test="areaCode != null and areaCode != '' ">area_code, </if>
+		<if test="areaName != null and areaName != '' ">area_name, </if>
+		<if test="coordinate != null and coordinate != '' ">coordinate, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="areaCode != null and areaCode != ''">#{areaCode}, </if>
+		<if test="areaName != null and areaName != ''">#{areaName}, </if>
+		<if test="coordinate != null and coordinate != ''">#{coordinate}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
 
 
 </mapper>
