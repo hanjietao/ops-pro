@@ -9,4 +9,9 @@ public interface IAreaService {
     List<Area> selectAreaList(Area area);
     int insertArea(Area area);
 
+    int deleteAreaByIds(String ids);
+
+    Object selectAreaById(Long id);
+
+    int updateArea(Area area);
 }

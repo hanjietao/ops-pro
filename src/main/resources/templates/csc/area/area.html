@@ -32,6 +32,12 @@
 			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="csc:area:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="csc:area:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="csc:area:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
 		</div>
 
 		<div class="col-sm-12 select-table table-striped">
@@ -42,6 +48,8 @@
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
 	//var forceFlag = [[${@permission.hasPermi('monitor:online:forceLogout')}]];
+	var editFlag = [[${@permission.hasPermi('csc:area:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('csc:area:remove')}]];
 	var prefix = ctx + "csc/area";
 
 	$(function() {
@@ -49,6 +57,8 @@
 			uniqueId: "id",
 			url: prefix + "/list",
 			createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
 			exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
@@ -59,11 +69,9 @@
 				checkbox: true
 			},
 				{
-					title: "序号",
-					formatter: function (value, row, index) {
-						return $.table.serialNumber(index);
-					}
-				},
+                    field : 'id',
+                    title : '序号'
+                },
 				// {
 				// 	field: 'id',
 				// 	title: 'id'
@@ -101,10 +109,12 @@
 				{
 					title: '操作',
 					align: 'center',
-					// formatter: function(value, row, index) {
-					// 	var msg = '<a class="btn btn-danger btn-xs ' + forceFlag + '" href="javascript:void(0)" onclick="forceLogout(\'' + row.sessionId + '\')"><i class="fa fa-sign-out"></i>强退</a> ';
-					// 	return msg;
-					// }
+					formatter: function(value, row, index) {
+						var actions = [];
+						actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+					}
 				}]
 		};
 		$.table.init(options);

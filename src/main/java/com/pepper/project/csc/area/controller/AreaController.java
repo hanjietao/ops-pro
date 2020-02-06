@@ -10,15 +10,14 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.monitor.job.domain.Job;
 import com.pepper.project.monitor.online.domain.UserOnline;
+import com.pepper.project.system.notice.domain.Notice;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,6 +50,15 @@ public class AreaController extends BaseController{
     }
 
     /**
+     * 新增区域
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
+
+    /**
      * 新增保存区域设置
      */
     @Log(title = "区域设置", businessType = BusinessType.INSERT)
@@ -63,12 +71,38 @@ public class AreaController extends BaseController{
     }
 
     /**
-     * 新增区域
+     * 修改区域
      */
-    @GetMapping("/add")
-    public String add()
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
-        return prefix + "/add";
+        mmap.put("area", areaService.selectAreaById(id));
+        return prefix + "/edit";
     }
+
+    /**
+     * 修改保存公告
+     */
+    @RequiresPermissions("csc:area:edit")
+    @Log(title = "区域设置", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(Area area)
+    {
+        return toAjax(areaService.updateArea(area));
+    }
+
+    /**
+     * 删除区域
+     */
+    @RequiresPermissions("csc:area:remove")
+    @Log(title = "区域设置", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(areaService.deleteAreaByIds(ids));
+    }
+
 }
 
