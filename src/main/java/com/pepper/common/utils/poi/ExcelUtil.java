@@ -48,7 +48,7 @@ import com.pepper.framework.aspectj.lang.annotation.Excel;
 import com.pepper.framework.aspectj.lang.annotation.Excel.ColumnType;
 import com.pepper.framework.aspectj.lang.annotation.Excel.Type;
 import com.pepper.framework.aspectj.lang.annotation.Excels;
-import com.pepper.framework.config.RuoYiConfig;
+import com.pepper.framework.config.OpsConfig;
 import com.pepper.framework.web.domain.AjaxResult;
 
 /**
@@ -688,7 +688,7 @@ public class ExcelUtil<T>
      */
     public String getAbsoluteFile(String filename)
     {
-        String downloadPath = RuoYiConfig.getDownloadPath() + filename;
+        String downloadPath = OpsConfig.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists())
         {

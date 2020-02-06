@@ -13,6 +13,9 @@
 						<li>
 							id：<input type="text" name="id"/>
 						</li>
+                        <li>
+                            区域编码：<input type="text" name="areaCode"/>
+                        </li>
 						<li>
 							区域名称：<input type="text" name="name"/>
 						</li>
@@ -61,10 +64,14 @@
 						return $.table.serialNumber(index);
 					}
 				},
-				{
-					field: 'id',
-					title: 'id'
-				},
+				// {
+				// 	field: 'id',
+				// 	title: 'id'
+				// },
+                {
+                    field: 'areaCode',
+                    title: '区域编码'
+                },
 				{
 					field: 'name',
 					title: '区域名称'

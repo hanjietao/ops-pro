@@ -2,7 +2,7 @@ package com.pepper.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pepper.common.utils.http.HttpUtils;
-import com.pepper.framework.config.RuoYiConfig;
+import com.pepper.framework.config.OpsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class AddressUtils
         {
             return "内网IP";
         }
-        if (RuoYiConfig.isAddressEnabled())
+        if (OpsConfig.isAddressEnabled())
         {
             String rspStr = HttpUtils.sendPost(IP_URL, "ip=" + ip);
             if (StringUtils.isEmpty(rspStr))

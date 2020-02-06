@@ -18,25 +18,29 @@ public class Area extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 用户会话id */
+    /** 唯一键索引id */
     private Integer id;
 
-    /** 部门名称 */
+    /** 区域码Code */
+    private String areaCode;
+
+    /** 区域名称 */
     private String name;
 
-    /** 登录名称 */
+    /** 经纬度 */
     private String coordinate;
 
-    /** session最后访问时间 */
+    /** 创建时间 */
     private Date createdTime;
 
+    /** 创建人 */
     private String createdBy;
 
-    /** session最后访问时间 */
+    /** 更新时间 */
     private Date updatedTime;
 
+    /** 更新人 */
     private String updatedBy;
-
 
     public Integer getId() {
         return id;
@@ -44,6 +48,14 @@ public class Area extends BaseEntity
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
     }
 
     public String getName() {
@@ -98,6 +110,7 @@ public class Area extends BaseEntity
     public String toString() {
         return "Area{" +
                 "id=" + id +
+                ", areaCode='" + areaCode + '\'' +
                 ", name='" + name + '\'' +
                 ", coordinate='" + coordinate + '\'' +
                 ", createdTime=" + createdTime +

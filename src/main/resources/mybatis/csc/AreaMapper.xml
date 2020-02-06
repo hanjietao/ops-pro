@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="Area" id="AreaResult">
 		<id     property="id"         column="id"         />
+		<result property="areaCode"         column="area_code"        />
 		<result property="name"         column="name"        />
 		<result property="coordinate"          column="coordinate"         />
 		<result property="createdTime"            column="created_time"            />
@@ -15,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectAreaVo">
-       select created_time, created_by, updated_time, updated_by, id, name, coordinate from csc_area
+       select created_time, created_by, updated_time, updated_by, id,area_code, name, coordinate from csc_area
     </sql>
 
 	<select id="selectAreaById" parameterType="Integer" resultMap="AreaResult">
@@ -28,6 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<where>
 			<if test="name != null and name != ''">
 				AND name like concat('%', #{name}, '%')
+			</if>
+			<if test="areaCode != null and areaCode != ''">
+				AND area_code like concat('%', #{areaCode}, '%')
 			</if>
 			<if test="id != null and id != 0">
 				AND id = #{id}

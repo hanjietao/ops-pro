@@ -15,7 +15,7 @@ import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.file.FileUploadUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
-import com.pepper.framework.config.RuoYiConfig;
+import com.pepper.framework.config.OpsConfig;
 import com.pepper.framework.shiro.service.PasswordService;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
@@ -153,7 +153,7 @@ public class ProfileController extends BaseController
         {
             if (!file.isEmpty())
             {
-                String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file);
+                String avatar = FileUploadUtils.upload(OpsConfig.getAvatarPath(), file);
                 currentUser.setAvatar(avatar);
                 if (userService.updateUserInfo(currentUser) > 0)
                 {

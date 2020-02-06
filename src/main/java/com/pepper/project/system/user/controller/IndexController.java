@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.pepper.framework.config.RuoYiConfig;
+import com.pepper.framework.config.OpsConfig;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.project.system.menu.domain.Menu;
 import com.pepper.project.system.menu.service.IMenuService;
@@ -23,7 +23,7 @@ public class IndexController extends BaseController
     private IMenuService menuService;
 
     @Autowired
-    private RuoYiConfig ruoYiConfig;
+    private OpsConfig opsConfig;
 
     // 系统首页
     @GetMapping("/index")
@@ -35,8 +35,8 @@ public class IndexController extends BaseController
         List<Menu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);
         mmap.put("user", user);
-        mmap.put("copyrightYear", ruoYiConfig.getCopyrightYear());
-        mmap.put("demoEnabled", ruoYiConfig.isDemoEnabled());
+        mmap.put("copyrightYear", opsConfig.getCopyrightYear());
+        mmap.put("demoEnabled", opsConfig.isDemoEnabled());
         return "index";
     }
 
@@ -51,7 +51,7 @@ public class IndexController extends BaseController
     @GetMapping("/system/main")
     public String main(ModelMap mmap)
     {
-        mmap.put("version", ruoYiConfig.getVersion());
+        mmap.put("version", opsConfig.getVersion());
         return "main";
     }
 }
