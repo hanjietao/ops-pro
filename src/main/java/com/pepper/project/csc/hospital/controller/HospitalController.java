@@ -5,6 +5,9 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.csc.area.domain.Area;
+import com.pepper.project.csc.area.service.AreaServiceImpl;
+import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.csc.hospital.domain.Hospital;
 import com.pepper.project.csc.hospital.service.IHospitalService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,6 +26,9 @@ public class HospitalController extends BaseController {
 
     @Autowired
     private IHospitalService hospitalService;
+
+    @Autowired
+    private IAreaService areaService;
 
     @RequiresPermissions("csc:hospital:view")
     @GetMapping()
@@ -45,8 +51,10 @@ public class HospitalController extends BaseController {
      * 新增区域
      */
     @GetMapping("/add")
-    public String add()
+    public String add(ModelMap mmap)
     {
+        List<Area> areas = areaService.selectAreaList(new Area());
+        mmap.put("areas",areas);
         return prefix + "/add";
     }
 

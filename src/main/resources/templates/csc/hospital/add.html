@@ -27,17 +27,38 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label is-required">所属社区：</label>
+			<label class="col-sm-2 control-label is-required">所属社区(TODO)：</label>
 			<div class="col-sm-10">
-				<input class="form-control" type="text" name="communityIds" id="communityIds" required>
+<!--				<select id="communityIds" class="form-control noselect2 selectpicker">-->
+				<select id="communityIds" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属社区" multiple>
+					<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}"></option>
+				</select>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">所属区域：</label>
 			<div class="col-sm-10">
-				<input class="form-control" type="text" name="areaId" id="areaId" required>
+				<select id="area" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
+					<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}"></option>
+				</select>
 			</div>
 		</div>
+<!--		<div class="form-group">-->
+<!--			<label class="font-noraml">所属社区：</label>-->
+<!--			<select id="area" class="form-control noselect2 selectpicker">-->
+<!--				<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}" "></option>-->
+<!--			</select>-->
+<!--		</div>-->
+<!--		<div class="form-group">-->
+<!--			<label class="font-noraml">单选</label>-->
+<!--			<select class="col-sm-10">-->
+<!--				<option value="">&#45;&#45;请选择开发语言&#45;&#45;</option>-->
+<!--				<option value="Java">Java</option>-->
+<!--				<option value="PHP">PHP</option>-->
+<!--				<option value=".NET">.NET</option>-->
+<!--			</select>-->
+<!--		</div>-->
+
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">医院状态：</label>
 			<div class="col-sm-10">

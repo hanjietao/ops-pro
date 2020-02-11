@@ -31,3 +31,7 @@ CREATE TABLE csc_hospital(
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
 ) COMMENT = '社区服务服务中心-医院介绍 ';
+
+
+
+
