@@ -4,6 +4,8 @@ import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.csc.hospital.domain.Hospital;
+import com.pepper.project.csc.hospital.service.IHospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class AreaServiceImpl implements IAreaService {
 
     @Autowired
     private AreaMapper areaDao;
+
+    @Autowired
+    private IHospitalService hospitalService;
 
     /**
      *  @Description: 列表查询
@@ -47,6 +52,20 @@ public class AreaServiceImpl implements IAreaService {
     public int updateArea(Area area) {
         area.setUpdateBy(ShiroUtils.getLoginName());
         return areaDao.updateArea(area);
+    }
+
+    @Override
+    public Object selectAreaListByHosId(Integer hosId) {
+        Hospital hospital = hospitalService.selectHospitalById(hosId);
+        String communityIds =hospital.getCommunityIds();
+        List<Area> areas = areaDao.selectAreaList(new Area());
+        for (Area area : areas)
+        {
+            if(communityIds.indexOf(area.getId().toString()) >= 0){
+                area.setFlag(true);
+            }
+        }
+        return areas;
     }
 
 

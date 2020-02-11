@@ -3,6 +3,8 @@
 <head>
 	<th:block th:include="include :: header('新增医院')" />
 	<th:block th:include="include :: summernote-css" />
+	<th:block th:include="include :: select2-css" />
+	<th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -27,10 +29,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label is-required">所属社区(TODO)：</label>
+			<label class="col-sm-2 control-label is-required">所属社区：</label>
 			<div class="col-sm-10">
-<!--				<select id="communityIds" class="form-control noselect2 selectpicker">-->
-				<select id="communityIds" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属社区" multiple>
+				<select id="communityIds" name="communityIds" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属社区" multiple>
 					<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}"></option>
 				</select>
 			</div>
@@ -38,27 +39,11 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">所属区域：</label>
 			<div class="col-sm-10">
-				<select id="area" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
+				<select id="areaId" name="areaId" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
 					<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}"></option>
 				</select>
 			</div>
 		</div>
-<!--		<div class="form-group">-->
-<!--			<label class="font-noraml">所属社区：</label>-->
-<!--			<select id="area" class="form-control noselect2 selectpicker">-->
-<!--				<option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}" "></option>-->
-<!--			</select>-->
-<!--		</div>-->
-<!--		<div class="form-group">-->
-<!--			<label class="font-noraml">单选</label>-->
-<!--			<select class="col-sm-10">-->
-<!--				<option value="">&#45;&#45;请选择开发语言&#45;&#45;</option>-->
-<!--				<option value="Java">Java</option>-->
-<!--				<option value="PHP">PHP</option>-->
-<!--				<option value=".NET">.NET</option>-->
-<!--			</select>-->
-<!--		</div>-->
-
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">医院状态：</label>
 			<div class="col-sm-10">
@@ -72,6 +57,8 @@
 </div>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: summernote-js" />
+<th:block th:include="include :: select2-js" />
+<th:block th:include="include :: bootstrap-select-js" />
 <script type="text/javascript">
 	var prefix = ctx + "csc/hospital";
 

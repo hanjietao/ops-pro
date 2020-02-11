@@ -45,6 +45,9 @@ public class Area extends BaseEntity
     /** 更新人 */
     private String updateBy;
 
+    /** 是否存在此区域 默认不存在 */
+    private boolean flag = false;
+
     public Integer getId() {
         return id;
     }
@@ -123,6 +126,14 @@ public class Area extends BaseEntity
     @Override
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     @Override

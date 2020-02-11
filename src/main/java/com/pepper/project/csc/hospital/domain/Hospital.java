@@ -46,6 +46,9 @@ public class Hospital extends BaseEntity{
     /** 更新人 */
     private String updateBy;
 
+    /** 区域名称 */
+    private String areaName;
+
     public Integer getId() {
         return id;
     }
@@ -140,6 +143,14 @@ public class Hospital extends BaseEntity{
     @Override
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     @Override
