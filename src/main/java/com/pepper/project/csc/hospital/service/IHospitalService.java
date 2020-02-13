@@ -14,4 +14,5 @@ public interface IHospitalService {
     Hospital selectHospitalById(Integer id);
 
     int updateHospital(Hospital hospital);
+
 }

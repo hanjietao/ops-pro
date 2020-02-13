@@ -4,6 +4,8 @@ import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.csc.doctor.domain.Doctor;
+import com.pepper.project.csc.doctor.mapper.DoctorMapper;
 import com.pepper.project.csc.hospital.domain.Hospital;
 import com.pepper.project.csc.hospital.mapper.HospitalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +61,6 @@ public class HospitalServiceImpl implements IHospitalService {
         area.setUpdateBy(ShiroUtils.getLoginName());
         return hospitalDao.updateHospital(area);
     }
+
 
 }
