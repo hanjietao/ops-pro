@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id = #{id}
 	</select>
 
- 	<select id="selectHospitalList" parameterType="Area" resultMap="HospitalResult">
+ 	<select id="selectHospitalList" parameterType="Community" resultMap="HospitalResult">
 		<include refid="selectHospitalVo"/>
 		<where>
 			<if test="hosName != null and hosName != ''">
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="introduction != null and introduction != ''">#{introduction}, </if>
 		<if test="communityIds != null and communityIds != ''">#{communityIds}, </if>
 		<if test="areaId != null and areaId != ''">#{areaId}, </if>
-		<if test="status != null and status != '' ">status, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),

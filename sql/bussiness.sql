@@ -79,6 +79,19 @@ CREATE TABLE csc_appointment(
     PRIMARY KEY (ID)
 ) COMMENT = '预约管理 ';
 
+CREATE TABLE cm_community(
+    ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
+    COMMUNITY_CODE VARCHAR(128)    COMMENT '社区编码' ,
+    COMMUNITY_NAME VARCHAR(128)    COMMENT '社区名称' ,
+    AREA_ID INT    COMMENT '社区所属区域ID' ,
+    INTRODUCTION TEXT    COMMENT '社区介绍' ,
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭（取消预约）' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+		PRIMARY KEY(ID)
+) COMMENT = '社区 ';
 
 
 
