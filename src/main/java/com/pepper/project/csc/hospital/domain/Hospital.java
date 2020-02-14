@@ -155,7 +155,7 @@ public class Hospital extends BaseEntity{
 
     @Override
     public String toString() {
-        return "Hospital{" +
+        return "Appointment{" +
                 "id=" + id +
                 ", hosName='" + hosName + '\'' +
                 ", hosCode='" + hosCode + '\'' +

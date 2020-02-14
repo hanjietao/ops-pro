@@ -6,7 +6,7 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://192.168.0.106:6666/pepper-ops?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                url: jdbc:mysql://192.168.0.104:6666/pepper-ops?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
                 password: 123456
             # 从库数据源
@@ -55,3 +55,10 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
+                slf4j:
+                    enabled: true
+                    statement-create-after-log-enabled: true
+                    statement-log-enabled: true
+                    statement-executable-sql-log-enable: true
+                    statement-log-error-enabled: true
+                    result-set-log-enabled: true
