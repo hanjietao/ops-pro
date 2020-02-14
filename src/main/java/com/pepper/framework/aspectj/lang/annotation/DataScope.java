@@ -31,4 +31,8 @@ public @interface DataScope
     String appointmentAlias() default "";
 
     String medicalProjectAlias() default "";
+
+    String areaAlias() default "";
+
+    String communityAlias() default "";
 }

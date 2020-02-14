@@ -15,34 +15,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
+		<association property="area"    column="id" javaType="Area" resultMap="AreaResult" />
+	</resultMap>
+
+	<resultMap type="Area" id="AreaResult">
+		<id     property="id"         column="id"         />
+		<result property="areaCode"         column="area_code"        />
+		<result property="areaName"         column="area_name"        />
+		<result property="coordinate"          column="coordinate"         />
+		<result property="status"          column="status"         />
 	</resultMap>
 
 	<sql id="selectCommunityVo">
-       select create_time, create_by, update_time, update_by, id,community_code, community_name,area_id, introduction,status from cm_community
+       select c.create_time, c.create_by, c.update_time, c.update_by, c.id,c.community_code, c.community_name,
+       c.area_id, c.introduction,c.status,
+       a.id,a.area_code,a.area_name,a.coordinate,a.status
+       from cm_community c
+       left join csc_area a on c.area_id = a.id
     </sql>
 
 	<select id="selectCommunityById" parameterType="Integer" resultMap="CommunityResult">
 		<include refid="selectCommunityVo"/>
-		where id = #{id}
+		where c.id = #{id}
 	</select>
 
  	<select id="selectCommunityList" parameterType="Community" resultMap="CommunityResult">
 		<include refid="selectCommunityVo"/>
 		<where>
 			<if test="communityCode != null and communityCode != ''">
-				AND community_code like concat('%', #{communityCode}, '%')
+				AND c.community_code like concat('%', #{communityCode}, '%')
 			</if>
 			<if test="communityName != null and communityName != ''">
-				AND community_name like concat('%', #{communityName}, '%')
+				AND c.community_name like concat('%', #{communityName}, '%')
 			</if>
 			<if test="areaId != null and areaId != ''">
-				AND area_id = #{areaId}
+				AND c.area_id = #{areaId}
 			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND c.status = #{status}
 			</if>
 			<if test="id != null and id != 0">
-				AND id = #{id}
+				AND c.id = #{id}
 			</if>
 		</where>
 	</select>

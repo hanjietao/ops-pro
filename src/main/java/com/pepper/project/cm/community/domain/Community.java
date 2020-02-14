@@ -1,6 +1,7 @@
 package com.pepper.project.cm.community.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.csc.area.domain.Area;
 
 import java.util.Date;
 
@@ -45,6 +46,9 @@ public class Community extends BaseEntity{
 
     /** 区域名称 */
     private String areaName;
+
+    /** 区域 */
+    private Area area;
 
     public Integer getId() {
         return id;
@@ -142,6 +146,14 @@ public class Community extends BaseEntity{
         this.areaName = areaName;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         return "Community{" +
@@ -156,6 +168,7 @@ public class Community extends BaseEntity{
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
                 ", areaName='" + areaName + '\'' +
+                ", area=" + area +
                 '}';
     }
 }
