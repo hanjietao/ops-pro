@@ -1,5 +1,6 @@
 package com.pepper.project.cm.activity.controller;
 
+import com.pepper.common.exception.BusinessException;
 import com.pepper.common.utils.poi.ExcelUtil;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
@@ -9,9 +10,12 @@ import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.cm.activity.domain.ActivityApply;
 import com.pepper.project.cm.activity.domain.ActivityApplyExcel;
 import com.pepper.project.cm.activity.service.IActivityApplyService;
+import com.pepper.project.cm.activity.service.IActivityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,10 +28,15 @@ import java.util.List;
 @RequestMapping("/cm/activity/apply")
 public class ActivityApplyController extends BaseController {
 
+    Logger logger = LoggerFactory.getLogger(ActivityApplyController.class);
+
     private String prefix = "cm/activity/apply";
 
     @Autowired
     private IActivityApplyService activityApplyService;
+
+    @Autowired
+    private IActivityService activityService;
 
     @Autowired
     private IAreaService areaService;
@@ -69,6 +78,10 @@ public class ActivityApplyController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(ActivityApply activityApply)
     {
+        if(activityService.selectActivityById(activityApply.getActivityId()) == null){
+            logger.error("not find activity by the activity id={}",activityApply.getActivityId());
+            throw new BusinessException("当前选择的报名的活动已下架！");
+        }
         return toAjax(activityApplyService.insertActivityApply(activityApply));
     }
 

@@ -22,7 +22,7 @@ public class ActivityApply extends BaseEntity{
 
     /** 报名活动 */
     @Excel(name = "活动id")
-    private String activityId;
+    private Integer activityId;
 
     /** 报名人id */
     private Long userId;
@@ -62,11 +62,11 @@ public class ActivityApply extends BaseEntity{
         this.id = id;
     }
 
-    public String getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(String activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 

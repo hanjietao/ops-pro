@@ -21,7 +21,7 @@ public class ActivityApplyExcel{
     private Integer id;
 
     /** 报名活动 */
-    private String activityId;
+    private Integer activityId;
 
     @Excel(name = "活动标题")
     private String activityTitle;
@@ -65,11 +65,11 @@ public class ActivityApplyExcel{
         this.id = id;
     }
 
-    public String getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(String activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 

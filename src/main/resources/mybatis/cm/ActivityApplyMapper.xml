@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectActivityApplyById" parameterType="Integer" resultMap="ActivityApplyResult">
 		<include refid="selectActivityApplyVo"/>
-		where id = #{id}
+		where aa.id = #{id}
 	</select>
 
  	<select id="selectActivityApplyList" parameterType="ActivityApply" resultMap="ActivityApplyResult">
