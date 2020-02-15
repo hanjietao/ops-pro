@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.cm.activity.mapper.ActivityMapper">
+
+	<resultMap type="Activity" id="ActivityResult">
+		<id     property="id"         		column="id"         />
+		<result property="title"         column="title"        />
+		<result property="content"         column="content"        />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+	</resultMap>
+
+	<resultMap type="Area" id="AreaResult">
+		<id     property="id"         column="id"         />
+		<result property="areaCode"         column="area_code"        />
+		<result property="areaName"         column="area_name"        />
+		<result property="coordinate"          column="coordinate"         />
+		<result property="status"          column="status"         />
+	</resultMap>
+
+	<sql id="selectActivityVo">
+       select create_time, create_by, update_time, update_by, id,title,content,status
+       from cm_activity
+    </sql>
+
+	<select id="selectActivityById" parameterType="Integer" resultMap="ActivityResult">
+		<include refid="selectActivityVo"/>
+		where id = #{id}
+	</select>
+
+ 	<select id="selectActivityList" parameterType="Activity" resultMap="ActivityResult">
+		<include refid="selectActivityVo"/>
+		<where>
+			<if test="title != null and title != ''">
+				AND title like concat('%', #{title}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertActivity" parameterType="Activity">
+		insert into cm_activity (
+		<if test="title != null and title != '' ">title, </if>
+		<if test="content != null and content != '' ">content, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="title != null and title != ''">#{title}, </if>
+		<if test="content != null and content != ''">#{content}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateActivity" parameterType="Activity">
+		update cm_activity
+		<set>
+			<if test="title != null and title != ''">title = #{title}, </if>
+			<if test="content != null and content != ''">content = #{content}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteActivityByIds" parameterType="String">
+        delete from cm_activity where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

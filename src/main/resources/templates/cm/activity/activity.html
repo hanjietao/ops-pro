@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-	<th:block th:include="include :: header('社区介绍列表')" />
+	<th:block th:include="include :: header('社区活动列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
 	<div class="row">
 		<div class="col-sm-12 search-collapse">
-			<form id="community-form">
+			<form id="activity-form">
 				<div class="select-list">
 					<ul>
 						<li>
 							id：<input type="text" name="id"/>
 						</li>
 						<li>
-							社区名称：<input type="text" name="communityName"/>
-						</li>
-						<li>
-							社区编码：<input type="text" name="communityCode"/>
+							活动标题：<input type="text" name="title"/>
 						</li>
 						<li>
 							社区状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
@@ -35,13 +32,13 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:community:add">
+			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:activity:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
-			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:community:edit">
+			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:activity:edit">
 				<i class="fa fa-edit"></i> 修改
 			</a>
-			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:community:remove">
+			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:activity:remove">
 				<i class="fa fa-remove"></i> 删除
 			</a>
 		</div>
@@ -53,11 +50,11 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-	var editFlag = [[${@permission.hasPermi('cm:community:edit')}]];
-	var removeFlag = [[${@permission.hasPermi('cm:community:remove')}]];
+	var editFlag = [[${@permission.hasPermi('cm:activity:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('cm:activity:remove')}]];
 	var types = [[${@dict.getType('sys_notice_type')}]];
 	var datas = [[${@dict.getType('sys_notice_status')}]];
-	var prefix = ctx + "cm/community";
+	var prefix = ctx + "cm/activity";
 
 	$(function() {
 		var options = {
@@ -69,7 +66,7 @@
 			//exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
-			modalName: "社区",
+			modalName: "社区活动",
 			//showExport: true,  // bootstrap-table自带的下载图标
 			escape: true,
 			columns: [{
@@ -79,21 +76,9 @@
 					field : 'id',
 					title : '序号'
 				},
-				// {
-				// 	field: 'id',
-				// 	title: 'id'
-				// },
 				{
-					field: 'communityCode',
-					title: '社区编码'
-				},
-				{
-					field: 'communityName',
-					title: '社区名称'
-				},
-				{
-					field: 'area.areaName',
-					title: '所属区域'
+					field: 'title',
+					title: '标题'
 				},
 				{
 					field: 'status',

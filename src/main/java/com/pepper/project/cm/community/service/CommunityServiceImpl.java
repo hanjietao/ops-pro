@@ -16,7 +16,7 @@ import java.util.List;
 public class CommunityServiceImpl implements ICommunityService {
 
     @Autowired
-    private CommunityMapper hospitalDao;
+    private CommunityMapper communityDao;
 
     @Autowired
     private AreaMapper areaDao;
@@ -30,7 +30,7 @@ public class CommunityServiceImpl implements ICommunityService {
     @DataScope(areaAlias = "a", communityAlias = "c")
     public List<Community> selectCommunityList(Community community) {
 
-        List<Community> list = hospitalDao.selectCommunityList(community);
+        List<Community> list = communityDao.selectCommunityList(community);
         for (Community hos:list) {
             Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
             hos.setAreaName(area.getAreaName());
@@ -42,23 +42,23 @@ public class CommunityServiceImpl implements ICommunityService {
     public int insertCommunity(Community area) {
         area.setCreateBy(ShiroUtils.getLoginName());
         area.setUpdateBy(ShiroUtils.getLoginName());
-        return hospitalDao.insertCommunity(area);
+        return communityDao.insertCommunity(area);
     }
 
     @Override
     public int deleteCommunityByIds(String ids) {
-        return hospitalDao.deleteCommunityByIds(Convert.toStrArray(ids));
+        return communityDao.deleteCommunityByIds(Convert.toStrArray(ids));
     }
 
     @Override
     public Community selectCommunityById(Integer id) {
-        return hospitalDao.selectCommunityById(id);
+        return communityDao.selectCommunityById(id);
     }
 
     @Override
     public int updateCommunity(Community area) {
         area.setUpdateBy(ShiroUtils.getLoginName());
-        return hospitalDao.updateCommunity(area);
+        return communityDao.updateCommunity(area);
     }
 
 

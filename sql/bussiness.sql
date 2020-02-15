@@ -93,5 +93,17 @@ CREATE TABLE cm_community(
 		PRIMARY KEY(ID)
 ) COMMENT = '社区 ';
 
+CREATE TABLE cm_activity(
+    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    TITLE VARCHAR(128)    COMMENT '活动标题' ,
+    CONTENT TEXT    COMMENT '活动内容' ,
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (ID)
+) COMMENT = '社区活动 ';
+
 
 
