@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -104,5 +105,20 @@ public class ActivityController extends BaseController {
     {
         return toAjax(activityService.deleteActivityByIds(ids));
     }
+
+    /**
+     * 查询报名详情
+     */
+    @RequiresPermissions("cm:activity:list")
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Integer id, ModelMap mmap)
+    {
+        mmap.put("activity", activityService.selectActivityById(id));//dictTypeService.selectDictTypeById(dictId));
+        // 查询所有的活动
+        mmap.put("activityList", activityService.selectActivityList(new Activity()));//dictTypeService.selectDictTypeAll());
+        return "cm/activity/apply/apply";
+    }
+
+
 
 }

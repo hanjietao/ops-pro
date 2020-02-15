@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.cm.activity.mapper.ActivityApplyMapper">
+
+	<resultMap type="ActivityApply" id="ActivityApplyResult">
+		<id     property="id"         		column="id"         />
+		<result property="activityId"         column="activity_id"        />
+		<result property="userId"         column="user_id"        />
+		<result property="userMobile"         column="user_mobile"        />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+		<association property="activity"    column="id" javaType="Activity" resultMap="ActivityResult" />
+		<association property="clientUser"    column="userId" javaType="ClientUser" resultMap="ClientUserResult" />
+	</resultMap>
+
+	<resultMap type="Activity" id="ActivityResult">
+		<id     property="id"         		column="id"         />
+		<result property="title"         column="title"        />
+		<result property="content"         column="content"        />
+		<result property="status"           column="status"         />
+	</resultMap>
+
+	<resultMap type="ClientUser" id="ClientUserResult">
+		<id     property="userId"         		column="user_id"         />
+		<result property="userName"         column="user_name"        />
+		<result property="nikeName"         column="nike_name"        />
+		<result property="userMobile"           column="user_mobile"         />
+		<result property="status"           column="status"         />
+	</resultMap>
+
+	<sql id="selectActivityApplyVo">
+       select aa.create_time, aa.create_by, aa.update_time, aa.update_by, aa.id,aa.activity_id,aa.user_id,aa.user_mobile,aa.status,
+       a.id,a.title,a.status,
+       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
+       from cm_activity_apply aa
+       left join cm_activity a on aa.activity_id = a.id
+       left join cm_client_user cu on aa.user_id = cu.user_id
+    </sql>
+
+	<select id="selectActivityApplyById" parameterType="Integer" resultMap="ActivityApplyResult">
+		<include refid="selectActivityApplyVo"/>
+		where id = #{id}
+	</select>
+
+ 	<select id="selectActivityApplyList" parameterType="ActivityApply" resultMap="ActivityApplyResult">
+		<include refid="selectActivityApplyVo"/>
+		<where>
+			<if test="activityId != null and activityId != ''">
+				AND aa.activity_id = #{activityId}
+			</if>
+			<if test="status != null and status != ''">
+				AND aa.status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND aa.id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertActivityApply" parameterType="ActivityApply">
+		insert into cm_activity_apply (
+		<if test="activityId != null and activityId != '' ">activity_id, </if>
+		<if test="userId != null and userId != '' ">user_id,</if>
+		<if test="userMobile != null and userMobile != '' ">user_mobile, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="activityId != null and activityId != ''">#{activityId}, </if>
+		<if test="userId != null and userId != ''">#{userId},</if>
+		<if test="userMobile != null and userMobile != ''">#{userMobile}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateActivityApply" parameterType="ActivityApply">
+		update cm_activity_apply
+		<set>
+			<if test="activityId != null and activityId != ''">activity_id = #{activityId}, </if>
+			<if test="userId != null and userId != ''">user_id = #{userId}, </if>
+			<if test="userMobile != null and userMobile != ''">user_mobile = #{userMobile}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteActivityApplyByIds" parameterType="String">
+        delete from cm_activity_apply where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
