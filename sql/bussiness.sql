@@ -93,6 +93,7 @@ CREATE TABLE cm_community(
 		PRIMARY KEY(ID)
 ) COMMENT = '社区 ';
 
+// TODO 需要新增活动所属社区
 CREATE TABLE cm_activity(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     TITLE VARCHAR(128)    COMMENT '活动标题' ,
@@ -104,6 +105,37 @@ CREATE TABLE cm_activity(
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
 ) COMMENT = '社区活动 ';
+
+CREATE TABLE cm_activity_apply(
+    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    activity_id INT    COMMENT '活动id' ,
+    USER_ID TEXT    COMMENT '用户id' ,
+    USER_MOBILE VARCHAR(20) COMMENT '用户手机号，参加活动用',
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (ID)
+) COMMENT = '社区活动 ';
+
+CREATE TABLE cm_user(
+    ID BIGINT    COMMENT '用户ID' ,
+    NIKE_NAME VARCHAR(128)    COMMENT '用户昵称' ,
+    USER_CURRENT_POINTS BIGINT    COMMENT '用户当前积分' ,
+    USER_ACC_POINTS BIGINT    COMMENT '用户累计积分' ,
+    USER_USED_POINTS BIGINT    COMMENT '用户已用积分' ,
+    NAME VARCHAR(32)    COMMENT '姓名' ,
+    MOBILE VARCHAR(32)    COMMENT '手机号' ,
+    PASSWORD VARCHAR(1024)    COMMENT '密码 MD5' ,
+    REGISTER_TIME DATETIME    COMMENT '注册时间' ,
+    LAST_LOGIN_TIME DATETIME    COMMENT '最近登陆时间' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 0-正常，1-关闭' ,
+    CREATED_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATED_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATED_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATED_TIME DATETIME    COMMENT '更新时间'
+) COMMENT = '用户会员表 community memeber';
 
 
 
