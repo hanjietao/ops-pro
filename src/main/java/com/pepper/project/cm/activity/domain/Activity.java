@@ -1,6 +1,7 @@
 package com.pepper.project.cm.activity.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.csc.area.domain.Area;
 
 import java.util.Date;
@@ -17,6 +18,8 @@ public class Activity extends BaseEntity{
 
     /** 唯一键索引id */
     private Integer id;
+
+    private Integer communityId;
 
     /** title */
     private String title;
@@ -39,12 +42,22 @@ public class Activity extends BaseEntity{
     /** 更新人 */
     private String updateBy;
 
+    private Community community;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
     }
 
     public String getTitle() {
@@ -111,10 +124,22 @@ public class Activity extends BaseEntity{
         this.updateBy = updateBy;
     }
 
+    public Community getCommunity() {
+        if(community == null){
+            community = new Community();
+        }
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
                 "id=" + id +
+                ", communityId=" + communityId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", status='" + status + '\'' +
@@ -122,6 +147,7 @@ public class Activity extends BaseEntity{
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
+                ", community=" + getCommunity() +
                 '}';
     }
 }

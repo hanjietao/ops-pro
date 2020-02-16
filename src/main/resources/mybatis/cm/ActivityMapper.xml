@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="Activity" id="ActivityResult">
 		<id     property="id"         		column="id"         />
+		<id     property="communityId"         		column="community_id"         />
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
 		<result property="status"           column="status"         />
@@ -13,43 +14,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
+		<association property="community"    column="id" javaType="Community" resultMap="CommunityResult" />
 	</resultMap>
 
-	<resultMap type="Area" id="AreaResult">
-		<id     property="id"         column="id"         />
-		<result property="areaCode"         column="area_code"        />
-		<result property="areaName"         column="area_name"        />
-		<result property="coordinate"          column="coordinate"         />
-		<result property="status"          column="status"         />
+	<resultMap type="Community" id="CommunityResult">
+		<id     property="id"         		column="id"         />
+		<result property="communityCode"         column="community_code"        />
+		<result property="communityName"         column="community_name"        />
+		<result property="areaId"       column="area_id"         />
+		<result property="status"           column="status"         />
 	</resultMap>
-
 	<sql id="selectActivityVo">
-       select create_time, create_by, update_time, update_by, id,title,content,status
-       from cm_activity
+       select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.community_id,a.title,a.content,a.status,
+       c.id,c.community_code,c.community_name,c.area_id,c.status
+       from cm_activity a
+       left join cm_community c on a.community_id = c.id
     </sql>
 
 	<select id="selectActivityById" parameterType="Integer" resultMap="ActivityResult">
 		<include refid="selectActivityVo"/>
-		where id = #{id}
+		where a.id = #{id}
 	</select>
 
  	<select id="selectActivityList" parameterType="Activity" resultMap="ActivityResult">
 		<include refid="selectActivityVo"/>
 		<where>
 			<if test="title != null and title != ''">
-				AND title like concat('%', #{title}, '%')
+				AND a.title like concat('%', #{title}, '%')
 			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND a.status = #{status}
 			</if>
 			<if test="id != null and id != 0">
-				AND id = #{id}
+				AND a.id = #{id}
 			</if>
 		</where>
 	</select>
 
 	<insert id="insertActivity" parameterType="Activity">
 		insert into cm_activity (
+		<if test="communityId != null and communityId != '' ">community_id, </if>
 		<if test="title != null and title != '' ">title, </if>
 		<if test="content != null and content != '' ">content, </if>
 		<if test="status != null and status != '' ">status, </if>
@@ -58,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		create_time,
 		update_time
 		)values(
+		<if test="communityId != null and communityId != ''">#{communityId}, </if>
 		<if test="title != null and title != ''">#{title}, </if>
 		<if test="content != null and content != ''">#{content}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
@@ -71,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateActivity" parameterType="Activity">
 		update cm_activity
 		<set>
+			<if test="communityId != null and communityId != ''">community_id = #{communityId}, </if>
 			<if test="title != null and title != ''">title = #{title}, </if>
 			<if test="content != null and content != ''">content = #{content}, </if>
 			<if test="status != null">status = #{status}, </if>

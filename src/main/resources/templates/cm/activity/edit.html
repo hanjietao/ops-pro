@@ -11,7 +11,13 @@
         <form class="form-horizontal m" id="form-activity-edit" th:object="${activity}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">社区名称：</label>
+                <label class="col-sm-2 control-label is-required">社区id：</label>
+                <div class="col-sm-10">
+                    <input id="communityId" name="communityId" th:field="*{communityId}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">活动标题：</label>
                 <div class="col-sm-10">
                     <input id="title" name="title" th:field="*{title}" class="form-control" type="text" required>
                 </div>
