@@ -2,25 +2,26 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('办事指南列表')" />
+	<th:block th:include="include :: select2-css" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
 	<div class="row">
 		<div class="col-sm-12 search-collapse">
-			<form id="guide-form">
+			<form id="note-form">
 				<div class="select-list">
 					<ul>
+<!--						<li>-->
+<!--							id：<input type="text" name="id"/>-->
+<!--						</li>-->
 						<li>
-							id：<input type="text" name="id"/>
+							所属社区：<select id="communityId" name="communityId" class="form-control">
+							<option value="">所有</option>
+							<option th:each="community : ${communitys}" th:text="${community['communityName']}" th:value="${community['id']}"></option>
+						</select>
 						</li>
 						<li>
-							标题：<input type="text" name="title"/>
-						</li>
-						<li>
-							所属社区：<input type="text" name="communityId"/>
-						</li>
-						<li>
-							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}" class="form-control">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
@@ -35,13 +36,13 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:guide:add">
+			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:note:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
-			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:guide:edit">
+			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:note:edit">
 				<i class="fa fa-edit"></i> 修改
 			</a>
-			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:guide:remove">
+			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:note:remove">
 				<i class="fa fa-remove"></i> 删除
 			</a>
 		</div>
@@ -52,12 +53,13 @@
 	</div>
 </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
 <script th:inline="javascript">
-	var editFlag = [[${@permission.hasPermi('cm:guide:edit')}]];
-	var removeFlag = [[${@permission.hasPermi('cm:guide:remove')}]];
+	var editFlag = [[${@permission.hasPermi('cm:note:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('cm:note:remove')}]];
 	var types = [[${@dict.getType('sys_notice_type')}]];
 	var datas = [[${@dict.getType('sys_notice_status')}]];
-	var prefix = ctx + "cm/guide";
+	var prefix = ctx + "cm/note";
 
 	$(function() {
 		var options = {
@@ -69,7 +71,7 @@
 			//exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
-			modalName: "办事指南",
+			modalName: "用户留言",
 			//showExport: true,  // bootstrap-table自带的下载图标
 			escape: true,
 			columns: [{
@@ -79,13 +81,13 @@
 					field : 'id',
 					title : '序号'
 				},
-				// {
-				// 	field: 'id',
-				// 	title: 'id'
-				// },
 				{
-					field: 'title',
-					title: '标题'
+					field: 'clientUser.nikeName',
+					title: '留言用户'
+				},
+				{
+					field: 'content',
+					title: '留言内容'
 				},
 				{
 					field: 'community.communityName',

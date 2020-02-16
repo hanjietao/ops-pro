@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.cm.note.mapper.NoteMapper">
+
+	<resultMap type="Note" id="NoteResult">
+		<id     property="id"         		column="id"         />
+		<result property="content"         column="content"        />
+        <result property="userId"         column="user_id"        />
+		<result property="communityId"       column="community_id"         />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+		<association property="community"    column="id" javaType="Community" resultMap="CommunityResult" />
+        <association property="clientUser"    column="id" javaType="ClientUser" resultMap="ClientUserResult" />
+    </resultMap>
+
+	<resultMap type="Community" id="CommunityResult">
+		<id     property="id"         		column="id"         />
+		<result property="communityCode"         column="community_code"        />
+		<result property="communityName"         column="community_name"        />
+		<result property="areaId"       column="area_id"         />
+		<result property="status"           column="status"         />
+	</resultMap>
+
+    <resultMap type="ClientUser" id="ClientUserResult">
+        <id     property="userId"         		column="user_id"         />
+        <result property="userName"         column="user_name"        />
+        <result property="nikeName"         column="nike_name"        />
+        <result property="userMobile"           column="user_mobile"         />
+        <result property="status"           column="status"         />
+    </resultMap>
+
+	<sql id="selectNoteVo">
+       select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id, bg.content,bg.user_id, bg.community_id,bg.status,
+       c.id,c.community_code,c.community_name,c.area_id,c.status,
+       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
+        from cm_note bg
+        left join cm_community c on bg.community_id = c.id
+        left join cm_client_user cu on bg.user_id = cu.user_id
+    </sql>
+
+	<select id="selectNoteById" parameterType="Integer" resultMap="NoteResult">
+		<include refid="selectNoteVo"/>
+		where bg.id = #{id}
+	</select>
+
+ 	<select id="selectNoteList" parameterType="Community" resultMap="NoteResult">
+		<include refid="selectNoteVo"/>
+		<where>
+            <if test="userId != null and userId != ''">
+                AND bg.userId = #{communityId}
+            </if>
+			<if test="communityId != null and communityId != ''">
+				AND bg.community_id like concat('%', #{communityId}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND bg.status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND bg.id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertNote" parameterType="Note">
+		insert into cm_note (
+		<if test="content != null and content != '' ">content, </if>
+		<if test="communityId != null and communityId != '' ">community_id, </if>
+        <if test="userId != null and userId != '' ">user_id, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="content != null and content != ''">#{content}, </if>
+		<if test="communityId != null and communityId != ''">#{communityId}, </if>
+        <if test="userId != null and userId != ''">#{userId}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateNote" parameterType="Note">
+		update cm_note
+		<set>
+			<if test="content != null and content != ''">content = #{content}, </if>
+			<if test="communityId != null">community_id = #{communityId}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteNoteByIds" parameterType="String">
+        delete from cm_note where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

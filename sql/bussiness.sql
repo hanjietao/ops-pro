@@ -96,6 +96,7 @@ CREATE TABLE cm_community(
 // TODO 需要新增活动所属社区
 CREATE TABLE cm_activity(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    COMMUNITY_ID INT COMMENT '社区',
     TITLE VARCHAR(128)    COMMENT '活动标题' ,
     CONTENT TEXT    COMMENT '活动内容' ,
     STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
@@ -132,6 +133,18 @@ CREATE TABLE cm_business_guide(
     PRIMARY KEY (ID)
 ) COMMENT = '办事指南 ';
 
+CREATE TABLE cm_note(
+    ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
+    CONTENT TEXT    COMMENT '留言内容' ,
+    USER_ID BIGINT(20) COMMENT '用户id',
+    COMMUNITY_ID INT    COMMENT '所属社区' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '用户留言社区 ';
 
 
 
