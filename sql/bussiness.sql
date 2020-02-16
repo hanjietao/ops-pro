@@ -119,6 +119,24 @@ CREATE TABLE cm_activity_apply(
     PRIMARY KEY (ID)
 ) COMMENT = '社区活动 ';
 
+CREATE TABLE cm_business_guide(
+    ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
+    TITLE VARCHAR(128)    COMMENT '指南标题' ,
+    CONTENT TEXT COMMENT '指南内容' ,
+    COMMUNITY_ID INT    COMMENT '所属社区' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY (ID)
+) COMMENT = '办事指南 ';
+
+
+
+
+
+-- 会员表
 CREATE TABLE cm_client_user(
     USER_ID BIGINT    COMMENT '用户ID' ,
     NIKE_NAME VARCHAR(128)    COMMENT '用户昵称' ,

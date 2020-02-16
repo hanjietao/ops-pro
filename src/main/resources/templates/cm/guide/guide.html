@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-	<th:block th:include="include :: header('社区活动列表')" />
+	<th:block th:include="include :: header('办事指南列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
 	<div class="row">
 		<div class="col-sm-12 search-collapse">
-			<form id="activity-form">
+			<form id="guide-form">
 				<div class="select-list">
 					<ul>
 						<li>
 							id：<input type="text" name="id"/>
 						</li>
 						<li>
-							活动标题：<input type="text" name="title"/>
+							标题：<input type="text" name="title"/>
 						</li>
 						<li>
-							社区状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							所属区域：<input type="text" name="communityId"/>
+						</li>
+						<li>
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
@@ -32,13 +35,13 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:activity:add">
+			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="cm:guide:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
-			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:activity:edit">
+			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="cm:guide:edit">
 				<i class="fa fa-edit"></i> 修改
 			</a>
-			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:activity:remove">
+			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:guide:remove">
 				<i class="fa fa-remove"></i> 删除
 			</a>
 		</div>
@@ -50,12 +53,11 @@
 </div>
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-	var editFlag = [[${@permission.hasPermi('cm:activity:edit')}]];
-	var removeFlag = [[${@permission.hasPermi('cm:activity:remove')}]];
-	var listFlag = [[${@permission.hasPermi('cm:activity:list')}]];
+	var editFlag = [[${@permission.hasPermi('cm:guide:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('cm:guide:remove')}]];
 	var types = [[${@dict.getType('sys_notice_type')}]];
 	var datas = [[${@dict.getType('sys_notice_status')}]];
-	var prefix = ctx + "cm/activity";
+	var prefix = ctx + "cm/guide";
 
 	$(function() {
 		var options = {
@@ -67,7 +69,7 @@
 			//exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
-			modalName: "社区活动",
+			modalName: "办事指南",
 			//showExport: true,  // bootstrap-table自带的下载图标
 			escape: true,
 			columns: [{
@@ -77,9 +79,17 @@
 					field : 'id',
 					title : '序号'
 				},
+				// {
+				// 	field: 'id',
+				// 	title: 'id'
+				// },
 				{
 					field: 'title',
 					title: '标题'
+				},
+				{
+					field: 'community.communityName',
+					title: '所属社区'
 				},
 				{
 					field: 'status',
@@ -113,7 +123,6 @@
 					formatter: function(value, row, index) {
 						var actions = [];
 						actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-						actions.push('<a class="btn btn-info btn-xs ' + listFlag + '" href="javascript:void(0)" onclick="detail(\'' + row.id + '\')"><i class="fa fa-list-ul"></i>报名列表</a> ');
 						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 					}
@@ -121,12 +130,6 @@
 		};
 		$.table.init(options);
 	});
-
-	/*字典列表-详细*/
-	function detail(dictId) {
-		var url = prefix + '/detail/' + dictId;
-		$.modal.openTab("活动报名列表", url);
-	}
 </script>
 </body>
 </html>

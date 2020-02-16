@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.cm.guide.mapper.GuideMapper">
+
+	<resultMap type="Guide" id="GuideResult">
+		<id     property="id"         		column="id"         />
+		<result property="title"         column="title"        />
+		<result property="content"         column="content"        />
+		<result property="communityId"       column="community_id"         />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+		<association property="community"    column="id" javaType="Community" resultMap="CommunityResult" />
+	</resultMap>
+
+	<resultMap type="Community" id="CommunityResult">
+		<id     property="id"         		column="id"         />
+		<result property="communityCode"         column="community_code"        />
+		<result property="communityName"         column="community_name"        />
+		<result property="areaId"       column="area_id"         />
+		<result property="status"           column="status"         />
+	</resultMap>
+
+	<sql id="selectGuideVo">
+       select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id,bg.title, bg.content, bg.community_id,bg.status,
+       c.id,c.community_code,c.community_name,c.area_id,c.status
+        from cm_business_guide bg
+        left join cm_community c on bg.community_id = c.id
+    </sql>
+
+	<select id="selectGuideById" parameterType="Integer" resultMap="GuideResult">
+		<include refid="selectGuideVo"/>
+		where bg.id = #{id}
+	</select>
+
+ 	<select id="selectGuideList" parameterType="Community" resultMap="GuideResult">
+		<include refid="selectGuideVo"/>
+		<where>
+			<if test="title != null and title != ''">
+				AND bg.title like concat('%', #{title}, '%')
+			</if>
+			<if test="communityId != null and communityId != ''">
+				AND bg.community_id like concat('%', #{communityId}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND bg.status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND bg.id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertGuide" parameterType="Guide">
+		insert into cm_business_guide (
+		<if test="title != null and title != '' ">title, </if>
+		<if test="content != null and content != '' ">content, </if>
+		<if test="communityId != null and communityId != '' ">community_id, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="title != null and title != ''">#{title}, </if>
+		<if test="content != null and content != ''">#{content}, </if>
+		<if test="communityId != null and communityId != ''">#{communityId}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateGuide" parameterType="Guide">
+		update cm_business_guide
+		<set>
+			<if test="title != null and title != ''">title = #{title}, </if>
+			<if test="content != null and content != ''">content = #{content}, </if>
+			<if test="communityId != null">community_id = #{communityId}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteGuideByIds" parameterType="String">
+        delete from cm_business_guide where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
