@@ -219,7 +219,18 @@ CREATE TABLE pm_note(
     PRIMARY KEY(ID)
 ) COMMENT = '用户留言物业 ';
 
-
+CREATE TABLE pm_notice(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    TITLE VARCHAR(1024)    COMMENT '通知内容' ,
+    CONTENT TEXT    COMMENT '通知内容' ,
+    PROPERTY_ID INT    COMMENT '物业id' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '物业通知 ';
 
 
 

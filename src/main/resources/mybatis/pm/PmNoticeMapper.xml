@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectPmNoticeVo"/>
 		<where>
             <if test="title != null and title != ''">
-                AND n.title = #{title}
+                AND n.title like concat('%', #{title}, '%')
             </if>
 			<if test="propertyId != null and propertyId != ''">
 				AND n.property_id like concat('%', #{propertyId}, '%')
