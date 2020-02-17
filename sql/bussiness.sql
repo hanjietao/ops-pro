@@ -79,6 +79,8 @@ CREATE TABLE csc_appointment(
     PRIMARY KEY (ID)
 ) COMMENT = '预约管理 ';
 
+-- 社区
+
 CREATE TABLE cm_community(
     ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
     COMMUNITY_CODE VARCHAR(128)    COMMENT '社区编码' ,
@@ -145,6 +147,81 @@ CREATE TABLE cm_note(
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
 ) COMMENT = '用户留言社区 ';
+
+
+
+
+-- 物业
+CREATE TABLE pm_property(
+    ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
+    PROPERTY_CODE VARCHAR(128)    COMMENT '社区编码' ,
+    PROPERTY_NAME VARCHAR(128)    COMMENT '社区名称' ,
+    AREA_ID INT    COMMENT '社区所属区域ID' ,
+    INTRODUCTION TEXT    COMMENT '社区介绍' ,
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭（取消预约）' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+		PRIMARY KEY(ID)
+) COMMENT = '物业 ';
+
+-- 需要新增活动所属社区
+CREATE TABLE pm_activity(
+    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    PROPERTY_ID INT COMMENT '物业',
+    TITLE VARCHAR(128)    COMMENT '活动标题' ,
+    CONTENT TEXT    COMMENT '活动内容' ,
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (ID)
+) COMMENT = '物业活动 ';
+
+CREATE TABLE pm_activity_apply(
+    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    activity_id INT    COMMENT '活动id' ,
+    USER_ID BIGINT(20)    COMMENT '用户id' ,
+    USER_MOBILE VARCHAR(20) COMMENT '用户手机号，参加活动用',
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间' ,
+    PRIMARY KEY (ID)
+) COMMENT = '物业活动报名 ';
+
+CREATE TABLE pm_business_guide(
+    ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
+    TITLE VARCHAR(128)    COMMENT '指南标题' ,
+    CONTENT TEXT COMMENT '指南内容' ,
+    PROPERTY_ID INT    COMMENT '所属物业' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY (ID)
+) COMMENT = '办事指南 ';
+
+CREATE TABLE pm_note(
+    ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
+    CONTENT TEXT    COMMENT '留言内容' ,
+    USER_ID BIGINT(20) COMMENT '用户id',
+    PROPERTY_ID INT    COMMENT '所属物业' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '用户留言物业 ';
+
+
+
+
 
 
 

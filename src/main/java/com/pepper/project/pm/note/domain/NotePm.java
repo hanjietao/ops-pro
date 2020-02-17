@@ -1,33 +1,32 @@
-package com.pepper.project.cm.community.domain;
+package com.pepper.project.pm.note.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
-import com.pepper.project.csc.area.domain.Area;
+import com.pepper.project.ch.user.domain.ClientUser;
+import com.pepper.project.pm.property.domain.Property;
 
 import java.util.Date;
 
 /**
- *  @Description: 社区服务服务中心-医院介绍 cm_community
+ *  @Description: 社区服务服务中心-用户留言 cm_note
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class Community extends BaseEntity{
+public class NotePm extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
     private Integer id;
 
-    /** 区域码Code */
-    private String communityCode;
+    /** 留言内容 */
+    private String content;
 
-    /** 区域名称 */
-    private String communityName;
+    /** 所属物业 */
+    private Integer propertyId;
 
-    private String areaId;
-
-    /** 介绍 */
-    private String introduction;
+    /** 用户id */
+    private Long userId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -44,11 +43,14 @@ public class Community extends BaseEntity{
     /** 更新人 */
     private String updateBy;
 
-    /** 区域名称 */
-    private String areaName;
+    private Property property;
 
-    /** 区域 */
-    private Area area;
+    /** 客户端用户 */
+    private ClientUser clientUser;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Integer getId() {
         return id;
@@ -58,36 +60,28 @@ public class Community extends BaseEntity{
         this.id = id;
     }
 
-    public String getCommunityCode() {
-        return communityCode;
+    public String getContent() {
+        return content;
     }
 
-    public void setCommunityCode(String communityCode) {
-        this.communityCode = communityCode;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public Integer getPropertyId() {
+        return propertyId;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
     }
 
-    public String getAreaId() {
-        return areaId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setAreaId(String areaId) {
-        this.areaId = areaId;
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getStatus() {
@@ -138,37 +132,42 @@ public class Community extends BaseEntity{
         this.updateBy = updateBy;
     }
 
-    public String getAreaName() {
-        return areaName;
+    public Property getProperty() {
+        if(property == null){
+            property = new Property();
+        }
+        return property;
     }
 
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
+    public void setProperty(Property property) {
+        this.property = property;
     }
 
-    public Area getArea() {
-        return area;
+    public ClientUser getClientUser() {
+        if(clientUser == null){
+            clientUser = new ClientUser();
+        }
+        return clientUser;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setClientUser(ClientUser clientUser) {
+        this.clientUser = clientUser;
     }
 
     @Override
     public String toString() {
-        return "ActivityPm{" +
+        return "Note{" +
                 "id=" + id +
-                ", communityCode='" + communityCode + '\'' +
-                ", communityName='" + communityName + '\'' +
-                ", areaId='" + areaId + '\'' +
-                ", introduction='" + introduction + '\'' +
+                ", content='" + content + '\'' +
+                ", propertyId=" + propertyId +
+                ", userId=" + userId +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
-                ", areaName='" + areaName + '\'' +
-                ", area=" + area +
+                ", property=" + getProperty() +
+                ", clientUser=" + getClientUser() +
                 '}';
     }
 }

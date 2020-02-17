@@ -1,4 +1,4 @@
-package com.pepper.project.cm.community.domain;
+package com.pepper.project.pm.property.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
 import com.pepper.project.csc.area.domain.Area;
@@ -11,7 +11,7 @@ import java.util.Date;
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class Community extends BaseEntity{
+public class Property extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -19,10 +19,10 @@ public class Community extends BaseEntity{
     private Integer id;
 
     /** 区域码Code */
-    private String communityCode;
+    private String propertyCode;
 
     /** 区域名称 */
-    private String communityName;
+    private String propertyName;
 
     private String areaId;
 
@@ -58,20 +58,20 @@ public class Community extends BaseEntity{
         this.id = id;
     }
 
-    public String getCommunityCode() {
-        return communityCode;
+    public String getPropertyCode() {
+        return propertyCode;
     }
 
-    public void setCommunityCode(String communityCode) {
-        this.communityCode = communityCode;
+    public void setPropertyCode(String propertyCode) {
+        this.propertyCode = propertyCode;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getPropertyName() {
+        return propertyName;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
     public String getAreaId() {
@@ -158,8 +158,8 @@ public class Community extends BaseEntity{
     public String toString() {
         return "ActivityPm{" +
                 "id=" + id +
-                ", communityCode='" + communityCode + '\'' +
-                ", communityName='" + communityName + '\'' +
+                ", propertyCode='" + propertyCode + '\'' +
+                ", propertyName='" + propertyName + '\'' +
                 ", areaId='" + areaId + '\'' +
                 ", introduction='" + introduction + '\'' +
                 ", status='" + status + '\'' +

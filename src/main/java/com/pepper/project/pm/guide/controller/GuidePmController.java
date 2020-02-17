@@ -1,16 +1,15 @@
-package com.pepper.project.cm.guide.controller;
+package com.pepper.project.pm.guide.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
-import com.pepper.project.cm.community.domain.Community;
-import com.pepper.project.cm.community.service.ICommunityService;
-import com.pepper.project.cm.guide.domain.Guide;
-import com.pepper.project.cm.guide.service.IGuideService;
-import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.pm.property.domain.Property;
+import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.pm.guide.domain.GuidePm;
+import com.pepper.project.pm.guide.service.IGuidePmService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,34 +19,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cm/guide")
-public class GuideController extends BaseController {
+@RequestMapping("/pm/guide")
+public class GuidePmController extends BaseController {
 
-    private String prefix = "cm/guide";
+    private String prefix = "pm/guide";
 
     @Autowired
-    private IGuideService guideService;
+    private IGuidePmService guideService;
 
     @Autowired
     private IAreaService areaService;
 
     @Autowired
-    private ICommunityService communityService;
+    private IPropertyService propertyService;
 
-    @RequiresPermissions("cm:guide:view")
+    @RequiresPermissions("pm:guide:view")
     @GetMapping()
     public String online()
     {
         return prefix + "/guide";
     }
 
-    @RequiresPermissions("cm:guide:list")
+    @RequiresPermissions("pm:guide:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Guide guide)
+    public TableDataInfo list(GuidePm guide)
     {
         startPage();
-        List<Guide> list = guideService.selectGuideList(guide);
+        List<GuidePm> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }
 
@@ -57,19 +56,19 @@ public class GuideController extends BaseController {
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        List<Community> communitys = communityService.selectCommunityList(new Community());
-        mmap.put("communitys",communitys);
+        List<Property> propertys = propertyService.selectPropertyList(new Property());
+        mmap.put("propertys",propertys);
         return prefix + "/add";
     }
 
     /**
      * 新增保存区域设置
      */
-    @Log(title = "医院介绍", businessType = BusinessType.INSERT)
-    @RequiresPermissions("cm:guide:add")
+    @Log(title = "办事指南", businessType = BusinessType.INSERT)
+    @RequiresPermissions("pm:guide:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Guide guide)
+    public AjaxResult addSave(GuidePm guide)
     {
         return toAjax(guideService.insertGuide(guide));
     }
@@ -80,8 +79,8 @@ public class GuideController extends BaseController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
-        List<Community> communitys = communityService.selectCommunityList(new Community());
-        mmap.put("communitys",communitys);
+        List<Property> propertys = propertyService.selectPropertyList(new Property());
+        mmap.put("propertys",propertys);
         mmap.put("guide", guideService.selectGuideById(id));
         return prefix + "/edit";
     }
@@ -89,11 +88,11 @@ public class GuideController extends BaseController {
     /**
      * 修改保存公告
      */
-    @RequiresPermissions("cm:guide:edit")
-    @Log(title = "医院介绍", businessType = BusinessType.UPDATE)
+    @RequiresPermissions("pm:guide:edit")
+    @Log(title = "办事指南", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Guide guide)
+    public AjaxResult editSave(GuidePm guide)
     {
         return toAjax(guideService.updateGuide(guide));
     }
@@ -101,8 +100,8 @@ public class GuideController extends BaseController {
     /**
      * 删除区域
      */
-    @RequiresPermissions("cm:guide:remove")
-    @Log(title = "医院介绍", businessType = BusinessType.DELETE)
+    @RequiresPermissions("pm:guide:remove")
+    @Log(title = "办事指南", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

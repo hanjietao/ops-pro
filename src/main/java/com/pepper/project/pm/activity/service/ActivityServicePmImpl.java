@@ -1,22 +1,20 @@
-package com.pepper.project.cm.activity.service;
+package com.pepper.project.pm.activity.service;
 
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
-import com.pepper.framework.aspectj.lang.annotation.DataScope;
-import com.pepper.project.cm.activity.domain.Activity;
-import com.pepper.project.cm.activity.mapper.ActivityMapper;
-import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.pm.activity.domain.ActivityPm;
+import com.pepper.project.pm.activity.mapper.ActivityPmMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ActivityServiceImpl implements IActivityService {
+public class ActivityServicePmImpl implements IActivityPmService {
 
     @Autowired
-    private ActivityMapper activityDao;
+    private ActivityPmMapper activityDao;
 
     @Autowired
     private AreaMapper areaDao;
@@ -28,9 +26,9 @@ public class ActivityServiceImpl implements IActivityService {
      *  @Date: 2020/2/6 0:23
      */
     @Override
-    public List<Activity> selectActivityList(Activity activity) {
+    public List<ActivityPm> selectActivityList(ActivityPm activityPm) {
 
-        List<Activity> list = activityDao.selectActivityList(activity);
+        List<ActivityPm> list = activityDao.selectActivityList(activityPm);
 //        for (ActivityPm hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
@@ -39,7 +37,7 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public int insertActivity(Activity area) {
+    public int insertActivity(ActivityPm area) {
         area.setCreateBy(ShiroUtils.getLoginName());
         area.setUpdateBy(ShiroUtils.getLoginName());
         return activityDao.insertActivity(area);
@@ -51,12 +49,12 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public Activity selectActivityById(Integer id) {
+    public ActivityPm selectActivityById(Integer id) {
         return activityDao.selectActivityById(id);
     }
 
     @Override
-    public int updateActivity(Activity area) {
+    public int updateActivity(ActivityPm area) {
         area.setUpdateBy(ShiroUtils.getLoginName());
         return activityDao.updateActivity(area);
     }

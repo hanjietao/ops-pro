@@ -35,4 +35,5 @@ public @interface DataScope
     String areaAlias() default "";
 
     String communityAlias() default "";
+    String propertyAlias() default "";
 }

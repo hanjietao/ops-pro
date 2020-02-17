@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增活动数据')" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-activityPm-apply-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">用户id：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="userId" id="userId" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">活动id：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="activityId" id="activityId" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label is-required">用户报名手机号：</label>
+				<div class="col-sm-8">
+					<input class="form-control" type="text" name="userMobile" id="userMobile" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
+						<input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script type="text/javascript">
+		var prefix = ctx + "pm/activity/apply";
+
+		// $("#form-activityPm-add").validate({
+		// 	rules:{
+		// 		dictSort:{
+		// 			digits:true
+		// 		},
+		// 	},
+		// 	focusCleanup: true
+		// });
+
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	$.operate.save(prefix + "/add", $('#form-activityPm-apply-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

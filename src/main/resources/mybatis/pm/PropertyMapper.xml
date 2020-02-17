@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.pm.property.mapper.PropertyMapper">
+
+	<resultMap type="Property" id="PropertyResult">
+		<id     property="id"         		column="id"         />
+		<result property="propertyCode"         column="property_code"        />
+		<result property="propertyName"         column="property_name"        />
+		<result property="areaId"       column="area_id"         />
+		<result property="introduction"       column="introduction"         />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+		<association property="area"    column="id" javaType="Area" resultMap="AreaResult" />
+	</resultMap>
+
+	<resultMap type="Area" id="AreaResult">
+		<id     property="id"         column="id"         />
+		<result property="areaCode"         column="area_code"        />
+		<result property="areaName"         column="area_name"        />
+		<result property="coordinate"          column="coordinate"         />
+		<result property="status"          column="status"         />
+	</resultMap>
+
+	<sql id="selectPropertyVo">
+       select p.create_time, p.create_by, p.update_time, p.update_by, p.id,p.property_code, p.property_name,
+       p.area_id, p.introduction,p.status,
+       a.id,a.area_code,a.area_name,a.coordinate,a.status
+       from pm_property p
+       left join csc_area a on p.area_id = a.id
+    </sql>
+
+	<select id="selectPropertyById" parameterType="Integer" resultMap="PropertyResult">
+		<include refid="selectPropertyVo"/>
+		where p.id = #{id}
+	</select>
+
+ 	<select id="selectPropertyList" parameterType="Property" resultMap="PropertyResult">
+		<include refid="selectPropertyVo"/>
+		<where>
+			<if test="propertyCode != null and propertyCode != ''">
+				AND p.property_code like concat('%', #{propertyCode}, '%')
+			</if>
+			<if test="propertyName != null and propertyName != ''">
+				AND p.property_name like concat('%', #{propertyName}, '%')
+			</if>
+			<if test="areaId != null and areaId != ''">
+				AND p.area_id = #{areaId}
+			</if>
+			<if test="status != null and status != ''">
+				AND p.status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND p.id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertProperty" parameterType="Property">
+		insert into pm_property (
+		<if test="propertyCode != null and propertyCode != '' ">property_code, </if>
+		<if test="propertyName != null and propertyName != '' ">property_name, </if>
+		<if test="areaId != null and areaId != '' ">area_id, </if>
+		<if test="introduction != null and introduction != '' ">introduction, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="propertyCode != null and propertyCode != ''">#{propertyCode}, </if>
+		<if test="propertyName != null and propertyName != ''">#{propertyName}, </if>
+		<if test="areaId != null and areaId != ''">#{areaId}, </if>
+		<if test="introduction != null and introduction != ''">#{introduction}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateProperty" parameterType="Property">
+		update pm_property
+		<set>
+			<if test="propertyCode != null and propertyCode != ''">property_code = #{propertyCode}, </if>
+			<if test="propertyName != null and propertyName != ''">property_name = #{propertyName}, </if>
+			<if test="areaId != null">area_id = #{areaId}, </if>
+			<if test="introduction != null">introduction = #{introduction}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deletePropertyByIds" parameterType="String">
+        delete from pm_property where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
