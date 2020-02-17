@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.he.board.mapper.BoardMapper">
+
+	<resultMap type="Board" id="BoardResult">
+		<id     property="id"         		column="id"         />
+		<result property="boardCode"         column="board_code"        />
+		<result property="boardName"         column="board_name"        />
+		<result property="status"           column="status"         />
+		<result property="createTime"       column="create_time"            />
+		<result property="createBy"     	column="create_by"    />
+		<result property="updateTime"       column="update_time"           />
+		<result property="updateBy"         column="update_by"                />
+	</resultMap>
+
+	<sql id="selectBoardVo">
+       select create_time, create_by, update_time, update_by, id,board_code, board_name,status
+        from he_board
+    </sql>
+
+	<select id="selectBoardById" parameterType="Integer" resultMap="BoardResult">
+		<include refid="selectBoardVo"/>
+		where id = #{id}
+	</select>
+
+ 	<select id="selectBoardList" parameterType="Board" resultMap="BoardResult">
+		<include refid="selectBoardVo"/>
+		<where>
+			<if test="boardName != null and boardName != ''">
+				AND board_name like concat('%', #{boardName}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertBoard" parameterType="Board">
+		insert into he_board (
+		<if test="boardCode != null and boardCode != '' ">board_code, </if>
+		<if test="boardName != null and boardName != '' ">board_name, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="boardCode != null and boardCode != ''">#{boardCode}, </if>
+		<if test="boardName != null and boardName != ''">#{boardName}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateBoard" parameterType="Board">
+		update he_board
+		<set>
+			<if test="boardCode != null and boardCode != ''">board_code = #{boardCode}, </if>
+			<if test="boardName != null and boardName != ''">board_name = #{boardName}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteBoardByIds" parameterType="String">
+        delete from he_board where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -36,4 +36,8 @@ public @interface DataScope
 
     String communityAlias() default "";
     String propertyAlias() default "";
+
+    String boardAlias() default "";
+
+    String videoAlias() default "";
 }

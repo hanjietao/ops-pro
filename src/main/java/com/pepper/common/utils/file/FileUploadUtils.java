@@ -108,7 +108,7 @@ public class FileUploadUtils
             throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
         }
 
-        assertAllowed(file, allowedExtension);
+        //assertAllowed(file, allowedExtension);
 
         String fileName = extractFilename(file);
 

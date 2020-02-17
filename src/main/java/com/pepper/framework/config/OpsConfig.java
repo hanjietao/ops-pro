@@ -99,6 +99,14 @@ public class OpsConfig
     }
 
     /**
+     * 获取健康视频上传路径
+     */
+    public static String getHealthVideoPath()
+    {
+        return getProfile() + "/healthVideo";
+    }
+
+    /**
      * 获取下载路径
      */
     public static String getDownloadPath()

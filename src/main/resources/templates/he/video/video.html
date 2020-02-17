@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('办事指南列表')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+	<div class="row">
+		<div class="col-sm-12 search-collapse">
+			<form id="video-form">
+				<div class="select-list">
+					<ul>
+						<li>
+							id：<input type="text" name="id"/>
+						</li>
+						<li>
+							标题：<input type="text" name="title"/>
+						</li>
+						<li>
+							所属社区：<input type="text" name="communityId"/>
+						</li>
+						<li>
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							<option value="">所有</option>
+							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+						</select>
+						</li>
+						<li>
+							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+						</li>
+					</ul>
+				</div>
+			</form>
+		</div>
+
+		<div class="btn-group-sm" id="toolbar" role="group">
+			<a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="he:video:add">
+				<i class="fa fa-plus"></i> 新增
+			</a>
+			<a class="btn btn-primary single disabled" onclick="$.operate.editFull()" shiro:hasPermission="he:video:edit">
+				<i class="fa fa-edit"></i> 修改
+			</a>
+			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="he:video:remove">
+				<i class="fa fa-remove"></i> 删除
+			</a>
+		</div>
+
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table"></table>
+		</div>
+	</div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+	var editFlag = [[${@permission.hasPermi('he:video:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('he:video:remove')}]];
+	var types = [[${@dict.getType('sys_notice_type')}]];
+	var datas = [[${@dict.getType('sys_notice_status')}]];
+	var prefix = ctx + "he/video";
+
+	viewImg= function(value) {
+		var actions = [];
+		$.each(datas, function(index, dict) {
+			if (dict.dictValue == ('' + value)) {
+				var listClass = $.common.equals("default", dict.listClass) || $.common.isEmpty(dict.listClass) ? "" : "badge badge-" + dict.listClass;
+				actions.push($.common.sprintf("<span class='%s'>%s</span>", listClass, dict.dictLabel));
+				return false;
+			}
+		});
+		return actions.join('');
+	}
+
+	$(function() {
+		var options = {
+			uniqueId: "id",
+			url: prefix + "/list",
+			createUrl: prefix + "/add",
+			updateUrl: prefix + "/edit/{id}",
+			removeUrl: prefix + "/remove",
+			//exportUrl: prefix + "/export",
+			sortName: "createTime",
+			sortOrder: "desc",
+			modalName: "办事指南",
+			//showExport: true,  // bootstrap-table自带的下载图标
+			escape: true,
+			columns: [{
+				checkbox: true
+			},
+				{
+					field : 'id',
+					title : '序号'
+				},
+				{
+					field: 'title',
+					title: '标题'
+				},
+				{
+					title: '视频',
+					field: 'videoUrl',
+					formatter: function(value, row, index) {
+						debugger
+						// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
+						// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
+						/*width: 108% !important;
+    height: 100% !important;*/
+						if(row.videoUrl){
+							return $.common.sprintf("<div style='width:100px;height:100px'><video src='%s' preload='none' controls='controls' style='width: 100% !important;height: 100% !important;' preload='none'>您的浏览器不支持该视频播放插件</video></div>", row.videoUrl);
+						}else {
+							return '无';
+						}
+					}
+				},
+				{
+					field: 'watchCount',
+					title: '观看人数'
+				},
+				{
+					field: 'board.boardName',
+					title: '所属板块'
+				},
+				{
+					field: 'status',
+					title: '状态',
+					align: 'center',
+					formatter: function(value, row, index) {
+						return $.table.selectDictLabel(datas, value);
+					}
+				},
+				{
+					field: 'createTime',
+					title: '创建时间',
+					sortable: true
+				},
+				{
+					field: 'createBy',
+					title: '创建者'
+				},
+				{
+					field: 'updateTime',
+					title: '更新时间',
+					sortable: true
+				},
+				{
+					field: 'updateBy',
+					title: '更新人'
+				},
+				{
+					title: '操作',
+					align: 'center',
+					formatter: function(value, row, index) {
+						var actions = [];
+						actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+					}
+				}]
+		};
+		$.table.init(options);
+	});
+</script>
+</body>
+</html>

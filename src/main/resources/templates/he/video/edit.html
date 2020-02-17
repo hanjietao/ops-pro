@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改医院')"/>
+    <th:block th:include="include :: summernote-css"/>
+    <th:block th:include="include :: select2-css"/>
+    <th:block th:include="include :: bootstrap-select-css"/>
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-video-edit" th:object="${video}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">标题：</label>
+            <div class="col-sm-10">
+                <input id="title" name="title" th:field="*{title}" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">视频：</label>
+            <div class="col-sm-10">
+                <input id="videoUrl" name="videoUrl" th:field="*{videoUrl}" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="font-noraml">多文件上传</label>
+            <div class="file-loading">
+                <input id="videoinput" type="file" multiple>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">所属板块：</label>
+            <div class="col-sm-10">
+                <select id="boardId" name="boardId" class="form-control noselect2 selectpicker"
+                        data-none-selected-text="请选择所属板块">
+                    <option th:each="board:${boards}" th:value="${board.id}" th:text="${board.boardName}"
+                            th:field="*{boardId}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">状态：</label>
+            <div class="col-sm-8">
+                <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}"
+                           th:field="*{status}">
+                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: summernote-js"/>
+<th:block th:include="include :: select2-js"/>
+<th:block th:include="include :: bootstrap-select-js"/>
+<th:block th:include="include :: bootstrap-fileinput-js"/>
+<script type="text/javascript">
+    var prefix = ctx + "he/video";
+
+    $("#form-video-edit").validate({
+        focusCleanup: true
+    });
+
+    $(document).ready(function () {
+        $("#videoinput").fileinput({
+            'theme': 'explorer-fas',
+            'uploadUrl': 'upload',
+            overwriteInitial: false,
+            initialPreviewAsData: true
+        });
+    });
+
+    function submitHandler() {
+        debugger
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-video-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

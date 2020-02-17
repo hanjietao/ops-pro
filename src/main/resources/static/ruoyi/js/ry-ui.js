@@ -298,7 +298,7 @@ var table = {
 				return actions.join('');
 			},
 			// 图片预览
-			imageView: function (value, height, width, target) {
+			imageView1: function (value, height, width, target) {
 				if ($.common.isEmpty(width)) {
                 	width = 'auto';
                 }
@@ -309,6 +309,37 @@ var table = {
 				var _target = $.common.isEmpty(target) ? 'self' : target;
 				if ($.common.isNotEmpty(value)) {
 					return $.common.sprintf("<img class='img-circle img-xs' data-height='%s' data-width='%s' data-target='%s' src='%s'/>", height, width, _target, value);
+				} else {
+					return $.common.nullToStr(value);
+				}
+			},
+			// 视频预览
+			imageView: function (value, height, width, target) {
+            	debugger
+				if ($.common.isEmpty(width)) {
+					width = 'auto';
+				}
+				if ($.common.isEmpty(height)) {
+					height = 'auto';
+				}
+				// blank or self
+				var _target = $.common.isEmpty(target) ? 'self' : target;
+				if ($.common.isNotEmpty(value)) {
+					/**
+
+
+					 <video src={url} controls={"controls"} width={200} height={150} preload="none" onClick={(e) => {
+                  if (e.target.paused) {
+                    e.target.play();
+                  } else {
+                    e.target.pause();
+                  }
+                }
+              }>您的浏览器不支持该视频播放插件</video>
+
+					 *
+					 */
+					return $.common.sprintf("<video src={%s} controls={'controls'} width={%s} height={%s} preload='none'>您的浏览器不支持该视频播放插件</video>", value, height, width);
 				} else {
 					return $.common.nullToStr(value);
 				}

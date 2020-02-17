@@ -233,6 +233,50 @@ CREATE TABLE pm_notice(
 ) COMMENT = '物业通知 ';
 
 
+-- 健康宣教
+
+CREATE TABLE he_board(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    BOARD_CODE VARCHAR(64)    COMMENT '板块编码' ,
+    BOARD_NAME VARCHAR(128)    COMMENT '板块名称' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '健康宣教板块 ';
+
+CREATE TABLE he_article(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    BOARD_ID INT(11)    COMMENT '板块编码' ,
+    TITLE VARCHAR(128)    COMMENT '文章标题' ,
+    CONTENT TEXT COMMENT '文章内容' ,
+    WATCH_COUNT INT COMMENT '观看数',
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '健康宣教宣教文章 ';
+
+CREATE TABLE he_video(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    BOARD_ID INT(11)    COMMENT '板块编码' ,
+    TITLE VARCHAR(128)    COMMENT '视频标题' ,
+    VIDEO_URL VARCHAR(1024) COMMENT '视频地址' ,
+    WATCH_COUNT INT COMMENT '观看数',
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '健康宣教宣教视频 ';
+
+
+
 
 
 
