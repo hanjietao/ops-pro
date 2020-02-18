@@ -281,15 +281,17 @@ CREATE TABLE he_video(
 
 
 
--- 会员表
-CREATE TABLE cm_client_user(
+-- 系统会员表 sm
+CREATE TABLE sm_client_user(
     USER_ID BIGINT    COMMENT '用户ID' ,
     NIKE_NAME VARCHAR(128)    COMMENT '用户昵称' ,
     USER_CURRENT_POINTS BIGINT    COMMENT '用户当前积分' ,
     USER_ACC_POINTS BIGINT    COMMENT '用户累计积分' ,
     USER_USED_POINTS BIGINT    COMMENT '用户已用积分' ,
     USER_NAME VARCHAR(32)    COMMENT '姓名' ,
+    AVATAR_URL VARCHAR(1024)    COMMENT '用户头像url' ,
     USER_MOBILE VARCHAR(32)    COMMENT '手机号' ,
+    gender CHAR(1)  default 2  COMMENT '0-男，1-女，2-未知' ,
     PASSWORD VARCHAR(1024)    COMMENT '密码 MD5' ,
     REGISTER_TIME DATETIME    COMMENT '注册时间' ,
     LAST_LOGIN_TIME DATETIME    COMMENT '最近登陆时间' ,
