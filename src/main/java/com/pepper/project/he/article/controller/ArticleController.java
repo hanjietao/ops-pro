@@ -33,8 +33,10 @@ public class ArticleController extends BaseController {
 
     @RequiresPermissions("he:article:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        List<Board> boards = boardService.selectBoardList(new Board());
+        mmap.put("boards",boards);
         return prefix + "/article";
     }
 

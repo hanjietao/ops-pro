@@ -7,13 +7,10 @@ import com.pepper.framework.config.OpsConfig;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
-import com.pepper.project.csc.area.domain.Area;
-import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
 import com.pepper.project.he.video.domain.Video;
 import com.pepper.project.he.video.service.IVideoService;
-import com.pepper.project.system.user.domain.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,8 +50,10 @@ public class VideoController extends BaseController {
 
     @RequiresPermissions("he:video:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        List<Board> boards = boardService.selectBoardList(new Board());
+        mmap.put("boards",boards);
         return prefix + "/video";
     }
 

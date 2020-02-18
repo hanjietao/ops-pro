@@ -90,6 +90,9 @@
 			var videoUrl = $("#videoUrl").val();
 			if(videoUrl){
 				$("#videoUrl").val(videoUrl)
+			}else{
+				$.modal.alertWarning("未发现上传成功的视频文件，请先选择视频，并点击上传。");
+				return
 			}
 			$.operate.save(prefix + "/add", $('#form-video-add').serialize());
 		}

@@ -41,6 +41,10 @@ public class ClientUser extends BaseEntity {
     /** 状态（0正常 1关闭） */
     private String status;
 
+    private Integer age;
+
+    private String birthday;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -149,6 +153,22 @@ public class ClientUser extends BaseEntity {
         this.status = status;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         return "ClientUser{" +
@@ -165,6 +185,8 @@ public class ClientUser extends BaseEntity {
                 ", registerTime=" + registerTime +
                 ", lastLoginTime=" + lastLoginTime +
                 ", status='" + status + '\'' +
+                ", age='" + age + '\'' +
+                ", birthday='" + birthday + '\'' +
                 '}';
     }
 }

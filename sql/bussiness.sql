@@ -296,6 +296,8 @@ CREATE TABLE sm_client_user(
     PASSWORD VARCHAR(1024)    COMMENT '密码 MD5' ,
     REGISTER_TIME DATETIME    COMMENT '注册时间' ,
     LAST_LOGIN_TIME DATETIME    COMMENT '最近登陆时间' ,
+    age int(11) comment '年龄',
+    birthday varchar(128) comment '生日 yyyy-MM-dd',
     STATUS CHAR(1)    COMMENT '状态 状态 0-正常，1-关闭' ,
     CREATED_BY VARCHAR(32)    COMMENT '创建人' ,
     CREATED_TIME DATETIME    COMMENT '创建时间' ,

@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('办事指南列表')" />
+	<th:block th:include="include :: select2-css" />
+	<th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -17,7 +19,10 @@
 							标题：<input type="text" name="title"/>
 						</li>
 						<li>
-							所属社区：<input type="text" name="communityId"/>
+							所属板块：<select id="boardId" name="boardId" class="form-control">
+							<option value="">所有</option>
+							<option th:each="board : ${boards}" th:text="${board['boardName']}" th:value="${board['id']}"></option>
+						</select>
 						</li>
 						<li>
 							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
@@ -52,6 +57,8 @@
 	</div>
 </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<th:block th:include="include :: bootstrap-select-js" />
 <script th:inline="javascript">
 	var editFlag = [[${@permission.hasPermi('he:video:edit')}]];
 	var removeFlag = [[${@permission.hasPermi('he:video:remove')}]];

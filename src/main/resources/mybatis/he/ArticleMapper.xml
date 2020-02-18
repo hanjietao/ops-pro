@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND a.title like concat('%', #{title}, '%')
 			</if>
 			<if test="boardId != null and boardId != ''">
-				AND a.board_id = #{board_id}
+				AND a.board_id = #{boardId}
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}

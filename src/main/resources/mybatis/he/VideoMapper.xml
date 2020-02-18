@@ -44,7 +44,7 @@
 				AND v.title like concat('%', #{title}, '%')
 			</if>
 			<if test="boardId != null and boardId != ''">
-				AND v.board_id like concat('%', #{board_id}, '%')
+				AND v.board_id like concat('%', #{boardId}, '%')
 			</if>
 			<if test="status != null and status != ''">
 				AND v.status = #{status}
