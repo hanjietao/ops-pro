@@ -39,10 +39,10 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public int insertActivity(Activity area) {
-        area.setCreateBy(ShiroUtils.getLoginName());
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return activityDao.insertActivity(area);
+    public int insertActivity(Activity activity) {
+        activity.setCreateBy(ShiroUtils.getLoginName());
+        activity.setUpdateBy(ShiroUtils.getLoginName());
+        return activityDao.insertActivity(activity);
     }
 
     @Override
@@ -56,9 +56,9 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public int updateActivity(Activity area) {
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return activityDao.updateActivity(area);
+    public int updateActivity(Activity activity) {
+        activity.setUpdateBy(ShiroUtils.getLoginName());
+        return activityDao.updateActivity(activity);
     }
 
 

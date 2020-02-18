@@ -299,7 +299,7 @@ CREATE TABLE cm_client_user(
     UPDATED_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATED_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY (USER_ID)
-) COMMENT = '用户会员表 community memeber';
+) AUTO_INCREMENT = 10000000 COMMENT = '用户会员表 community memeber';
 
 
 
