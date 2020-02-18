@@ -1,7 +1,7 @@
 /**
  * 基于bootstrap-table-fixed-columns修改
  * 支持左右列冻结、支持固定高度
- * Copyright (c) 2019 pepper
+ * Copyright (c) 2019 ruoyi
  */
 (function ($) {
     'use strict';
@@ -28,7 +28,7 @@
                 '<thead></thead>',
                 '</table>',
                 '</div>'].join(''));
-
+            
             this.$fixedHeader.find('table').attr('class', this.$el.attr('class'));
             this.$fixedHeaderColumns = this.$fixedHeader.find('thead');
             this.$tableHeader.before(this.$fixedHeader);
@@ -213,7 +213,7 @@
                 this.$fixedBody.hide();
                 return;
             }
-
+            
             if (!this.options.height) {
                 top = this.$fixedHeader.height()- 1;
                 height = height - top;
@@ -232,7 +232,7 @@
                     $(this).width($($(thattds).find('td')[j]).width() + 1);
                 });
             });
-
+            
             $("#" + table.options.id).on("check.bs.table uncheck.bs.table", function (e, rows, $element) {
         	    var index= $element.data('index');
                 $(this).find('.bs-checkbox').find('input[data-index="' + index + '"]').prop("checked", true);
