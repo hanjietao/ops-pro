@@ -2,7 +2,6 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('修改区域')" />
-	<th:block th:include="include :: summernote-css" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -38,50 +37,8 @@
 		</form>
     </div>
     <th:block th:include="include :: footer" />
-    <th:block th:include="include :: summernote-js" />
     <script type="text/javascript">
         var prefix = ctx + "csc/area";
-
-	    $(function() {
-		    $('.summernote').summernote({
-		    	placeholder: '请输入公告内容',
-		    	height : 192,
-				lang : 'zh-CN',
-				followingToolbar: false,
-				callbacks: {
-	                onImageUpload: function (files) {
-	                    sendFile(files[0], this);
-	                }
-	            }
-		    });
-			var content = $("#noticeContent").val();
-		    $('#editor').summernote('code', content);
-	    });
-
-	    // 上传文件
-	    function sendFile(file, obj) {
-	        var data = new FormData();
-	        data.append("file", file);
-	        $.ajax({
-	            type: "POST",
-	            url: ctx + "common/upload",
-	            data: data,
-	            cache: false,
-	            contentType: false,
-	            processData: false,
-	            dataType: 'json',
-	            success: function(result) {
-	                if (result.code == web_status.SUCCESS) {
-	                	$(obj).summernote('editor.insertImage', result.url, result.fileName);
-					} else {
-						$.modal.alertError(result.msg);
-					}
-	            },
-	            error: function(error) {
-	                $.modal.alertWarning("图片上传失败。");
-	            }
-	        });
-	    }
 
 		$("#form-area-edit").validate({
 			focusCleanup: true

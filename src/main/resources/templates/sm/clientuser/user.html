@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-	<th:block th:include="include :: header('区域设置')" />
+	<th:block th:include="include :: header('客户端用户列表')" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -76,7 +76,7 @@
 			//exportUrl: prefix + "/export",
 			sortName: "createTime",
 			sortOrder: "desc",
-			modalName: "区域",
+			modalName: "客户端用户",
 			//showExport: true,  // bootstrap-table自带的下载图标
 			escape: true,
 			columns: [{

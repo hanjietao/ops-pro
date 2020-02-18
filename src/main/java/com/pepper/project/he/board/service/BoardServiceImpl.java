@@ -3,7 +3,6 @@ package com.pepper.project.he.board.service;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.framework.aspectj.lang.annotation.DataScope;
-import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.mapper.BoardMapper;
@@ -16,7 +15,7 @@ import java.util.List;
 public class BoardServiceImpl implements IBoardService {
 
     @Autowired
-    private BoardMapper propertyDao;
+    private BoardMapper boardDao;
 
     @Autowired
     private AreaMapper areaDao;
@@ -30,7 +29,7 @@ public class BoardServiceImpl implements IBoardService {
     @DataScope(areaAlias = "a", propertyAlias = "p")
     public List<Board> selectBoardList(Board board) {
 
-        List<Board> list = propertyDao.selectBoardList(board);
+        List<Board> list = boardDao.selectBoardList(board);
         return list;
     }
 
@@ -38,23 +37,23 @@ public class BoardServiceImpl implements IBoardService {
     public int insertBoard(Board area) {
         area.setCreateBy(ShiroUtils.getLoginName());
         area.setUpdateBy(ShiroUtils.getLoginName());
-        return propertyDao.insertBoard(area);
+        return boardDao.insertBoard(area);
     }
 
     @Override
     public int deleteBoardByIds(String ids) {
-        return propertyDao.deleteBoardByIds(Convert.toStrArray(ids));
+        return boardDao.deleteBoardByIds(Convert.toStrArray(ids));
     }
 
     @Override
     public Board selectBoardById(Integer id) {
-        return propertyDao.selectBoardById(id);
+        return boardDao.selectBoardById(id);
     }
 
     @Override
     public int updateBoard(Board area) {
         area.setUpdateBy(ShiroUtils.getLoginName());
-        return propertyDao.updateBoard(area);
+        return boardDao.updateBoard(area);
     }
 
 

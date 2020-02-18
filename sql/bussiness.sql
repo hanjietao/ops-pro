@@ -278,7 +278,19 @@ CREATE TABLE he_video(
 
 
 
-
+-- 首页模块 front page
+CREATE TABLE fp_loop_image(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    title VARCHAR(64)    COMMENT '广告标题' ,
+    image_url VARCHAR(1024)    COMMENT '轮播图片url' ,
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    SORT INT(11)   DEFAULT 0  COMMENT '排序，越大排在前面' ,
+    CREATE_BY VARCHAR(32)    COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '首页轮播图 ';
 
 
 

@@ -298,7 +298,7 @@ var table = {
 				return actions.join('');
 			},
 			// 图片预览
-			imageView1: function (value, height, width, target) {
+			imageView: function (value, height, width, target) {
 				if ($.common.isEmpty(width)) {
                 	width = 'auto';
                 }
@@ -314,7 +314,7 @@ var table = {
 				}
 			},
 			// 视频预览
-			imageView: function (value, height, width, target) {
+			videoView: function (value, height, width, target) {
             	debugger
 				if ($.common.isEmpty(width)) {
 					width = 'auto';

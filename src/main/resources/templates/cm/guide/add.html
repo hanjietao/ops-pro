@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-	<th:block th:include="include :: header('新增医院')" />
+	<th:block th:include="include :: header('新增办事指南')" />
 	<th:block th:include="include :: summernote-css" />
 	<th:block th:include="include :: select2-css" />
 	<th:block th:include="include :: bootstrap-select-css" />
@@ -49,7 +49,7 @@
 	var prefix = ctx + "cm/guide";
 
 	$('.summernote').summernote({
-		placeholder: '请输入医院介绍',
+		placeholder: '请输入办事指南',
 		height : 192,
 		lang : 'zh-CN',
 		followingToolbar: false,
