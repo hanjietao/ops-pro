@@ -35,6 +35,22 @@ public class VideoController extends BaseController {
     @Autowired
     private IBoardService boardService;
 
+    /**
+
+     // 判断是否承载视频动态组标签
+     if(tabEntity.getType() == TAB_TYPE_VIDEO_MOMENT){
+     logger.info("视频动态组标签，需要删除动态组关联视频动态关系数据：tab_id={},tab_type={},tab_name={}",tabEntity.getId(),tabEntity.getType(),tabEntity.getTab());
+     tabMomentDao.deleteByTabId(tabEntity.getId());
+     noticeAllTable(NoticeTableTypeEnum.tab_moment_info, httpSession);
+     }
+
+     @Transactional
+     @Modifying(clearAutomatically = true)
+     @Query(value = "DELETE FROM tab_moment_info t WHERE t.tab_id = ?1", nativeQuery = true)
+     void deleteByTabId(int tabId);
+
+     */
+
     @RequiresPermissions("he:video:view")
     @GetMapping()
     public String online()
@@ -94,7 +110,7 @@ public class VideoController extends BaseController {
     @Log(title = "宣教板块", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Video video)
+    public AjaxResult editSave(Video video,String videoUrl1)
     {
         return toAjax(videoService.updateVideo(video));
     }
@@ -117,13 +133,35 @@ public class VideoController extends BaseController {
     @Log(title = "宣教视频", businessType = BusinessType.UPDATE)
     @PostMapping("/edit/upload")
     @ResponseBody
-    public AjaxResult updateAvatar(@RequestParam("file_data") MultipartFile file,@RequestParam("fileId") String fileId)
+    public AjaxResult editUpload(@RequestParam("file_data") MultipartFile file,@RequestParam("uploadModule") String uploadModule)
     {
         try
         {
             if (!file.isEmpty())
             {
-                String healthVideoUrl = FileUploadUtils.upload(OpsConfig.getHealthVideoPath(), file);
+                String healthVideoUrl = FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
+                return success(healthVideoUrl);
+            }
+            return error();
+        }
+        catch (Exception e)
+        {
+            //logger.error("修改头像失败！", e);
+            return error(e.getMessage());
+        }
+    }
+
+    //uploadModule:'healthEducation'
+    @Log(title = "宣教视频", businessType = BusinessType.UPDATE)
+    @PostMapping("/upload")
+    @ResponseBody
+    public AjaxResult addUpload(@RequestParam("file_data") MultipartFile file,@RequestParam("uploadModule") String uploadModule)
+    {
+        try
+        {
+            if (!file.isEmpty())
+            {
+                String healthVideoUrl = FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
                 return success(healthVideoUrl);
             }
             return error();

@@ -101,9 +101,9 @@ public class OpsConfig
     /**
      * 获取健康视频上传路径
      */
-    public static String getHealthVideoPath()
+    public static String getHealthVideoPath(String module)
     {
-        return getProfile() + "/healthVideo";
+        return getProfile() + "/" + module;
     }
 
     /**
