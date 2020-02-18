@@ -1,4 +1,4 @@
-package com.pepper.project.ch.user.domain;
+package com.pepper.project.sm.user.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
 
@@ -26,6 +26,12 @@ public class ClientUser extends BaseEntity {
 
     private String userMobile;
 
+    /** 用户头像地址 */
+    private String avatarUrl;
+
+    //'0-女，1-男，2-未知'
+    private String gender;
+
     private String password;
 
     private Date registerTime;
@@ -35,11 +41,15 @@ public class ClientUser extends BaseEntity {
     /** 状态（0正常 1关闭） */
     private String status;
 
-    public Long getId() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setId(Long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -91,6 +101,22 @@ public class ClientUser extends BaseEntity {
         this.userMobile = userMobile;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -133,6 +159,8 @@ public class ClientUser extends BaseEntity {
                 ", userUsedPoints=" + userUsedPoints +
                 ", userName='" + userName + '\'' +
                 ", userMobile='" + userMobile + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", gender='" + gender + '\'' +
                 ", password='" + password + '\'' +
                 ", registerTime=" + registerTime +
                 ", lastLoginTime=" + lastLoginTime +

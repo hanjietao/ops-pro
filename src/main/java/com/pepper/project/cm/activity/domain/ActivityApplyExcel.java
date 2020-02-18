@@ -1,8 +1,6 @@
 package com.pepper.project.cm.activity.domain;
 
 import com.pepper.framework.aspectj.lang.annotation.Excel;
-import com.pepper.framework.web.domain.BaseEntity;
-import com.pepper.project.ch.user.domain.ClientUser;
 
 import java.util.Date;
 

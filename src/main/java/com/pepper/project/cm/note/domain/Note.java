@@ -1,7 +1,7 @@
 package com.pepper.project.cm.note.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
-import com.pepper.project.ch.user.domain.ClientUser;
+import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.cm.community.domain.Community;
 
 import java.util.Date;

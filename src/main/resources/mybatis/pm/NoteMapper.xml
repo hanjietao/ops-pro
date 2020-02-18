@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
         from pm_note bg
         left join pm_property p on bg.property_id = p.id
-        left join cm_client_user cu on bg.user_id = cu.user_id
+        left join sm_client_user cu on bg.user_id = cu.user_id
     </sql>
 
 	<select id="selectNoteById" parameterType="Integer" resultMap="NoteResult">

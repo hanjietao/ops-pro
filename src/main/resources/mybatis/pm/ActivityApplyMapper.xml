@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
        from pm_activity_apply aa
        left join pm_activity a on aa.activity_id = a.id
-       left join cm_client_user cu on aa.user_id = cu.user_id
+       left join sm_client_user cu on aa.user_id = cu.user_id
     </sql>
 
 	<select id="selectActivityApplyById" parameterType="Integer" resultMap="ActivityApplyResult">

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.sm.user.mapper.ClientUserMapper">
+
+	<resultMap type="ClientUser" id="ClientUserResult">
+		<id     property="userId"         	 column="user_id"         />
+		<result property="nikeName"          column="nike_name"         />
+		<result property="userCurrentPoints" column="user_current_points"        />
+		<result property="userAccPoints"     column="user_acc_points"        />
+        <result property="userUsedPoints"    column="user_used_points"        />
+        <result property="userName"          column="user_name"         />
+        <result property="userMobile"        column="user_mobile"         />
+        <result property="gender"          column="gender"         />
+		<result property="avatarUrl"          column="avatar_url"         />
+<!--        <result property="password"          column="password"         />-->
+        <result property="registerTime"      column="register_time"         />
+        <result property="lastLoginTime"     column="last_login_time"         />
+        <result property="status"            column="status"         />
+		<result property="createTime"        column="create_time"            />
+		<result property="createBy"     	 column="create_by"       />
+		<result property="updateTime"        column="update_time"     />
+		<result property="updateBy"          column="update_by"       />
+	</resultMap>
+
+	<sql id="selectClientUserVo">
+       select cu.create_time, cu.create_by, cu.update_time, cu.update_by, cu.user_id,cu.nike_name
+       ,cu.user_current_points,cu.user_acc_points,cu.user_used_points,cu.user_name,cu.user_mobile
+       ,cu.gender,cu.avatar_url,cu.register_time,cu.last_login_time,cu.status
+       from sm_client_user cu
+    </sql>
+
+	<select id="selectClientUserById" parameterType="Integer" resultMap="ClientUserResult">
+		<include refid="selectClientUserVo"/>
+		where cu.id = #{id}
+	</select>
+
+ 	<select id="selectClientUserList" parameterType="ClientUser" resultMap="ClientUserResult">
+		<include refid="selectClientUserVo"/>
+		<where>
+			<if test="nikeName != null and nikeName != ''">
+				AND cu.nike_name like concat('%', #{nikeName}, '%')
+			</if>
+            <if test="gender != null and gender != ''">
+                AND cu.gender = #{gender}
+            </if>
+			<if test="userMobile != null and userMobile != ''">
+				AND cu.user_mobile like concat('%', #{userMobile}, '%')
+			</if>
+            <if test="userName != null and userName != ''">
+                AND cu.user_name like concat('%', #{userName}, '%')
+            </if>
+			<if test="status != null and status != ''">
+				AND cu.status = #{status}
+			</if>
+			<if test="userId != null and userId != 0">
+				AND cu.user_id = #{userId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertClientUser" parameterType="ClientUser">
+		insert into sm_client_user (
+		<if test="nikeName != null and nikeName != '' ">nike_name, </if>
+		<if test="userName != null and userName != '' ">user_name, </if>
+		<if test="userMobile != null and userMobile != '' ">user_mobile, </if>
+        <if test="gender != null and gender != '' ">gender, </if>
+        <if test="password != null and password != '' ">password, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		register_time,
+		last_login_time,
+		create_time,
+		update_time
+		)values(
+		<if test="nikeName != null and nikeName != ''">#{nikeName}, </if>
+		<if test="userName != null and userName != ''">#{userName}, </if>
+		<if test="userMobile != null and userMobile != ''">#{userMobile}, </if>
+        <if test="gender != null and gender != ''">#{gender}, </if>
+        <if test="password != null and password != '' ">#{password}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        sysdate(),
+        sysdate(),
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateClientUser" parameterType="ClientUser">
+		update sm_client_user
+		<set>
+			<if test="nikeName != null and nikeName != ''">nike_name = #{nikeName}, </if>
+			<if test="userName != null and userName != ''">user_name = #{userName}, </if>
+			<if test="userMobile != null and userMobile != ''">user_mobile = #{userMobile}, </if>
+            <if test="gender != null and gender != ''">gender = #{gender}, </if>
+			<if test="avatarUrl != null and avatarUrl != ''">avatar_url = #{avatarUrl}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            last_login_time = sysdate()
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteClientUserByIds" parameterType="String">
+        delete from sm_client_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
