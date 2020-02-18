@@ -27,6 +27,9 @@ public class Board extends BaseEntity{
     /** 区域状态（0正常 1关闭） */
     private String status;
 
+    /** 排序*/
+    private Integer sort;
+
     /** 创建时间 */
     private Date createTime;
 
@@ -73,6 +76,14 @@ public class Board extends BaseEntity{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     @Override
@@ -122,6 +133,7 @@ public class Board extends BaseEntity{
                 ", boardCode='" + boardCode + '\'' +
                 ", boardName='" + boardName + '\'' +
                 ", status='" + status + '\'' +
+                ", sort=" + sort +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +

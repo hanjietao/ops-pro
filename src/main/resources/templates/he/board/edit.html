@@ -23,6 +23,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label is-required">排序（越大越靠前）：</label>
+                <div class="col-sm-10">
+                    <input id="sort" name="sort" th:field="*{sort}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label is-required">状态：</label>
                 <div class="col-sm-8">
                     <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
@@ -46,7 +52,7 @@
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-board-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-board-edit').serialize());
             }
         }
 	</script>
