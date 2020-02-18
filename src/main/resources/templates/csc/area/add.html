@@ -39,33 +39,6 @@
 <script type="text/javascript">
 	var prefix = ctx + "csc/area";
 
-	// $("#form-area-add").validate({
-	// 	onkeyup: false,
-	// 	rules:{
-	// 		cronExpression:{
-	// 			remote: {
-	// 				url: prefix + "/checkCronExpressionIsValid",
-	// 				type: "post",
-	// 				dataType: "json",
-	// 				data: {
-	// 					"cronExpression": function() {
-	// 						return $.common.trim($("#cronExpression").val());
-	// 					}
-	// 				},
-	// 				dataFilter: function(data, type) {
-	// 					return data;
-	// 				}
-	// 			}
-	// 		},
-	// 	},
-	// 	messages: {
-	// 		"cronExpression": {
-	// 			remote: "表达式不正确"
-	// 		}
-	// 	},
-	// 	focusCleanup: true
-	// });
-
 	function submitHandler() {
 		if ($.validate.form()) {
 			$.operate.save(prefix + "/add", $('#form-area-add').serialize());

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增轮播图片')" />
+	<th:block th:include="include :: select2-css" />
+	<th:block th:include="include :: bootstrap-select-css" />
+	<th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+	<form class="form-horizontal m" id="form-video-add">
+		<input id="imageUrl" name="imageUrl" type="hidden">
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">标题：</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" name="title" id="title" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">排序：</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" name="sort" id="sort" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">图片上传（单个）：</label>
+			<div class="col-sm-10">
+				<div class="file-loading">
+					<input id="imageinput" type="file" accept=".png,.jpeg,.jpg" data-browse-on-zone-click="true">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">状态：</label>
+			<div class="col-sm-10">
+				<div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
+					<input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+					<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<th:block th:include="include :: bootstrap-select-js" />
+<th:block th:include="include :: bootstrap-fileinput-js"/>
+<script type="text/javascript">
+	var prefix = ctx + "fp/loopImage";
+
+	$(document).ready(function () {
+		debugger
+		//var val = $("#imageUrl1").val();
+		//$("#imageUrl").attr('src', val);
+		$("#imageinput").fileinput({
+			'theme': 'explorer-fas',
+			'uploadUrl': 'upload',
+			overwriteInitial: false,
+			initialPreviewAsData: true,
+			uploadExtraData:function(){
+				var data = {
+					uploadModule:'loopImage'
+				}
+				return data;
+			}
+		}).on('filepreupload', function(event, data, previewId, index) {     //上传中
+			debugger
+			var form = data.form, files = data.files, extra = data.extra,
+					response = data.response, reader = data.reader;
+			console.log('文件正在上传');
+		}).on("fileuploaded", function (event, data, previewId, index) {    //一个文件上传成功
+			debugger
+			console.log('文件上传成功！');
+			debugger
+			console.log('文件上传成功！'+data.response.id);
+			$("#imageUrl").val(data.response.msg);
+		}).on('fileerror', function(event, data, msg) {  //一个文件上传失败
+			debugger
+			console.log('文件上传失败！'+data.id);
+			console.log(data);
+			console.log(msg);
+		});
+	});
+
+	function submitHandler() {
+		debugger
+		if ($.validate.form()) {
+			var imageUrl = $("#imageUrl").val();
+			if(imageUrl){
+				$("#imageUrl").val(imageUrl)
+			}else{
+				$.modal.alertWarning("未发现上传成功的视频文件，请先选择视频，并点击上传。");
+				return
+			}
+			$.operate.save(prefix + "/add", $('#form-video-add').serialize());
+		}
+	}
+</script>
+</body>
+</html>

@@ -1429,6 +1429,7 @@ var table = {
             },
             // 将字符串按指定字符分割
             split: function (str, sep, maxLen) {
+            	debugger
             	if ($.common.isEmpty(str)) {
             	    return null;
             	}
