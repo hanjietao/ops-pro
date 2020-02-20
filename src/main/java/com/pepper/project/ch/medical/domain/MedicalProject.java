@@ -5,7 +5,7 @@ import com.pepper.framework.web.domain.BaseEntity;
 import java.util.Date;
 
 /**
- *  @Description: 社区服务服务中心-医疗项目 csc_medical_project
+ *  @Description: 社区服务服务中心-医疗项目 ch_medical_project
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10

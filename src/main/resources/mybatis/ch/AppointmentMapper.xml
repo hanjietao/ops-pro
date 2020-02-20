@@ -46,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
 		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
 		from ch_appointment a
-		left join csc_hospital h on a.hospital_id = h.id
-		left join csc_medical_project mp on a.medical_project_id = mp.id
+		left join ch_hospital h on a.hospital_id = h.id
+		left join ch_medical_project mp on a.medical_project_id = mp.id
     </sql>
 
 	<select id="selectAppointmentById" parameterType="Integer" resultMap="AppointmentResult">
@@ -62,8 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
 		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
 		from ch_appointment a
-		left join csc_hospital h on a.hospital_id = h.id
-		left join csc_medical_project mp on a.medical_project_id = mp.id
+		left join ch_hospital h on a.hospital_id = h.id
+		left join ch_medical_project mp on a.medical_project_id = mp.id
 		<where>
 			<if test="userId != null">
 				AND a.user_id = #{userId}
