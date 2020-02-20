@@ -323,4 +323,6 @@ CREATE TABLE sm_client_user(
 ) AUTO_INCREMENT = 10000000 COMMENT = '用户会员表 community memeber';
 
 
-
+-- sys_user update
+alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
+alter table sys_user add column merchant_Id int(11) default '0' comment '商户id';

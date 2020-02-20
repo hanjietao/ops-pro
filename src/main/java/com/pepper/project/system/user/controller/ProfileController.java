@@ -1,5 +1,12 @@
 package com.pepper.project.system.user.controller;
 
+import com.pepper.project.ch.hospital.domain.Hospital;
+import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.cm.community.service.ICommunityService;
+import com.pepper.project.pm.property.domain.Property;
+import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.system.user.domain.Merchant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +48,15 @@ public class ProfileController extends BaseController
     @Autowired
     private PasswordService passwordService;
 
+    @Autowired
+    private IHospitalService hospitalService;
+
+    @Autowired
+    private ICommunityService communityService;
+
+    @Autowired
+    private IPropertyService propertyService;
+
     /**
      * 个人信息
      */
@@ -48,7 +64,10 @@ public class ProfileController extends BaseController
     public String profile(ModelMap mmap)
     {
         User user = getSysUser();
+        Merchant merchant = user.getMerchant();
+        mmap.put("merchant",merchant);
         mmap.put("user", user);
+
         mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
         mmap.put("postGroup", userService.selectUserPostGroup(user.getUserId()));
         return prefix + "/profile";
@@ -137,6 +156,58 @@ public class ProfileController extends BaseController
             setSysUser(userService.selectUserById(currentUser.getUserId()));
             return success();
         }
+        return error();
+    }
+
+    /**
+     * 修改商户信息
+     */
+    @Log(title = "商户信息user", businessType = BusinessType.UPDATE)
+    @PostMapping("/updateMerchant")
+    @ResponseBody
+    public AjaxResult updateMerchant(Merchant merchant)
+    {
+        User currentUser = getSysUser();
+        if("0".equals(currentUser.getMerchantFlag())){
+            return error();
+        }
+        if(StringUtils.isEmpty(merchant.getMerchantIntroduce())
+            || StringUtils.isEmpty(merchant.getMerchantName())){
+            return error("信息更新失败，介绍和名称不能设置为空！");
+        }
+
+        int updateCount = 0;
+        if("1".equals(currentUser.getMerchantFlag())){
+            Community community = communityService.selectCommunityById(merchant.getMerchantId());
+            community.setCommunityName(merchant.getMerchantName());
+            community.setIntroduction(merchant.getMerchantIntroduce());
+            community.setId(merchant.getMerchantId());
+            updateCount = communityService.updateCommunity(community);
+
+        }else if("2".equals(currentUser.getMerchantFlag())){
+            Hospital hospital = hospitalService.selectHospitalById(merchant.getMerchantId());
+            hospital.setHosName(merchant.getMerchantName());
+            hospital.setIntroduction(merchant.getMerchantIntroduce());
+            hospital.setId(merchant.getMerchantId());
+            updateCount = hospitalService.updateHospital(hospital);
+
+        }else if("3".equals(currentUser.getMerchantFlag())){
+            Property property = propertyService.selectPropertyById(merchant.getMerchantId());
+            property.setPropertyName(merchant.getMerchantName());
+            property.setIntroduction(merchant.getMerchantIntroduce());
+            property.setId(merchant.getMerchantId());
+            updateCount = propertyService.updateProperty(property);
+        }
+        if (updateCount > 0)
+        {
+            Merchant merchant1 = currentUser.getMerchant();
+            merchant1.setMerchantName(merchant.getMerchantName());
+            merchant1.setMerchantIntroduce(merchant1.getMerchantIntroduce());
+            currentUser.setMerchant(merchant1);
+            setSysUser(currentUser);
+            return success();
+        }
+
         return error();
     }
 

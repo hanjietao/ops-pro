@@ -96,6 +96,14 @@ public class User extends BaseEntity
     /** 岗位组 */
     private Long[] postIds;
 
+    /** 商户标志：0-管理员，1-商户 */
+    private String merchantFlag;
+
+    /** 商户id*/
+    private Integer merchantId;
+
+    private Merchant merchant;
+
     public User()
     {
 
@@ -337,6 +345,33 @@ public class User extends BaseEntity
         this.postIds = postIds;
     }
 
+    public String getMerchantFlag() {
+        return merchantFlag;
+    }
+
+    public void setMerchantFlag(String merchantFlag) {
+        this.merchantFlag = merchantFlag;
+    }
+
+    public Integer getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Integer merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Merchant getMerchant() {
+        if(merchant == null){
+            merchant = new Merchant();
+        }
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -360,6 +395,9 @@ public class User extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("dept", getDept())
+            .append("merchantFlag", getMerchantFlag())
+            .append("merchant", getMerchant())
+            .append("merchantId", getMerchantId())
             .toString();
     }
 }

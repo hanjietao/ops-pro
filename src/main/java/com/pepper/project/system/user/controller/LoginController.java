@@ -2,10 +2,20 @@ package com.pepper.project.system.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.pepper.project.ch.hospital.domain.Hospital;
+import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.cm.community.service.ICommunityService;
+import com.pepper.project.pm.property.domain.Property;
+import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.system.user.domain.Merchant;
+import com.pepper.project.system.user.domain.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +33,15 @@ import com.pepper.framework.web.domain.AjaxResult;
 @Controller
 public class LoginController extends BaseController
 {
+    @Autowired
+    private ICommunityService communityService;
+
+    @Autowired
+    private IHospitalService hospitalService;
+
+    @Autowired
+    private IPropertyService propertyService;
+
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response)
     {
@@ -44,6 +63,39 @@ public class LoginController extends BaseController
         try
         {
             subject.login(token);
+            User sysUser = getSysUser();
+            if(!"0".equals(sysUser.getMerchantFlag())){
+                Integer merchantId = sysUser.getMerchantId();
+                Merchant merchant = new Merchant();
+                String flg = sysUser.getMerchantFlag();
+                String merchantIntro = null;
+                String merchantName = null;
+                String status = null;
+                if("1".equals(flg)){
+                    Community community = communityService.selectCommunityById(merchantId);
+                    merchantIntro = StringUtils.isEmpty(community.getIntroduction())?"这是一个社区":community.getIntroduction();
+                    merchantName = community.getCommunityName();
+                    status = community.getStatus();
+                }else if("2".equals(flg)){
+                    Hospital hospital = hospitalService.selectHospitalById(merchantId);
+                    merchantIntro = StringUtils.isEmpty(hospital.getIntroduction())?"这是一个医院":hospital.getIntroduction();
+                    merchantName = hospital.getHosName();
+                    status = hospital.getStatus();
+                }else if("3".equals(flg)){
+                    Property property = propertyService.selectPropertyById(merchantId);
+                    merchantIntro = StringUtils.isEmpty(property.getIntroduction())?"这是一个物业":property.getIntroduction();
+                    merchantName = property.getPropertyName();
+                    status = property.getStatus();
+                }
+                merchant.setMerchantIntroduce(merchantIntro);
+                merchant.setMerchantName(merchantName);
+                merchant.setStatus(status);
+                merchant.setImageUrl(sysUser.getAvatar());
+                merchant.setMerchantId(merchantId);
+                sysUser.setMerchant(merchant);
+            }
+
+            setSysUser(sysUser);
             return success();
         }
         catch (AuthenticationException e)
