@@ -7,7 +7,7 @@ import com.pepper.project.ch.medical.domain.MedicalProject;
 import java.util.Date;
 
 /**
- *  @Description: 社区服务服务中心-预约管理 csc_appointment
+ *  @Description: 社区医院-预约管理 ch_appointment
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
