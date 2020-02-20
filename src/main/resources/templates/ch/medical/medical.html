@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('医疗项目列表')" />
+	<th:block th:include="include :: select2-css" />
+	<th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body class="gray-bg">
     <div class="container-div">
@@ -16,9 +18,15 @@
 								医疗项目名称：<input type="text" name="name"/>
 							</li>
 							<li>
-								医疗项目状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+								医疗项目状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}" class="form-control">
 								<option value="">所有</option>
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li>
+								医院：<select id="hospitalId" name="hospitalId" class="form-control">
+								<option value="">所有</option>
+								<option th:each="hospital : ${hospitals}" th:text="${hospital['hosName']}" th:value="${hospital['id']}"></option>
 							</select>
 							</li>
 							<li>
@@ -48,6 +56,8 @@
     	</div>
     </div>
     <th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<th:block th:include="include :: bootstrap-select-js" />
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('ch:medical:edit')}]];
         var removeFlag = [[${@permission.hasPermi('ch:medical:remove')}]];
@@ -72,6 +82,10 @@
 				{
 					field : 'name',
 					title : '医疗项目名称'
+				},
+				{
+					field : 'hospital.hosName',
+					title : '医院名称'
 				},
 				{
 		            field: 'price',

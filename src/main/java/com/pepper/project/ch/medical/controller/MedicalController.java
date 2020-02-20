@@ -5,6 +5,8 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.ch.hospital.domain.Hospital;
+import com.pepper.project.ch.hospital.service.IHospitalService;
 import com.pepper.project.ch.medical.domain.MedicalProject;
 import com.pepper.project.ch.medical.service.IMedicalProjectService;
 import com.pepper.project.csc.area.service.IAreaService;
@@ -26,12 +28,13 @@ public class MedicalController extends BaseController {
     private IMedicalProjectService medicalProjectService;
 
     @Autowired
-    private IAreaService areaService;
+    private IHospitalService hospitalService;
 
     @RequiresPermissions("ch:medical:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmp)
     {
+        mmp.put("hospitals",hospitalService.selectHospitalList(new Hospital()));
         return prefix + "/medical";
     }
 

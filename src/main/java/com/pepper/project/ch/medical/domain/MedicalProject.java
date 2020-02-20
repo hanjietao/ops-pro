@@ -1,6 +1,7 @@
 package com.pepper.project.ch.medical.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.ch.hospital.domain.Hospital;
 
 import java.util.Date;
 
@@ -28,6 +29,8 @@ public class MedicalProject extends BaseEntity{
 
     private String deleteFlag;
 
+    private Integer hospitalId;
+
     /** 区域状态（0正常 1关闭） */
     private String status;
 
@@ -45,6 +48,8 @@ public class MedicalProject extends BaseEntity{
 
     /** 区域名称 */
     private String areaName;
+
+    private Hospital hospital;
 
     public Integer getId() {
         return id;
@@ -84,6 +89,14 @@ public class MedicalProject extends BaseEntity{
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public Integer getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(Integer hospitalId) {
+        this.hospitalId = hospitalId;
     }
 
     public String getStatus() {
@@ -142,6 +155,17 @@ public class MedicalProject extends BaseEntity{
         this.areaName = areaName;
     }
 
+    public Hospital getHospital() {
+        if(hospital == null){
+            hospital = new Hospital();
+        }
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
     @Override
     public String toString() {
         return "MedicalProject{" +
@@ -150,12 +174,14 @@ public class MedicalProject extends BaseEntity{
                 ", serviceContent='" + serviceContent + '\'' +
                 ", price='" + price + '\'' +
                 ", deleteFlag='" + deleteFlag + '\'' +
+                ", hospitalId='" + hospitalId + '\'' +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
                 ", areaName='" + areaName + '\'' +
+                ", hospital='" + getHospital() + '\'' +
                 '}';
     }
 }

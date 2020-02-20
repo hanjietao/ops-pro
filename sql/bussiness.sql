@@ -108,7 +108,7 @@ CREATE TABLE ch_medical_project(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '医疗项目ID' ,
     NAME VARCHAR(64)    COMMENT '医疗项目名称' ,
     SERVICE_CONTENT VARCHAR(1024)    COMMENT '服务内容' ,
-    PRICE DECIMAL(32,8)    COMMENT '收费标准 45' ,
+    PRICE DECIMAL(32,2)    COMMENT '收费标准 45' ,
     HOSPITAL_ID INT(11)    COMMENT '医院id' ,
     DELETE_FLAG VARCHAR(1)  DEFAULT '0'  COMMENT '删除标志 1-已删除，0-未删除' ,
     STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,

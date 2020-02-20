@@ -15,31 +15,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createBy"     column="create_by"    />
 		<result property="updateTime"           column="update_time"           />
 		<result property="updateBy"                column="update_by"                />
+		<association property="hospital"    column="id" javaType="Hospital" resultMap="hospitalResult" />
+	</resultMap>
+
+	<resultMap id="hospitalResult" type="Hospital">
+		<id     property="id"   column="id"     />
+		<result property="hosName"         column="hos_name"        />
+		<result property="hosCode"         column="hos_code"        />
+		<result property="introduction"       column="introduction"         />
+		<result property="communityIds"       column="community_ids"         />
+		<result property="areaId"       column="area_id"         />
+		<result property="status"           column="status"         />
 	</resultMap>
 
 	<sql id="selectMedicalProjectVo">
-       select create_time, create_by, update_time, update_by, id,name, service_content, price,delete_flag,status from ch_medical_project
+       select mp.create_time, mp.create_by, mp.update_time, mp.update_by, mp.id,mp.name, mp.service_content, mp.price,mp.hospital_id,mp.delete_flag,mp.status,
+       h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status
+       from ch_medical_project mp
+       left join ch_hospital h on mp.hospital_id = h.id
     </sql>
 
 	<select id="selectMedicalProjectById" parameterType="Integer" resultMap="MedicalProjectResult">
 		<include refid="selectMedicalProjectVo"/>
-		where id = #{id}
+		where mp.id = #{id}
 	</select>
 
  	<select id="selectMedicalProjectList" parameterType="MedicalProject" resultMap="MedicalProjectResult">
 		<include refid="selectMedicalProjectVo"/>
 		<where>
 			<if test="name != null and name != ''">
-				AND name like concat('%', #{name}, '%')
+				AND mp.name like concat('%', #{name}, '%')
 			</if>
-<!--			<if test="areaCode != null and areaCode != ''">-->
-<!--				AND area_code like concat('%', #{areaCode}, '%')-->
-<!--			</if>-->
+			<if test="hospitalId != null and hospitalId != ''">
+				AND mp.hospital_id = #{hospitalId}
+			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND mp.status = #{status}
 			</if>
 			<if test="id != null and id != 0">
-				AND id = #{id}
+				AND mp.id = #{id}
 			</if>
 		</where>
 	</select>
@@ -49,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="name != null and name != '' ">name, </if>
 		<if test="serviceContent != null and serviceContent != '' ">service_content, </if>
 		<if test="price != null and price != '' ">price, </if>
+		<if test="hospitalId != null and hospitalId != '' ">hospital_id, </if>
 		<if test="status != null and status != '' ">status, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
@@ -58,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="name != null and name != ''">#{name}, </if>
 		<if test="serviceContent != null and serviceContent != ''">#{serviceContent}, </if>
 		<if test="price != null and price != ''">#{price}, </if>
+		<if test="hospitalId != null and hospitalId != ''">#{hospitalId}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
@@ -72,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="name != null and name != ''">name = #{name}, </if>
 			<if test="serviceContent != null and serviceContent != ''">service_content = #{serviceContent}, </if>
 			<if test="price != null">price = #{price}, </if>
+			<if test="hospitalId != null">hospital_id = #{hospitalId}, </if>
 			<if test="status != null">status = #{status}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
