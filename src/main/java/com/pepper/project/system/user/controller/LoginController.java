@@ -3,6 +3,7 @@ package com.pepper.project.system.user.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.service.IHospitalService;
 import com.pepper.project.cm.community.domain.Community;

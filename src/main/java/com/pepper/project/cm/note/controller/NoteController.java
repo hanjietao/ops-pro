@@ -1,5 +1,6 @@
 package com.pepper.project.cm.note.controller;
 
+import com.pepper.common.exception.BusinessException;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
@@ -48,6 +49,14 @@ public class NoteController extends BaseController {
     public TableDataInfo list(Note note)
     {
         startPage();
+        Integer cId = getSysUser().getMerchantId();
+        String merchantFlag = getSysUser().getMerchantFlag();
+        if(!"0".equals(merchantFlag)){
+            if(!"1".equals(merchantFlag)){
+                throw new BusinessException("非社区普通管理员用户不允许操作此页面");
+            }
+            note.setCommunityId(cId);
+        }
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }
