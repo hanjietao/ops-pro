@@ -7,6 +7,8 @@ import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,10 +31,15 @@ public class HospitalController extends BaseController {
     @Autowired
     private IAreaService areaService;
 
+    @Autowired
+    private ICommunityService communityService;
+
     @RequiresPermissions("ch:hospital:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        mmap.put("areas",areaService.selectAreaList(new Area()));
+        mmap.put("communitys",communityService.selectCommunityList(new Community()));
         return prefix + "/hospital";
     }
 

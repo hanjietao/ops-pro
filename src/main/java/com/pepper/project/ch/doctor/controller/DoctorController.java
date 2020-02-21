@@ -31,8 +31,9 @@ public class DoctorController extends BaseController {
 
     @RequiresPermissions("ch:doctor:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        mmap.put("hospitals",hospitalService.selectHospitalList(new Hospital()));
         return prefix + "/doctor";
     }
 

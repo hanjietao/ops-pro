@@ -35,8 +35,9 @@ public class GuidePmController extends BaseController {
 
     @RequiresPermissions("pm:guide:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        mmap.put("propertys",propertyService.selectPropertyList(new Property()));
         return prefix + "/guide";
     }
 

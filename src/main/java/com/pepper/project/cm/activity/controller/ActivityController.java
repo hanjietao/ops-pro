@@ -7,6 +7,8 @@ import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.cm.activity.service.IActivityService;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,12 +30,17 @@ public class ActivityController extends BaseController {
     private IActivityService activityService;
 
     @Autowired
+    private ICommunityService communityService;
+
+    @Autowired
     private IAreaService areaService;
 
     @RequiresPermissions("cm:activity:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        List<Community> communitys = communityService.selectCommunityList(new Community());
+        mmap.put("communitys",communitys);
         return prefix + "/activity";
     }
 

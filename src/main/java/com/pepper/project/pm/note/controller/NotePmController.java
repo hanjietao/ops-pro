@@ -37,8 +37,8 @@ public class NotePmController extends BaseController {
     @GetMapping()
     public String online(ModelMap mmap)
     {
-        List<Property> communitys = propertyService.selectPropertyList(new Property());
-        mmap.put("communitys",communitys);
+        List<Property> propertys = propertyService.selectPropertyList(new Property());
+        mmap.put("propertys",propertys);
         return prefix + "/note";
     }
 

@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('医院介绍列表')" />
+	<th:block th:include="include :: select2-css" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -17,17 +18,29 @@
 							医院名称：<input type="text" name="hosName"/>
 						</li>
 						<li>
-							医院英文名：<input type="text" name="hosCode"/>
+							医院编码：<input type="text" name="hosCode"/>
 						</li>
 						<li>
-							医院状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							所属社区：<select id="communityIds" name="communityIds" class="form-control">
+							<option value="">所有</option>
+							<option th:each="community : ${communitys}" th:text="${community['communityName']}" th:value="${community['id']}"></option>
+						</select>
+						</li>
+						<li>
+							所属区域：<select id="areaId" name="areaId" class="form-control">
+							<option value="">所有</option>
+							<option th:each="area : ${areas}" th:text="${area['areaName']}" th:value="${area['id']}"></option>
+						</select>
+						</li>
+						<li>
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
 						</li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							<a class="btn btn-warning btn-rounded btn-sm" onclick="resetPre()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 						</li>
 					</ul>
 				</div>
@@ -52,6 +65,7 @@
 	</div>
 </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
 <script th:inline="javascript">
 	var editFlag = [[${@permission.hasPermi('ch:hospital:edit')}]];
 	var removeFlag = [[${@permission.hasPermi('ch:hospital:remove')}]];
@@ -89,7 +103,7 @@
 				},
 				{
 					field: 'hosCode',
-					title: '医院英文名'
+					title: '医院编码'
 				},
 				{
 					field: 'areaName',
@@ -134,6 +148,12 @@
 		};
 		$.table.init(options);
 	});
+
+	function resetPre() {
+		$.form.reset();
+		$("#communityIds").val("").trigger("change");
+		$("#areaId").val("").trigger("change");
+	}
 </script>
 </body>
 </html>

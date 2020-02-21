@@ -18,20 +18,20 @@
 								医疗项目名称：<input type="text" name="name"/>
 							</li>
 							<li>
-								医疗项目状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}" class="form-control">
-								<option value="">所有</option>
-								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-							</select>
-							</li>
-							<li>
-								医院：<select id="hospitalId" name="hospitalId" class="form-control">
+								所属医院：<select id="hospitalId" name="hospitalId" class="form-control">
 								<option value="">所有</option>
 								<option th:each="hospital : ${hospitals}" th:text="${hospital['hosName']}" th:value="${hospital['id']}"></option>
 							</select>
 							</li>
 							<li>
+								状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}" class="form-control">
+								<option value="">所有</option>
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="resetPre()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
 						</ul>
 					</div>
@@ -130,6 +130,10 @@
             };
             $.table.init(options);
         });
+		function resetPre() {
+			$.form.reset();
+			$("#hospitalId").val("").trigger("change");
+		}
     </script>
 </body>
 </html>

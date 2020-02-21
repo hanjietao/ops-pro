@@ -9,6 +9,8 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.pm.activity.domain.ActivityPm;
 import com.pepper.project.pm.activity.service.IActivityPmService;
+import com.pepper.project.pm.property.domain.Property;
+import com.pepper.project.pm.property.service.IPropertyService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +31,14 @@ public class ActivityPmController extends BaseController {
     @Autowired
     private IAreaService areaService;
 
+    @Autowired
+    private IPropertyService propertyService;
+
     @RequiresPermissions("pm:activity:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        mmap.put("propertys",propertyService.selectPropertyList(new Property()));
         return prefix + "/activity";
     }
 

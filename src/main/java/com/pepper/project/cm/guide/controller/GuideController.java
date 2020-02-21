@@ -36,8 +36,10 @@ public class GuideController extends BaseController {
 
     @RequiresPermissions("cm:guide:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        List<Community> communitys = communityService.selectCommunityList(new Community());
+        mmap.put("communitys",communitys);
         return prefix + "/guide";
     }
 

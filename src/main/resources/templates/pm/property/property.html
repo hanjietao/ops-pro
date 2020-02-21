@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<th:block th:include="include :: header('物业列表')" />
+	<th:block th:include="include :: select2-css" />
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -20,14 +21,20 @@
 							物业编码：<input type="text" name="propertyCode"/>
 						</li>
 						<li>
-							物业状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							所属区域：<select id="areaId" name="areaId" class="form-control">
+							<option value="">所有</option>
+							<option th:each="area : ${areas}" th:text="${area['areaName']}" th:value="${area['id']}"></option>
+						</select>
+						</li>
+						<li>
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>
 						</li>
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							<a class="btn btn-warning btn-rounded btn-sm" onclick="resetPre()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 						</li>
 					</ul>
 				</div>
@@ -52,6 +59,7 @@
 	</div>
 </div>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
 <script th:inline="javascript">
 	var editFlag = [[${@permission.hasPermi('pm:property:edit')}]];
 	var removeFlag = [[${@permission.hasPermi('pm:property:remove')}]];
@@ -85,11 +93,11 @@
 				// },
 				{
 					field: 'propertyCode',
-					title: '社区编码'
+					title: '物业编码'
 				},
 				{
 					field: 'propertyName',
-					title: '社区名称'
+					title: '物业名称'
 				},
 				{
 					field: 'area.areaName',
@@ -134,6 +142,11 @@
 		};
 		$.table.init(options);
 	});
+
+	function resetPre() {
+		$.form.reset();
+		$("#areaId").val("").trigger("change");
+	}
 </script>
 </body>
 </html>

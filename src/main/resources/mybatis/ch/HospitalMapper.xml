@@ -31,13 +31,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectHospitalVo"/>
 		<where>
 			<if test="hosName != null and hosName != ''">
-				AND name like concat('%', #{hosName}, '%')
+				AND hos_name like concat('%', #{hosName}, '%')
+			</if>
+			<if test="hosCode != null and hosCode != ''">
+				AND hos_code like concat('%', #{hosCode}, '%')
 			</if>
 			<if test="hosCode != null and hosCode != ''">
 				AND hos_code like concat('%', #{hosCode}, '%')
 			</if>
 			<if test="areaId != null and areaId != ''">
 				AND area_id = #{areaId}
+			</if>
+			<if test="communityIds != null and communityIds != ''">
+				AND community_ids like concat('%', #{communityIds}, '%')
 			</if>
 			<if test="status != null and status != ''">
 				AND status = #{status}

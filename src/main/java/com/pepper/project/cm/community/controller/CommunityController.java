@@ -31,8 +31,10 @@ public class CommunityController extends BaseController {
 
     @RequiresPermissions("cm:community:view")
     @GetMapping()
-    public String online()
+    public String online(ModelMap mmap)
     {
+        List<Area> areas = areaService.selectAreaList(new Area());
+        mmap.put("areas",areas);
         return prefix + "/community";
     }
 
