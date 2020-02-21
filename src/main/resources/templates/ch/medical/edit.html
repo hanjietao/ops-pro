@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">项目状态：</label>
+                <label class="col-sm-2 control-label is-required">状态：</label>
                 <div class="col-sm-8">
                     <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
                         <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">

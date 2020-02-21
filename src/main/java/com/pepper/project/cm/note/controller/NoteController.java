@@ -3,6 +3,7 @@ package com.pepper.project.cm.note.controller;
 import com.pepper.common.exception.BusinessException;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -49,7 +50,7 @@ public class NoteController extends BaseController {
     public TableDataInfo list(Note note)
     {
         startPage();
-        note.setId(getMerchantId());
+        note.setCommunityId(getMerchantId());
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }
@@ -74,6 +75,11 @@ public class NoteController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(Note note)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非社区业务系统用户 无法添加社区留言");
+        }
+        note.setCommunityId(getMerchantId());
         return toAjax(noteService.insertNote(note));
     }
 

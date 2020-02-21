@@ -17,7 +17,7 @@
 						<li>
 							标题：<input type="text" name="title"/>
 						</li>
-						<li>
+						<li shiro:hasPermission="pm:property:add">
 							所属物业：<select id="propertyId" name="propertyId" class="form-control">
 							<option value="">所有</option>
 							<option th:each="property : ${propertys}" th:text="${property['propertyName']}" th:value="${property['id']}"></option>
@@ -94,7 +94,7 @@
 				},
 				{
 					field: 'property.propertyName',
-					title: '所属社区'
+					title: '所属物业'
 				},
 				{
 					field: 'status',

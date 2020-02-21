@@ -2,6 +2,7 @@ package com.pepper.project.pm.notice.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -48,50 +49,56 @@ public class PmNoticeController extends BaseController {
     public TableDataInfo list(PmNotice notice)
     {
         startPage();
+        notice.setPropertyId(getMerchantId());
         List<PmNotice> list = pmNoticeService.selectPmNoticeList(notice);
         return getDataTable(list);
     }
 
     /**
-     * 新增社区留言
+     * 新增社区通知
      */
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        List<Property> propertys = propertyService.selectPropertyList(new Property());
-        mmap.put("propertys",propertys);
+//        List<Property> propertys = propertyService.selectPropertyList(new Property());
+//        mmap.put("propertys",propertys);
         return prefix + "/add";
     }
 
     /**
-     * 新增保存社区留言
+     * 新增保存物业通知
      */
-    @Log(title = "社区留言", businessType = BusinessType.INSERT)
+    @Log(title = "物业通知", businessType = BusinessType.INSERT)
     @RequiresPermissions("pm:notice:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(PmNotice notice)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非物业业务系统用户 无法添加物业通知");
+        }
+        notice.setPropertyId(getMerchantId());
         return toAjax(pmNoticeService.insertPmNotice(notice));
     }
 
     /**
-     * 修改社区留言
+     * 修改物业通知
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
-        List<Property> propertys = propertyService.selectPropertyList(new Property());
-        mmap.put("propertys",propertys);
+//        List<Property> propertys = propertyService.selectPropertyList(new Property());
+//        mmap.put("propertys",propertys);
         mmap.put("notice", pmNoticeService.selectPmNoticeById(id));
         return prefix + "/edit";
     }
 
     /**
-     * 修改保存社区留言
+     * 修改保存物业通知
      */
     @RequiresPermissions("pm:notice:edit")
-    @Log(title = "社区留言", businessType = BusinessType.UPDATE)
+    @Log(title = "物业通知", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(PmNotice notice)
@@ -100,10 +107,10 @@ public class PmNoticeController extends BaseController {
     }
 
     /**
-     * 删除社区留言
+     * 删除物业通知
      */
     @RequiresPermissions("pm:notice:remove")
-    @Log(title = "社区留言", businessType = BusinessType.DELETE)
+    @Log(title = "物业通知", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

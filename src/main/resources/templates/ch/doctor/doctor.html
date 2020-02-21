@@ -20,7 +20,7 @@
 							<li>
 								医生编码：<input type="text" name="doctorCode"/>
 							</li>
-							<li>
+							<li shiro:hasPermission="ch:hospital:add">
 								所属医院：<select id="hospitalId" name="hospitalId" class="form-control">
 								<option value="">所有</option>
 								<option th:each="hospital : ${hospitals}" th:text="${hospital['hosName']}" th:value="${hospital['id']}"></option>
@@ -65,6 +65,7 @@
         var removeFlag = [[${@permission.hasPermi('ch:doctor:remove')}]];
         var types = [[${@dict.getType('sys_notice_type')}]];
         var datas = [[${@dict.getType('sys_notice_status')}]];
+        var dtypes = [[${@dict.getType('sys_doctor_type')}]];
         var prefix = ctx + "ch/doctor";
 
         $(function() {
@@ -95,10 +96,13 @@
 				},
 				{
 					field: 'doctorType',
-					title: '医生类型'
+					title: '医生类型',
+					formatter: function(value, row, index) {
+						return $.table.selectDictLabel(dtypes, value);
+					}
 				},
 				{
-					field: 'hospitalId',
+					field: 'hospital.hosName',
 					title: '所属医院'
 				},
 				{

@@ -93,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<set>
 			<if test="content != null and content != ''">content = #{content}, </if>
 			<if test="propertyId != null">property_id = #{propertyId}, </if>
+			<if test="userId != null">user_id = #{userId}, </if>
 			<if test="status != null">status = #{status}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()

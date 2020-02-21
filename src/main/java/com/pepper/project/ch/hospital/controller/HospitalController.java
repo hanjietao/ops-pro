@@ -49,12 +49,13 @@ public class HospitalController extends BaseController {
     public TableDataInfo list(Hospital hospital)
     {
         startPage();
+        hospital.setId(getMerchantId());
         List<Hospital> list = hospitalService.selectHospitalList(hospital);
         return getDataTable(list);
     }
 
     /**
-     * 新增区域
+     * 新增医院
      */
     @GetMapping("/add")
     public String add(ModelMap mmap)
@@ -65,7 +66,7 @@ public class HospitalController extends BaseController {
     }
 
     /**
-     * 新增保存区域设置
+     * 新增保存医院设置
      */
     @Log(title = "医院介绍", businessType = BusinessType.INSERT)
     @RequiresPermissions("ch:hospital:add")
@@ -77,7 +78,7 @@ public class HospitalController extends BaseController {
     }
 
     /**
-     * 修改区域
+     * 修改医院
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
@@ -88,7 +89,7 @@ public class HospitalController extends BaseController {
     }
 
     /**
-     * 修改保存公告
+     * 修改保存医院
      */
     @RequiresPermissions("ch:hospital:edit")
     @Log(title = "医院介绍", businessType = BusinessType.UPDATE)
@@ -100,7 +101,7 @@ public class HospitalController extends BaseController {
     }
 
     /**
-     * 删除区域
+     * 删除医院
      */
     @RequiresPermissions("ch:hospital:remove")
     @Log(title = "医院介绍", businessType = BusinessType.DELETE)

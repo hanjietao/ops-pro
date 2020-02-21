@@ -14,7 +14,7 @@
 <!--						<li>-->
 <!--							id：<input type="text" name="id"/>-->
 <!--						</li>-->
-						<li>
+						<li shiro:hasPermission="pm:property:add">
 							所属物业：<select id="propertyId" name="propertyId" class="form-control">
 							<option value="">所有</option>
 							<option th:each="property : ${propertys}" th:text="${property['propertyName']}" th:value="${property['id']}"></option>

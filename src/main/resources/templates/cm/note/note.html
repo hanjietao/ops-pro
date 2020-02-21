@@ -14,7 +14,7 @@
 <!--						<li>-->
 <!--							id：<input type="text" name="id"/>-->
 <!--						</li>-->
-						<li>
+						<li shiro:hasPermission="cm:community:add">
 							所属社区：<select id="communityId" name="communityId" class="form-control">
 							<option value="">所有</option>
 							<option th:each="community : ${communitys}" th:text="${community['communityName']}" th:value="${community['id']}"></option>

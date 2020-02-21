@@ -17,7 +17,7 @@
 							<li>
 								医疗项目名称：<input type="text" name="name"/>
 							</li>
-							<li>
+							<li shiro:hasPermission="ch:hospital:add">
 								所属医院：<select id="hospitalId" name="hospitalId" class="form-control">
 								<option value="">所有</option>
 								<option th:each="hospital : ${hospitals}" th:text="${hospital['hosName']}" th:value="${hospital['id']}"></option>

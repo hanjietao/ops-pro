@@ -78,7 +78,7 @@ public class ActivityController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非社区业务系统无法添加社区活动");
+            return  error("非社区业务系统用户 无法添加社区活动");
         }
         activity.setCommunityId(getMerchantId());
         return toAjax(activityService.insertActivity(activity));

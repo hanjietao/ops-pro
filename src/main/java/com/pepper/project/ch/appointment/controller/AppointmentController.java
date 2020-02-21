@@ -2,6 +2,7 @@ package com.pepper.project.ch.appointment.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -51,6 +52,7 @@ public class AppointmentController extends BaseController {
     public TableDataInfo list(Appointment appointment, ModelMap mmp)
     {
         startPage();
+        appointment.setHospitalId(getMerchantId());
         List<Appointment> list = appointmentService.selectAppointmentList(appointment);
         return getDataTable(list);
     }
@@ -82,6 +84,11 @@ public class AppointmentController extends BaseController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.hadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非医院业务系统用户 无法添加医院预约");
+        }
+        appointment.setHospitalId(getMerchantId());
         appointment.setAppointmentTime(time);
         return toAjax(appointmentService.insertAppointment(appointment));
     }

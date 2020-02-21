@@ -1,6 +1,7 @@
 package com.pepper.project.ch.doctor.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.ch.hospital.domain.Hospital;
 
 import java.util.Date;
 
@@ -48,6 +49,8 @@ public class Doctor extends BaseEntity{
 
     /** 更新人 */
     private String updateBy;
+
+    private Hospital hospital;
 
     public Integer getId() {
         return id;
@@ -145,6 +148,17 @@ public class Doctor extends BaseEntity{
         this.updateBy = updateBy;
     }
 
+    public Hospital getHospital() {
+        if(hospital == null){
+            hospital = new Hospital();
+        }
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
     @Override
     public String toString() {
         return "Doctor{" +
@@ -159,6 +173,7 @@ public class Doctor extends BaseEntity{
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
+                ", hospital='" + getHospital() + '\'' +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.pepper.project.pm.guide.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -47,6 +48,7 @@ public class GuidePmController extends BaseController {
     public TableDataInfo list(GuidePm guide)
     {
         startPage();
+        guide.setPropertyId(getMerchantId());
         List<GuidePm> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }
@@ -71,6 +73,11 @@ public class GuidePmController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(GuidePm guide)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非物业业务系统用户 无法添加物业指南");
+        }
+        guide.setPropertyId(getMerchantId());
         return toAjax(guideService.insertGuide(guide));
     }
 
@@ -87,7 +94,7 @@ public class GuidePmController extends BaseController {
     }
 
     /**
-     * 修改保存公告
+     * 修改保存物业指南
      */
     @RequiresPermissions("pm:guide:edit")
     @Log(title = "办事指南", businessType = BusinessType.UPDATE)

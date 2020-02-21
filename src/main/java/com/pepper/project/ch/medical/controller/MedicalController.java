@@ -2,6 +2,7 @@ package com.pepper.project.ch.medical.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -44,6 +45,7 @@ public class MedicalController extends BaseController {
     public TableDataInfo list(MedicalProject medicalProject)
     {
         startPage();
+        medicalProject.setHospitalId(getMerchantId());
         List<MedicalProject> list = medicalProjectService.selectMedicalProjectList(medicalProject);
         return getDataTable(list);
     }
@@ -66,6 +68,11 @@ public class MedicalController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(MedicalProject medicalProject)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.hadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非医院业务系统用户 无法添加医院医疗项目");
+        }
+        medicalProject.setHospitalId(getMerchantId());
         return toAjax(medicalProjectService.insertMedicalProject(medicalProject));
     }
 

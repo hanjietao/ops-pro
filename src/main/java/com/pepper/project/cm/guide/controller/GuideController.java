@@ -2,6 +2,7 @@ package com.pepper.project.cm.guide.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -49,7 +50,7 @@ public class GuideController extends BaseController {
     public TableDataInfo list(Guide guide)
     {
         startPage();
-        guide.setId(getMerchantId());
+        guide.setCommunityId(getMerchantId());
         List<Guide> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }
@@ -68,12 +69,17 @@ public class GuideController extends BaseController {
     /**
      * 新增保存区域设置
      */
-    @Log(title = "医院介绍", businessType = BusinessType.INSERT)
+    @Log(title = "社区指南", businessType = BusinessType.INSERT)
     @RequiresPermissions("cm:guide:add")
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Guide guide)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非社区业务系统用户 无法添加社区指南");
+        }
+        guide.setCommunityId(getMerchantId());
         return toAjax(guideService.insertGuide(guide));
     }
 
@@ -90,10 +96,10 @@ public class GuideController extends BaseController {
     }
 
     /**
-     * 修改保存公告
+     * 修改保存社区指南
      */
     @RequiresPermissions("cm:guide:edit")
-    @Log(title = "医院介绍", businessType = BusinessType.UPDATE)
+    @Log(title = "社区指南", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Guide guide)
@@ -105,7 +111,7 @@ public class GuideController extends BaseController {
      * 删除区域
      */
     @RequiresPermissions("cm:guide:remove")
-    @Log(title = "医院介绍", businessType = BusinessType.DELETE)
+    @Log(title = "社区指南", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
