@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pepper.common.exception.BusinessException;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.service.DictService;
 import com.pepper.project.system.dict.domain.DictData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,8 +161,10 @@ public class BaseController
     public Integer getMerchantId(){
         String merchantFlag = getSysUser().getMerchantFlag();
         if(!"0".equals(merchantFlag)){
-            if(!"1".equals(merchantFlag)){
-                throw new BusinessException("非社区普通管理员用户不允许操作此页面");
+            if(!SysUserType.cadmin.equals(merchantFlag)
+                && SysUserType.hadmin.equals(merchantFlag)
+                && SysUserType.padmin.equals(merchantFlag)){
+                throw new BusinessException("未知类型用户，不允许打开此页面");
             }
             Integer cId = getSysUser().getMerchantId();
             return cId;

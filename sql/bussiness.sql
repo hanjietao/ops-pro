@@ -14,7 +14,7 @@ CREATE TABLE csc_area(
     CREATE_BY VARCHAR(64)    COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
     PRIMARY KEY (ID)
-) COMMENT = '社区服务服务中心-区域设置';
+)AUTO_INCREMENT = 100000 COMMENT = '社区服务服务中心-区域设置';
 
 
 -- 社区
@@ -31,7 +31,7 @@ CREATE TABLE cm_community(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
 		PRIMARY KEY(ID)
-) COMMENT = '社区 ';
+) AUTO_INCREMENT = 200000 COMMENT = '社区 ';
 
 // TODO 需要新增活动所属社区
 CREATE TABLE cm_activity(
@@ -58,7 +58,7 @@ CREATE TABLE cm_activity_apply(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
-) COMMENT = '社区活动 ';
+) COMMENT = '社区活动报名表 ';
 
 CREATE TABLE cm_business_guide(
     ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
@@ -71,7 +71,7 @@ CREATE TABLE cm_business_guide(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY (ID)
-) COMMENT = '办事指南 ';
+)AUTO_INCREMENT = 1000 COMMENT = '社区办事指南 ';
 
 CREATE TABLE cm_note(
     ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
@@ -102,7 +102,7 @@ CREATE TABLE ch_hospital(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
-) COMMENT = '社区服务服务中心-医院介绍 ';
+) AUTO_INCREMENT = 300000 COMMENT = '社区服务服务中心-医院介绍 ';
 
 CREATE TABLE ch_medical_project(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '医疗项目ID' ,
@@ -117,7 +117,7 @@ CREATE TABLE ch_medical_project(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
-) COMMENT = '医疗项目';
+) AUTO_INCREMENT = 1000 COMMENT = '医疗项目';
 
 
 CREATE TABLE ch_doctor(
@@ -133,7 +133,7 @@ CREATE TABLE ch_doctor(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间' ,
     PRIMARY KEY (ID)
-) COMMENT = '医生管理 ';
+) AUTO_INCREMENT = 2000 COMMENT = '医生管理 ';
 
 CREATE TABLE ch_appointment(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '预约ID' ,
@@ -168,7 +168,7 @@ CREATE TABLE pm_property(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
 		PRIMARY KEY(ID)
-) COMMENT = '物业 ';
+)AUTO_INCREMENT = 400000 COMMENT = '物业 ';
 
 -- 需要新增活动所属社区
 CREATE TABLE pm_activity(
@@ -208,7 +208,7 @@ CREATE TABLE pm_business_guide(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY (ID)
-) COMMENT = '办事指南 ';
+)AUTO_INCREMENT = 2000 COMMENT = '办事指南 ';
 
 CREATE TABLE pm_note(
     ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
@@ -234,7 +234,7 @@ CREATE TABLE pm_notice(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
-) COMMENT = '物业通知 ';
+)AUTO_INCREMENT = 100 COMMENT = '物业通知 ';
 
 
 -- 健康宣教
@@ -250,7 +250,7 @@ CREATE TABLE he_board(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
-) COMMENT = '健康宣教板块 ';
+) AUTO_INCREMENT = 5000 COMMENT = '健康宣教板块 ';
 
 CREATE TABLE he_article(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
@@ -294,7 +294,7 @@ CREATE TABLE fp_loop_image(
     UPDATE_BY VARCHAR(32)    COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
-) COMMENT = '首页轮播图 ';
+)AUTO_INCREMENT = 100 COMMENT = '首页轮播图 ';
 
 
 

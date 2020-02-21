@@ -44,6 +44,7 @@ public class PropertyController extends BaseController {
     public TableDataInfo list(Property property)
     {
         startPage();
+        property.setId(getMerchantId());
         List<Property> list = propertyService.selectPropertyList(property);
         return getDataTable(list);
     }

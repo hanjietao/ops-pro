@@ -1,6 +1,8 @@
 package com.pepper.project.system.role.controller;
 
 import java.util.List;
+
+import com.pepper.framework.aspectj.lang.enums.SysBusinessRoleType;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -164,6 +166,14 @@ public class RoleController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
+
+        String[] idArr = ids.split(",");
+        for (String id :idArr) {
+            if(SysBusinessRoleType.contains(id)){
+                return error("系统业务角色不允许删除！");
+            }
+        }
+        ids="888999";
         try
         {
             return toAjax(roleService.deleteRoleByIds(ids));

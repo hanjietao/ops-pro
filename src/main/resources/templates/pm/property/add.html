@@ -24,8 +24,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">物业介绍：</label>
 			<div class="col-sm-10">
-				<input id="introduction" name="introduction" type="hidden">
-				<div class="summernote"></div>
+				<textarea id="introduction" name="introduction" style="height:100px" class="form-control" required></textarea>
 			</div>
 		</div>
 		<div class="form-group">
@@ -54,42 +53,42 @@
 <script type="text/javascript">
 	var prefix = ctx + "pm/property";
 
-	$('.summernote').summernote({
-		placeholder: '请输入社区介绍',
-		height : 192,
-		lang : 'zh-CN',
-		followingToolbar: false,
-		callbacks: {
-			onImageUpload: function (files) {
-				sendFile(files[0], this);
-			}
-		}
-	});
-
-	// 上传文件
-	function sendFile(file, obj) {
-		var data = new FormData();
-		data.append("file", file);
-		$.ajax({
-			type: "POST",
-			url: ctx + "common/upload",
-			data: data,
-			cache: false,
-			contentType: false,
-			processData: false,
-			dataType: 'json',
-			success: function(result) {
-				if (result.code == web_status.SUCCESS) {
-					$(obj).summernote('editor.insertImage', result.url, result.fileName);
-				} else {
-					$.modal.alertError(result.msg);
-				}
-			},
-			error: function(error) {
-				$.modal.alertWarning("图片上传失败。");
-			}
-		});
-	}
+	// $('.summernote').summernote({
+	// 	placeholder: '请输入社区介绍',
+	// 	height : 192,
+	// 	lang : 'zh-CN',
+	// 	followingToolbar: false,
+	// 	callbacks: {
+	// 		onImageUpload: function (files) {
+	// 			sendFile(files[0], this);
+	// 		}
+	// 	}
+	// });
+	//
+	// // 上传文件
+	// function sendFile(file, obj) {
+	// 	var data = new FormData();
+	// 	data.append("file", file);
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: ctx + "common/upload",
+	// 		data: data,
+	// 		cache: false,
+	// 		contentType: false,
+	// 		processData: false,
+	// 		dataType: 'json',
+	// 		success: function(result) {
+	// 			if (result.code == web_status.SUCCESS) {
+	// 				$(obj).summernote('editor.insertImage', result.url, result.fileName);
+	// 			} else {
+	// 				$.modal.alertError(result.msg);
+	// 			}
+	// 		},
+	// 		error: function(error) {
+	// 			$.modal.alertWarning("图片上传失败。");
+	// 		}
+	// 	});
+	// }
 
 	$("#form-property-add").validate({
 		focusCleanup: true
@@ -97,8 +96,8 @@
 
 	function submitHandler() {
 		if ($.validate.form()) {
-			var sHTML = $('.summernote').summernote('code');
-			$("#introduction").val(sHTML);
+			// var sHTML = $('.summernote').summernote('code');
+			// $("#introduction").val(sHTML);
 			$.operate.save(prefix + "/add", $('#form-property-add').serialize());
 		}
 	}

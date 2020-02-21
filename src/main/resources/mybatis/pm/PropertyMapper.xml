@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertProperty" parameterType="Property">
+	<insert id="insertProperty" parameterType="Property" useGeneratedKeys="true" keyProperty="id">
 		insert into pm_property (
 		<if test="propertyCode != null and propertyCode != '' ">property_code, </if>
 		<if test="propertyName != null and propertyName != '' ">property_name, </if>

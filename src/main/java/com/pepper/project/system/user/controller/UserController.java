@@ -1,6 +1,19 @@
 package com.pepper.project.system.user.controller;
 
 import java.util.List;
+
+import com.pepper.common.utils.StringUtils;
+import com.pepper.framework.aspectj.lang.enums.SysBusinessRoleType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
+import com.pepper.project.ch.hospital.domain.Hospital;
+import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.cm.community.service.ICommunityService;
+import com.pepper.project.csc.area.domain.Area;
+import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.pm.property.domain.Property;
+import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.system.role.domain.Role;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +57,18 @@ public class UserController extends BaseController
 
     @Autowired
     private IPostService postService;
+
+    @Autowired
+    private IAreaService areaService;
+
+    @Autowired
+    private ICommunityService communityService;
+
+    @Autowired
+    private IHospitalService hospitalService;
+
+    @Autowired
+    private IPropertyService propertyService;
 
     @RequiresPermissions("system:user:view")
     @GetMapping()
@@ -102,6 +127,7 @@ public class UserController extends BaseController
     {
         mmap.put("roles", roleService.selectRoleAllAsc());
         mmap.put("posts", postService.selectPostAll());
+        mmap.put("areas", areaService.selectAreaList(new Area()));
         return prefix + "/add";
     }
 
@@ -126,6 +152,59 @@ public class UserController extends BaseController
         {
             return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
+        if(user.getRoleId() == null || user.getRoleId() == 0){
+            return error("角色不可以不选！");
+        }
+        if(SysBusinessRoleType.contains(user.getRoleId().toString())
+                && (user.getAreaId() == null || StringUtils.isEmpty(user.getMerchantName()))){
+            return error("选择社区管理员/医院管理员/物业管理员 角色，需要选择【所属区域】,填写业务系统名称，用于初始化对应业务系统");
+        }
+        Integer insertValue = null;
+        Integer merchantId = null;
+        if(SysBusinessRoleType.contains(user.getRoleId().toString())){
+            if(SysBusinessRoleType.cadminrole.getType().equals(user.getRoleId().toString())){
+                Community community = new Community();
+                community.setIntroduction("这是一个社区！");
+                community.setCommunityName(user.getMerchantName());
+                community.setAreaId(user.getAreaId());
+                community.setStatus("0");
+                insertValue = communityService.insertCommunity(community);
+                community.setCommunityCode(community.getId().toString());
+                communityService.updateCommunity(community);
+                merchantId = community.getId();// import
+                user.setMerchantFlag(SysUserType.cadmin.getType());// import
+            }else if(SysBusinessRoleType.hadminrole.getType().equals(user.getRoleId().toString())){
+                Hospital hospital = new Hospital();
+                hospital.setIntroduction("这是一个医院！");
+                hospital.setHosName(user.getMerchantName());
+                hospital.setAreaId(user.getAreaId());
+                hospital.setStatus("0");
+                insertValue = hospitalService.insertHospital(hospital);
+                hospital.setHosCode(hospital.getId().toString());
+                hospitalService.updateHospital(hospital);
+                merchantId = hospital.getId(); // import
+                user.setMerchantFlag(SysUserType.hadmin.getType());// import
+            }else if(SysBusinessRoleType.padminrole.getType().equals(user.getRoleId().toString())){
+                Property property = new Property();
+                property.setIntroduction("这是一个物业！");
+                property.setPropertyName(user.getMerchantName());
+                property.setAreaId(user.getAreaId());
+                property.setStatus("0");
+                insertValue = propertyService.insertProperty(property);
+                property.setPropertyCode(property.getId().toString());
+                propertyService.updateProperty(property);
+                merchantId = property.getId();// import
+                user.setMerchantFlag(SysUserType.padmin.getType());// import
+            }else{
+                return error("系统异常！");
+            }
+            if(insertValue != 1){
+                return error("用户创建失败：业务系统初始化错误！");
+            }
+        }
+        Long[] roleIds = new Long[]{user.getRoleId()};
+        user.setRoleIds(roleIds);
+        user.setMerchantId(merchantId);// import
         return toAjax(userService.insertUser(user));
     }
 
@@ -135,8 +214,32 @@ public class UserController extends BaseController
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
     {
-        mmap.put("user", userService.selectUserById(userId));
-        mmap.put("roles", roleService.selectRolesByUserId(userId));
+        List<Role> roles = roleService.selectRolesAscByUserId(userId);
+        mmap.put("areas", areaService.selectAreaList(new Area()));
+        User user = userService.selectUserById(userId);
+        if(SysUserType.cadmin.getType().equals(user.getMerchantFlag())){
+
+            Community community = communityService.selectCommunityById(user.getMerchantId());
+            user.setAreaId(community.getAreaId());
+            user.setMerchantName(community.getCommunityName());
+        }else if(SysUserType.hadmin.getType().equals(user.getMerchantFlag())){
+
+            Hospital hospital = hospitalService.selectHospitalById(user.getMerchantId());
+            user.setAreaId(hospital.getAreaId());
+            user.setMerchantName(hospital.getHosName());
+        }else if(SysUserType.padmin.getType().equals(user.getMerchantFlag())){
+
+            Property property = propertyService.selectPropertyById(user.getMerchantId());
+            user.setAreaId(property.getAreaId());
+            user.setMerchantName(property.getPropertyName());
+        }
+        for (Role role: roles) {
+            if(role.isFlag() == true){
+                user.setRoleId(role.getRoleId());
+            }
+        }
+        mmap.put("roles", roles);
+        mmap.put("user", user);
         mmap.put("posts", postService.selectPostsByUserId(userId));
         return prefix + "/edit";
     }
@@ -159,6 +262,37 @@ public class UserController extends BaseController
         {
             return error("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
+
+        String merchantFlag = user.getMerchantFlag();
+        if((SysUserType.cadmin.getType().equals(merchantFlag) || SysUserType.hadmin.getType().equals(merchantFlag)
+            || SysUserType.padmin.getType().equals(merchantFlag))
+                && (user.getAreaId() == null || StringUtils.isEmpty(user.getMerchantName()))){
+            return error("选择社区管理员/医院管理员/物业管理员 角色，需要选择【所属区域】,填写业务系统名称，不能为空");
+        }
+        if(!SysUserType.admin.getType().equals(merchantFlag)){
+            if(SysUserType.cadmin.getType().equals(user.getMerchantFlag())){
+
+                Community community = communityService.selectCommunityById(user.getMerchantId());
+                community.setAreaId(user.getAreaId());
+                community.setCommunityName(user.getMerchantName());
+                communityService.updateCommunity(community);
+            }else if(SysUserType.hadmin.getType().equals(user.getMerchantFlag())){
+
+                Hospital hospital = hospitalService.selectHospitalById(user.getMerchantId());
+                hospital.setAreaId(user.getAreaId());
+                hospital.setHosName(user.getMerchantName());
+                hospitalService.updateHospital(hospital);
+            }else if(SysUserType.padmin.getType().equals(user.getMerchantFlag())){
+
+                Property property = propertyService.selectPropertyById(user.getMerchantId());
+                property.setAreaId(user.getAreaId());
+                property.setPropertyName(user.getMerchantName());
+                propertyService.updateProperty(property);
+            }else{
+                return error("更新失败：错误的用户类型！");
+            }
+        }
+
         return toAjax(userService.updateUser(user));
     }
 

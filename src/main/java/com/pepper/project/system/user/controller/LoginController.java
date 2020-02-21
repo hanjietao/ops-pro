@@ -76,18 +76,18 @@ public class LoginController extends BaseController
                 String status = null;
                 if(SysUserType.cadmin.getType().equals(flg)){
                     Community community = communityService.selectCommunityById(merchantId);
-                    merchantIntro = StringUtils.isEmpty(community.getIntroduction())?"这是一个社区":community.getIntroduction();
                     merchantName = community.getCommunityName();
+                    merchantIntro = StringUtils.isEmpty(community.getIntroduction())?"这是"+merchantName:community.getIntroduction();
                     status = community.getStatus();
                 }else if(SysUserType.hadmin.getType().equals(flg)){
                     Hospital hospital = hospitalService.selectHospitalById(merchantId);
-                    merchantIntro = StringUtils.isEmpty(hospital.getIntroduction())?"这是一个医院":hospital.getIntroduction();
                     merchantName = hospital.getHosName();
+                    merchantIntro = StringUtils.isEmpty(hospital.getIntroduction())?"这是"+merchantName:hospital.getIntroduction();
                     status = hospital.getStatus();
                 }else if(SysUserType.padmin.getType().equals(flg)){
                     Property property = propertyService.selectPropertyById(merchantId);
-                    merchantIntro = StringUtils.isEmpty(property.getIntroduction())?"这是一个物业":property.getIntroduction();
                     merchantName = property.getPropertyName();
+                    merchantIntro = StringUtils.isEmpty(property.getIntroduction())?"这是"+merchantName:property.getIntroduction();
                     status = property.getStatus();
                 }
                 merchant.setMerchantIntroduce(merchantIntro);

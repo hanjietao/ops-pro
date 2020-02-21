@@ -19,14 +19,13 @@
                 <div class="form-group">
 				<label class="col-sm-2 control-label is-required">医院编码：</label>
 				<div class="col-sm-10">
-                    <input id="hosCode" name="hosCode" th:field="*{hosCode}" class="form-control" type="text" required>
+                    <input id="hosCode" name="hosCode" th:field="*{id}" class="form-control" disabled type="text" required>
 				</div>
 			</div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">医院介绍：</label>
                 <div class="col-sm-10">
-                    <input id="introduction" name="introduction" th:field="*{introduction}" type="hidden">
-                    <div id="editor" class="summernote"></div>
+                    <textarea id="introduction" name="introduction" style="height:100px" th:field="*{introduction}" class="form-control" required></textarea>
                 </div>
             </div>
             <div class="form-group">

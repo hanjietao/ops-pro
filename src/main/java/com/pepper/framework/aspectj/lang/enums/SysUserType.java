@@ -1,10 +1,10 @@
 package com.pepper.framework.aspectj.lang.enums;
 
 /**
- *  业务系统  用户类型
- *
- * @author pepper
- *
+ *  @Description: 业务系统  用户类型
+ *  @author: HanJieTao
+ *  @mail: hjtxyr@163.com
+ *  @Date: 2020/2/21 14:10
  */
 public enum SysUserType
 {

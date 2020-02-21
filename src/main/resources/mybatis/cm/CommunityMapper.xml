@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertCommunity" parameterType="Community">
+	<insert id="insertCommunity" parameterType="Community" useGeneratedKeys="true" keyProperty="id">
 		insert into cm_community (
 		<if test="communityCode != null and communityCode != '' ">community_code, </if>
 		<if test="communityName != null and communityName != '' ">community_name, </if>

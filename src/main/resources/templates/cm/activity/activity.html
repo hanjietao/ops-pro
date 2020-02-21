@@ -17,14 +17,14 @@
 						<li>
 							活动标题：<input type="text" name="title"/>
 						</li>
-						<li>
+						<li shiro:hasPermission="cm:community:add">
 							所属社区：<select id="communityId" name="communityId" class="form-control">
 							<option value="">所有</option>
 							<option th:each="community : ${communitys}" th:text="${community['communityName']}" th:value="${community['id']}"></option>
 						</select>
 						</li>
 						<li>
-							社区状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+							状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
 							<option value="">所有</option>
 							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 						</select>

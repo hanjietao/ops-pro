@@ -3,6 +3,7 @@
 <head>
 	<th:block th:include="include :: header('新增用户')" />
 	<th:block th:include="include :: select2-css" />
+    <th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body>
     <div class="main-content">
@@ -106,13 +107,39 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label">角色：</label>
                         <div class="col-xs-10">
-                            <label th:each="role:${roles}" class="check-box">
-								<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '1'}">
-							</label>
+                            <div class="radio-box" th:each="role:${roles}">
+                                <input type="radio" th:id="${role.roleId}" name="roleId" th:value="${role.roleId}" th:disabled="${role.status == '1'}">
+                                <label th:for="${role.roleId}" th:text="${role.roleName}"></label>
+                            </div>
+<!--                            <label th:each="role:${roles}" class="check-box">-->
+<!--								<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}">-->
+<!--							</label>-->
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">所属区域：</label>
+                        <div class="col-sm-8">
+                            <select id="areaId" name="areaId" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
+                                <option value="">物业/社区/物业，角色用户必选！</option>
+                                <option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">业务系统名称：</label>
+                        <div class="col-sm-8">
+                            <input id="merchantName" name="merchantName" class="form-control" type="text" maxlength="60" placeholder="业务角色请输入业务系统名称">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h4 class="form-header h4">其他信息</h4>
             <div class="row">
                 <div class="col-sm-12">
@@ -126,7 +153,7 @@
             </div>
         </form>
     </div>
-      
+
     <div class="row">
         <div class="col-sm-offset-5 col-sm-10">
             <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
@@ -135,9 +162,10 @@
     </div>
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: select2-js" />
+    <th:block th:include="include :: bootstrap-select-js" />
 	<script>
 	    var prefix = ctx + "system/user";
-	
+
         $("#form-user-add").validate({
         	onkeyup: false,
         	rules:{
@@ -208,20 +236,21 @@
             },
             focusCleanup: true
         });
-        
+
         function submitHandler() {
+            debugger
 	        if ($.validate.form()) {
 	        	var data = $("#form-user-add").serializeArray();
 	        	var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
-	        	var roleIds = $.form.selectCheckeds("role");
+	        	//var roleIds = $.form.selectCheckeds("role");
 	        	var postIds = $.form.selectSelects("post");
 	        	data.push({"name": "status", "value": status});
-	        	data.push({"name": "roleIds", "value": roleIds});
+	        	//data.push({"name": "roleIds", "value": roleIds});
 	        	data.push({"name": "postIds", "value": postIds});
 	        	$.operate.saveTab(prefix + "/add", data);
 	        }
 	    }
-         
+
         /*用户管理-新增-选择部门树*/
         function selectDeptTree() {
         	var treeId = $("#treeId").val();
@@ -235,7 +264,7 @@
 			};
 			$.modal.openOptions(options);
 		}
-		
+
 		function doSubmit(index, layero){
 			var tree = layero.find("iframe")[0].contentWindow.$._tree;
 			if ($.tree.notAllowParents(tree)) {

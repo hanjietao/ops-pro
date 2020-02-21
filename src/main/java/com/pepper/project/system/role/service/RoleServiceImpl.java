@@ -110,6 +110,25 @@ public class RoleServiceImpl implements IRoleService
         return roles;
     }
 
+    @Override
+    public List<Role> selectRolesAscByUserId(Long userId)
+    {
+        List<Role> userRoles = roleMapper.selectRolesByUserId(userId);
+        List<Role> roles = selectRoleAllAsc();
+        for (Role role : roles)
+        {
+            for (Role userRole : userRoles)
+            {
+                if (role.getRoleId().longValue() == userRole.getRoleId().longValue())
+                {
+                    role.setFlag(true);
+                    break;
+                }
+            }
+        }
+        return roles;
+    }
+
     /**
      * 查询所有角色
      *

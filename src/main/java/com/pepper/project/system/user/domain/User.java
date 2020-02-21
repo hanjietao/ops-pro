@@ -104,6 +104,12 @@ public class User extends BaseEntity
 
     private Merchant merchant;
 
+    /** 区域id 初始化业务系统  非数据库字段 */
+    private String areaId;
+
+    /** 业务系统名称 初始化业务系统 非数据库字段 */
+    private String merchantName;
+
     public User()
     {
 
@@ -372,6 +378,22 @@ public class User extends BaseEntity
         this.merchant = merchant;
     }
 
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -398,6 +420,8 @@ public class User extends BaseEntity
             .append("merchantFlag", getMerchantFlag())
             .append("merchant", getMerchant())
             .append("merchantId", getMerchantId())
+            .append("areaId", getAreaId())
+            .append("merchantName", getMerchantName())
             .toString();
     }
 }

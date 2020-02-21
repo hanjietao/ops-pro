@@ -38,6 +38,8 @@ public interface IRoleService
      */
     public List<Role> selectRolesByUserId(Long userId);
 
+    public List<Role> selectRolesAscByUserId(Long userId);
+
     /**
      * 查询所有角色
      *
