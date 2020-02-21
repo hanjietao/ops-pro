@@ -2,6 +2,7 @@ package com.pepper.project.cm.activity.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -50,7 +51,7 @@ public class ActivityController extends BaseController {
     public TableDataInfo list(Activity activity)
     {
         startPage();
-        activity.setId(getMerchantId());
+        activity.setCommunityId(getMerchantId());
         List<Activity> list = activityService.selectActivityList(activity);
         return getDataTable(list);
     }
@@ -61,8 +62,8 @@ public class ActivityController extends BaseController {
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        List<Area> areas = areaService.selectAreaList(new Area());
-        mmap.put("areas",areas);
+//        List<Area> areas = areaService.selectAreaList(new Area());
+//        mmap.put("areas",areas);
         return prefix + "/add";
     }
 
@@ -75,6 +76,11 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(Activity activity)
     {
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非社区业务系统无法添加社区活动");
+        }
+        activity.setCommunityId(getMerchantId());
         return toAjax(activityService.insertActivity(activity));
     }
 
@@ -121,9 +127,19 @@ public class ActivityController extends BaseController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Integer id, ModelMap mmap)
     {
-        mmap.put("activity", activityService.selectActivityById(id));//dictTypeService.selectDictTypeById(dictId));
-        // 查询所有的活动
-        mmap.put("activityList", activityService.selectActivityList(new Activity()));//dictTypeService.selectDictTypeAll());
+        String merchantFlag = getSysUser().getMerchantFlag();
+        Activity activity = new Activity();
+        if(SysUserType.admin.getType().equals(merchantFlag)){
+            //dictTypeService.selectDictTypeById(dictId));
+            // 查询所有的活动
+            mmap.put("activityList", activityService.selectActivityList(activity));//dictTypeService.selectDictTypeAll());
+        }else if(SysUserType.cadmin.getType().equals(merchantFlag)){
+            activity.setCommunityId(getMerchantId());
+            mmap.put("activityList", activityService.selectActivityList(activity));
+        }else{
+            return "页面打开失败，用户类型错误!";
+        }
+        mmap.put("activity", activityService.selectActivityById(id));
         return "cm/activity/apply/apply";
     }
 

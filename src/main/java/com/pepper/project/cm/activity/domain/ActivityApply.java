@@ -54,6 +54,9 @@ public class ActivityApply extends BaseEntity{
     /** 客户端用户表 */
     private ClientUser clientUser;
 
+    /** 为了在权限区分是，筛选特定社区的活动 */
+    private Integer communityId;
+
     public Integer getId() {
         return id;
     }
@@ -158,6 +161,14 @@ public class ActivityApply extends BaseEntity{
         this.clientUser = clientUser;
     }
 
+    public Integer getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
+    }
+
     @Override
     public String toString() {
         return "ActivityApply{" +
@@ -172,6 +183,7 @@ public class ActivityApply extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", activity='" + getActivity() + '\'' +
                 ", clientUser='" + getClientUser() + '\'' +
+                ", communityId='" + communityId + '\'' +
                 '}';
     }
 }

@@ -53,6 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="activityId != null and activityId != ''">
 				AND aa.activity_id = #{activityId}
 			</if>
+			<if test="communityId != null and communityId != ''">
+				AND a.community_id = #{communityId}
+			</if>
 			<if test="status != null and status != ''">
 				AND aa.status = #{status}
 			</if>

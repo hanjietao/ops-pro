@@ -54,7 +54,9 @@ public class ActivityApplyController extends BaseController {
     public TableDataInfo list(ActivityApply activityApply)
     {
         startPage();
-        activityApply.setId(getMerchantId());
+        if(getMerchantId()!=0){
+            activityApply.setCommunityId(getMerchantId());
+        }
         List<ActivityApply> list = activityApplyService.selectActivityApplyList(activityApply);
         return getDataTable(list);
     }
@@ -128,6 +130,9 @@ public class ActivityApplyController extends BaseController {
     @ResponseBody
     public AjaxResult export(ActivityApply activityApply)
     {
+        if(getMerchantId()!=0){
+            activityApply.setCommunityId(getMerchantId());
+        }
         List<ActivityApply> list = activityApplyService.selectActivityApplyList(activityApply);
         List<ActivityApplyExcel> excelList = new ArrayList<>();
         for (ActivityApply apply: list) {
