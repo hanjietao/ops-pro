@@ -47,6 +47,7 @@ public class GuideController extends BaseController {
     public TableDataInfo list(Guide guide)
     {
         startPage();
+        guide.setId(getMerchantId());
         List<Guide> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }

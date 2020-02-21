@@ -8,10 +8,10 @@
 	<div class="row">
 		<div class="col-sm-12 search-collapse">
 			<form id="community-form">
-				<div class="select-list">
+				<div class="select-list" shiro:hasPermission="cm:community:add">
 					<ul>
 						<li>
-							id：<input type="text" name="id"/>
+							id：<input type="text" name="id" />
 						</li>
 						<li>
 							社区名称：<input type="text" name="communityName"/>
@@ -92,7 +92,7 @@
 					title: '社区名称'
 				},
 				{
-					field: 'user.html.areaName',
+					field: 'area.areaName',
 					title: '所属区域'
 				},
 				{

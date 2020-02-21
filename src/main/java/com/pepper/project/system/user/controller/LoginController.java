@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pepper.common.utils.security.ShiroUtils;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
+import com.pepper.framework.web.service.DictService;
 import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.service.IHospitalService;
 import com.pepper.project.cm.community.domain.Community;
@@ -65,24 +67,24 @@ public class LoginController extends BaseController
         {
             subject.login(token);
             User sysUser = getSysUser();
-            if(!"0".equals(sysUser.getMerchantFlag())){
+            if(!SysUserType.admin.getType().equals(sysUser.getMerchantFlag())){
                 Integer merchantId = sysUser.getMerchantId();
                 Merchant merchant = new Merchant();
                 String flg = sysUser.getMerchantFlag();
                 String merchantIntro = null;
                 String merchantName = null;
                 String status = null;
-                if("1".equals(flg)){
+                if(SysUserType.cadmin.getType().equals(flg)){
                     Community community = communityService.selectCommunityById(merchantId);
                     merchantIntro = StringUtils.isEmpty(community.getIntroduction())?"这是一个社区":community.getIntroduction();
                     merchantName = community.getCommunityName();
                     status = community.getStatus();
-                }else if("2".equals(flg)){
+                }else if(SysUserType.hadmin.getType().equals(flg)){
                     Hospital hospital = hospitalService.selectHospitalById(merchantId);
                     merchantIntro = StringUtils.isEmpty(hospital.getIntroduction())?"这是一个医院":hospital.getIntroduction();
                     merchantName = hospital.getHosName();
                     status = hospital.getStatus();
-                }else if("3".equals(flg)){
+                }else if(SysUserType.padmin.getType().equals(flg)){
                     Property property = propertyService.selectPropertyById(merchantId);
                     merchantIntro = StringUtils.isEmpty(property.getIntroduction())?"这是一个物业":property.getIntroduction();
                     merchantName = property.getPropertyName();

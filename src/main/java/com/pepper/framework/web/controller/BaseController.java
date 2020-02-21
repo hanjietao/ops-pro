@@ -3,6 +3,12 @@ package com.pepper.framework.web.controller;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import com.pepper.common.exception.BusinessException;
+import com.pepper.framework.web.service.DictService;
+import com.pepper.project.system.dict.domain.DictData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import com.github.pagehelper.PageHelper;
@@ -55,6 +61,7 @@ public class BaseController
             String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
             PageHelper.startPage(pageNum, pageSize, orderBy);
         }
+
     }
 
     /**
@@ -148,6 +155,18 @@ public class BaseController
     public void setSysUser(User user)
     {
         ShiroUtils.setSysUser(user);
+    }
+
+    public Integer getMerchantId(){
+        String merchantFlag = getSysUser().getMerchantFlag();
+        if(!"0".equals(merchantFlag)){
+            if(!"1".equals(merchantFlag)){
+                throw new BusinessException("非社区普通管理员用户不允许操作此页面");
+            }
+            Integer cId = getSysUser().getMerchantId();
+            return cId;
+        }
+        return 0;
     }
 
     public Long getUserId()

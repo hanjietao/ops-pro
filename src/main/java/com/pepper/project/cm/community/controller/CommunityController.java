@@ -42,6 +42,7 @@ public class CommunityController extends BaseController {
     public TableDataInfo list(Community community)
     {
         startPage();
+        community.setId(getMerchantId());
         List<Community> list = communityService.selectCommunityList(community);
         return getDataTable(list);
     }

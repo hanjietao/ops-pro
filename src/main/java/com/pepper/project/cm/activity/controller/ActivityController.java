@@ -43,6 +43,7 @@ public class ActivityController extends BaseController {
     public TableDataInfo list(Activity activity)
     {
         startPage();
+        activity.setId(getMerchantId());
         List<Activity> list = activityService.selectActivityList(activity);
         return getDataTable(list);
     }

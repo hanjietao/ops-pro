@@ -67,7 +67,6 @@ public class ProfileController extends BaseController
         Merchant merchant = user.getMerchant();
         mmap.put("merchant",merchant);
         mmap.put("user", user);
-
         mmap.put("roleGroup", userService.selectUserRoleGroup(user.getUserId()));
         mmap.put("postGroup", userService.selectUserPostGroup(user.getUserId()));
         return prefix + "/profile";

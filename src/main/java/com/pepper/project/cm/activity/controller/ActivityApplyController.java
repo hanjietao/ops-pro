@@ -54,6 +54,7 @@ public class ActivityApplyController extends BaseController {
     public TableDataInfo list(ActivityApply activityApply)
     {
         startPage();
+        activityApply.setId(getMerchantId());
         List<ActivityApply> list = activityApplyService.selectActivityApplyList(activityApply);
         return getDataTable(list);
     }
