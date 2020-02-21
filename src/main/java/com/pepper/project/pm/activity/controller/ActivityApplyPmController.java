@@ -54,6 +54,9 @@ public class ActivityApplyPmController extends BaseController {
     public TableDataInfo list(ActivityApplyPm activityApplyPm)
     {
         startPage();
+        if(getMerchantId()!=0){
+            activityApplyPm.setPropertyId(getMerchantId());
+        }
         List<ActivityApplyPm> list = activityApplyService.selectActivityApplyList(activityApplyPm);
         return getDataTable(list);
     }
@@ -127,6 +130,9 @@ public class ActivityApplyPmController extends BaseController {
     @ResponseBody
     public AjaxResult export(ActivityApplyPm activityApplyPm)
     {
+        if(getMerchantId()!=0){
+            activityApplyPm.setPropertyId(getMerchantId());
+        }
         List<ActivityApplyPm> list = activityApplyService.selectActivityApplyList(activityApplyPm);
         List<ActivityApplyPmExcel> excelList = new ArrayList<>();
         for (ActivityApplyPm apply: list) {

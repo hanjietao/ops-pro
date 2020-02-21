@@ -17,7 +17,7 @@
 						<li>
 							活动标题：<input type="text" name="title"/>
 						</li>
-						<li>
+						<li shiro:hasPermission="pm:activity:add">
 							所属物业：<select id="propertyId" name="propertyId" class="form-control">
 							<option value="">所有</option>
 							<option th:each="property : ${propertys}" th:text="${property['propertyName']}" th:value="${property['id']}"></option>
@@ -39,13 +39,13 @@
 		</div>
 
 		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pm:activityPm:add">
+			<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="pm:activity:add">
 				<i class="fa fa-plus"></i> 新增
 			</a>
-			<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="pm:activityPm:edit">
+			<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="pm:activity:edit">
 				<i class="fa fa-edit"></i> 修改
 			</a>
-			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pm:activityPm:remove">
+			<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pm:activity:remove">
 				<i class="fa fa-remove"></i> 删除
 			</a>
 		</div>
@@ -58,9 +58,9 @@
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: select2-js" />
 <script th:inline="javascript">
-	var editFlag = [[${@permission.hasPermi('pm:activityPm:edit')}]];
-	var removeFlag = [[${@permission.hasPermi('pm:activityPm:remove')}]];
-	var listFlag = [[${@permission.hasPermi('pm:activityPm:list')}]];
+	var editFlag = [[${@permission.hasPermi('pm:activity:edit')}]];
+	var removeFlag = [[${@permission.hasPermi('pm:activity:remove')}]];
+	var listFlag = [[${@permission.hasPermi('pm:activity:list')}]];
 	var types = [[${@dict.getType('sys_notice_type')}]];
 	var datas = [[${@dict.getType('sys_notice_status')}]];
 	var prefix = ctx + "pm/activity";

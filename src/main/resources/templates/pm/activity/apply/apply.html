@@ -14,7 +14,7 @@
 						    <li>
 								活动标题：<select id="activityId" name="activityId" class="form-control">
 									<option value="">所有</option>
-					                <option th:each="activityPm : ${activityList}" th:text="${activityPm['title']}" th:value="${activityPm['id']}" th:field="*{activityPm.id}"></option>
+					                <option th:each="activityPm : ${activityList}" th:text="${activityPm['title']}" th:value="${activityPm['id']}" th:field="*{activity.id}"></option>
 								</select>
 							</li>
 							<li>
@@ -33,16 +33,16 @@
 			</div>
 
 	       <div class="btn-group-sm" id="toolbar" role="group">
-	            <a class="btn btn-success" onclick="add()" shiro:hasPermission="pm:activityPm:add">
+	            <a class="btn btn-success" onclick="add()" shiro:hasPermission="pm:activity:add">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
-<!--	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="pm:activityPm:edit">-->
+<!--	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="pm:activity:edit">-->
 <!--		            <i class="fa fa-edit"></i> 修改-->
 <!--		        </a>-->
-				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pm:activityPm:remove">
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="pm:activity:remove">
 		            <i class="fa fa-remove"></i> 删除
 		        </a>
-		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pm:activityPm:export">
+		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="pm:activity:export">
 		            <i class="fa fa-download"></i> 导出
 		        </a>
 	        </div>
@@ -55,8 +55,8 @@
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: select2-js" />
 	<script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('pm:activityPm:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('system:dict:remove')}]];
+		var editFlag = [[${@permission.hasPermi('pm:activity:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('pm:activity:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var prefix = ctx + "pm/activity/apply";
 

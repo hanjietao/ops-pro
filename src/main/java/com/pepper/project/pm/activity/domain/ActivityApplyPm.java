@@ -54,6 +54,9 @@ public class ActivityApplyPm extends BaseEntity{
     /** 客户端用户表 */
     private ClientUser clientUser;
 
+    /** 为了在权限区分是，筛选特定物业的活动 */
+    private Integer propertyId;
+
     public Integer getId() {
         return id;
     }
@@ -158,6 +161,14 @@ public class ActivityApplyPm extends BaseEntity{
         this.clientUser = clientUser;
     }
 
+    public Integer getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
+    }
+
     @Override
     public String toString() {
         return "ActivityApplyPm{" +
@@ -172,6 +183,7 @@ public class ActivityApplyPm extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", activityPm='" + getActivityPm() + '\'' +
                 ", clientUser='" + getClientUser() + '\'' +
+                ", propertyId='" + propertyId + '\'' +
                 '}';
     }
 }

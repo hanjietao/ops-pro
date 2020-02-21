@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pepper.project.pm.activityPm.mapper.ActivityApplyPmMapper">
+<mapper namespace="com.pepper.project.pm.activity.mapper.ActivityApplyPmMapper">
 
 	<resultMap type="ActivityApplyPm" id="ActivityApplyResult">
 		<id     property="id"         		column="id"         />
@@ -52,6 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<where>
 			<if test="activityId != null and activityId != ''">
 				AND aa.activity_id = #{activityId}
+			</if>
+			<if test="propertyId != null and propertyId != ''">
+				AND a.property_id = #{propertyId}
 			</if>
 			<if test="status != null and status != ''">
 				AND aa.status = #{status}

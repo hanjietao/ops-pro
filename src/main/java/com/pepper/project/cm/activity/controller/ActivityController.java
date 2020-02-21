@@ -90,8 +90,8 @@ public class ActivityController extends BaseController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
-        List<Area> areas = areaService.selectAreaList(new Area());
-        mmap.put("areas",areas);
+//        List<Area> areas = areaService.selectAreaList(new Area());
+//        mmap.put("areas",areas);
         mmap.put("activity", activityService.selectActivityById(id));
         return prefix + "/edit";
     }
@@ -117,7 +117,8 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(activityService.deleteActivityByIds(ids));
+        return error("删除，不支持操作");
+        //return toAjax(activityService.deleteActivityByIds(ids));
     }
 
     /**
@@ -130,7 +131,6 @@ public class ActivityController extends BaseController {
         String merchantFlag = getSysUser().getMerchantFlag();
         Activity activity = new Activity();
         if(SysUserType.admin.getType().equals(merchantFlag)){
-            //dictTypeService.selectDictTypeById(dictId));
             // 查询所有的活动
             mmap.put("activityList", activityService.selectActivityList(activity));//dictTypeService.selectDictTypeAll());
         }else if(SysUserType.cadmin.getType().equals(merchantFlag)){

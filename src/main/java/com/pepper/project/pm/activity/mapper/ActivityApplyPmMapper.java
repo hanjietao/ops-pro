@@ -7,7 +7,7 @@ import java.util.List;
 public interface ActivityApplyPmMapper {
 
     ActivityApplyPm selectActivityApplyById(Integer id);
-    List<ActivityApplyPm> selectActivityApplyList(ActivityApplyPm activity);
+    List<ActivityApplyPm> selectActivityApplyList(ActivityApplyPm activityApplyPm);
 
     /**
      * 新增医院信息
