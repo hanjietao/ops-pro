@@ -57,6 +57,13 @@ public class RoleServiceImpl implements IRoleService
         return roleMapper.selectRoleList(role);
     }
 
+    @Override
+    @DataScope(deptAlias = "d")
+    public List<Role> selectRoleListAsc(Role role)
+    {
+        return roleMapper.selectRoleListAsc(role);
+    }
+
     /**
      * 根据用户ID查询权限
      *
@@ -112,6 +119,12 @@ public class RoleServiceImpl implements IRoleService
     public List<Role> selectRoleAll()
     {
         return SpringUtils.getAopProxy(this).selectRoleList(new Role());
+    }
+
+    @Override
+    public List<Role> selectRoleAllAsc()
+    {
+        return SpringUtils.getAopProxy(this).selectRoleListAsc(new Role());
     }
 
     /**

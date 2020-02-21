@@ -100,7 +100,7 @@ public class UserController extends BaseController
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
-        mmap.put("roles", roleService.selectRoleAll());
+        mmap.put("roles", roleService.selectRoleAllAsc());
         mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }

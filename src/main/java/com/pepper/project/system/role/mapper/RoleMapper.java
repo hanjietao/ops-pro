@@ -18,6 +18,8 @@ public interface RoleMapper
      */
     public List<Role> selectRoleList(Role role);
 
+    List<Role> selectRoleListAsc(Role role);
+
     /**
      * 根据用户ID查询角色
      *
@@ -81,4 +83,6 @@ public interface RoleMapper
      * @return 角色信息
      */
     public Role checkRoleKeyUnique(String roleKey);
+
+
 }

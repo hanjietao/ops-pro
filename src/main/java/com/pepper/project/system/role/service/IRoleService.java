@@ -20,6 +20,8 @@ public interface IRoleService
      */
     public List<Role> selectRoleList(Role role);
 
+    public List<Role> selectRoleListAsc(Role role);
+
     /**
      * 根据用户ID查询角色
      *
@@ -42,6 +44,8 @@ public interface IRoleService
      * @return 角色列表
      */
     public List<Role> selectRoleAll();
+
+    public List<Role> selectRoleAllAsc();
 
     /**
      * 通过角色ID查询角色
