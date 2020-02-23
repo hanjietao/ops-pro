@@ -12,6 +12,14 @@
  File Encoding         : 65001
 
  Date: 23/02/2020 13:34:09
+
+ csc: community service center
+ cm: community management
+ ch: community hospital
+ pm: property management
+ he: healthy education
+ fp: front page
+ sm: system member
 */
 
 SET NAMES utf8mb4;
