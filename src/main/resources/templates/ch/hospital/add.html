@@ -102,8 +102,8 @@
 
 	function submitHandler() {
 		if ($.validate.form()) {
-			var sHTML = $('.summernote').summernote('code');
-			$("#introduction").val(sHTML);
+			// var sHTML = $('.summernote').summernote('code');
+			// $("#introduction").val(sHTML);
 			$.operate.save(prefix + "/add", $('#form-hospital-add').serialize());
 		}
 	}

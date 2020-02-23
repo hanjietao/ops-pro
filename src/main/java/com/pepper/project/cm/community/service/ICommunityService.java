@@ -15,4 +15,5 @@ public interface ICommunityService {
 
     int updateCommunity(Community community);
 
+    List<Community> selectCommunityListByHospitalId(Integer hospitalId);
 }

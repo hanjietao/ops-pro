@@ -167,13 +167,13 @@ public class RoleController extends BaseController
     public AjaxResult remove(String ids)
     {
 
+        // 不允许删除系统业务角色，只能修改，否则会出问题 important
         String[] idArr = ids.split(",");
         for (String id :idArr) {
             if(SysBusinessRoleType.contains(id)){
                 return error("系统业务角色不允许删除！");
             }
         }
-        ids="888999";
         try
         {
             return toAjax(roleService.deleteRoleByIds(ids));

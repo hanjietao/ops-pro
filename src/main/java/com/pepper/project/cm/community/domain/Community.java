@@ -50,6 +50,9 @@ public class Community extends BaseEntity{
     /** 区域 */
     private Area area;
 
+    /** 是否存在此区域 默认不存在 */
+    private boolean flag = false;
+
     public Integer getId() {
         return id;
     }
@@ -154,6 +157,14 @@ public class Community extends BaseEntity{
         this.area = area;
     }
 
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "ActivityPm{" +
@@ -169,6 +180,7 @@ public class Community extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", areaName='" + areaName + '\'' +
                 ", area=" + area +
+                ", flag=" + flag +
                 '}';
     }
 }
