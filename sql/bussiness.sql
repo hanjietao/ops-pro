@@ -18,7 +18,7 @@ CREATE TABLE csc_area(
 
 
 -- 社区
-
+drop table if exists cm_community ;
 CREATE TABLE cm_community(
     ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
     COMMUNITY_CODE VARCHAR(128)    COMMENT '社区编码' ,
@@ -34,6 +34,7 @@ CREATE TABLE cm_community(
 ) AUTO_INCREMENT = 200000 COMMENT = '社区 ';
 
 // TODO 需要新增活动所属社区
+drop table if exists cm_activity ;
 CREATE TABLE cm_activity(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     COMMUNITY_ID INT COMMENT '社区',
@@ -47,6 +48,7 @@ CREATE TABLE cm_activity(
     PRIMARY KEY (ID)
 ) COMMENT = '社区活动 ';
 
+drop table if exists cm_activity_apply ;
 CREATE TABLE cm_activity_apply(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     activity_id INT    COMMENT '活动id' ,
@@ -60,6 +62,7 @@ CREATE TABLE cm_activity_apply(
     PRIMARY KEY (ID)
 ) COMMENT = '社区活动报名表 ';
 
+drop table if exists cm_business_guide ;
 CREATE TABLE cm_business_guide(
     ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
     TITLE VARCHAR(128)    COMMENT '指南标题' ,
@@ -73,6 +76,7 @@ CREATE TABLE cm_business_guide(
     PRIMARY KEY (ID)
 )AUTO_INCREMENT = 1000 COMMENT = '社区办事指南 ';
 
+drop table if exists cm_note ;
 CREATE TABLE cm_note(
     ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT    COMMENT '留言内容' ,
@@ -104,6 +108,7 @@ CREATE TABLE ch_hospital(
     PRIMARY KEY (ID)
 ) AUTO_INCREMENT = 300000 COMMENT = '社区服务服务中心-医院介绍 ';
 
+drop table if exists ch_medical_project ;
 CREATE TABLE ch_medical_project(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '医疗项目ID' ,
     NAME VARCHAR(64)    COMMENT '医疗项目名称' ,
@@ -119,7 +124,7 @@ CREATE TABLE ch_medical_project(
     PRIMARY KEY (ID)
 ) AUTO_INCREMENT = 1000 COMMENT = '医疗项目';
 
-
+drop table if exists ch_doctor ;
 CREATE TABLE ch_doctor(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '医生ID' ,
     DOCTOR_CODE INT NOT NULL   COMMENT '医生ID' ,
@@ -135,6 +140,7 @@ CREATE TABLE ch_doctor(
     PRIMARY KEY (ID)
 ) AUTO_INCREMENT = 2000 COMMENT = '医生管理 ';
 
+drop table if exists ch_appointment ;
 CREATE TABLE ch_appointment(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '预约ID' ,
     USER_ID BIGINT(20) NOT NULL COMMENT '用户id',
@@ -156,6 +162,7 @@ CREATE TABLE ch_appointment(
 
 
 -- 物业
+drop table if exists pm_property ;
 CREATE TABLE pm_property(
     ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
     PROPERTY_CODE VARCHAR(128)    COMMENT '社区编码' ,
@@ -171,6 +178,7 @@ CREATE TABLE pm_property(
 )AUTO_INCREMENT = 400000 COMMENT = '物业 ';
 
 -- 需要新增活动所属社区
+drop table if exists pm_activity ;
 CREATE TABLE pm_activity(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     PROPERTY_ID INT COMMENT '物业',
@@ -184,6 +192,7 @@ CREATE TABLE pm_activity(
     PRIMARY KEY (ID)
 ) COMMENT = '物业活动 ';
 
+drop table if exists pm_activity_apply ;
 CREATE TABLE pm_activity_apply(
     ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     activity_id INT    COMMENT '活动id' ,
@@ -197,6 +206,7 @@ CREATE TABLE pm_activity_apply(
     PRIMARY KEY (ID)
 ) COMMENT = '物业活动报名 ';
 
+drop table if exists pm_business_guide ;
 CREATE TABLE pm_business_guide(
     ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
     TITLE VARCHAR(128)    COMMENT '指南标题' ,
@@ -210,6 +220,7 @@ CREATE TABLE pm_business_guide(
     PRIMARY KEY (ID)
 )AUTO_INCREMENT = 2000 COMMENT = '办事指南 ';
 
+drop table if exists pm_note ;
 CREATE TABLE pm_note(
     ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT    COMMENT '留言内容' ,
@@ -223,6 +234,7 @@ CREATE TABLE pm_note(
     PRIMARY KEY(ID)
 ) COMMENT = '用户留言物业 ';
 
+drop table if exists pm_notice ;
 CREATE TABLE pm_notice(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     TITLE VARCHAR(1024)    COMMENT '通知内容' ,
@@ -238,7 +250,7 @@ CREATE TABLE pm_notice(
 
 
 -- 健康宣教
-
+drop table if exists he_board ;
 CREATE TABLE he_board(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_CODE VARCHAR(64)    COMMENT '板块编码' ,
@@ -252,6 +264,7 @@ CREATE TABLE he_board(
     PRIMARY KEY(ID)
 ) AUTO_INCREMENT = 5000 COMMENT = '健康宣教板块 ';
 
+drop table if exists he_article ;
 CREATE TABLE he_article(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_ID INT(11)    COMMENT '板块编码' ,
@@ -266,6 +279,7 @@ CREATE TABLE he_article(
     PRIMARY KEY(ID)
 ) COMMENT = '健康宣教宣教文章 ';
 
+drop table if exists he_video ;
 CREATE TABLE he_video(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_ID INT(11)    COMMENT '板块编码' ,
@@ -283,6 +297,7 @@ CREATE TABLE he_video(
 
 
 -- 首页模块 front page
+drop table if exists fp_loop_image ;
 CREATE TABLE fp_loop_image(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     title VARCHAR(64)    COMMENT '广告标题' ,
@@ -299,6 +314,7 @@ CREATE TABLE fp_loop_image(
 
 
 -- 系统会员表 sm
+drop table if exists sm_client_user ;
 CREATE TABLE sm_client_user(
     USER_ID BIGINT    COMMENT '用户ID' ,
     NIKE_NAME VARCHAR(128)    COMMENT '用户昵称' ,
@@ -326,3 +342,5 @@ CREATE TABLE sm_client_user(
 -- sys_user update
 alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
 alter table sys_user add column merchant_Id int(11) default '0' comment '商户id';
+
+ -- <p class="m-t-md">你若不离不弃，我必生死相依 admin  admin123  hant  123456</p>
