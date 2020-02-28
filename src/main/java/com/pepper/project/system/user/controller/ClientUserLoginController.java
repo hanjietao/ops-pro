@@ -1,6 +1,7 @@
 package com.pepper.project.system.user.controller;
 
 import com.pepper.common.constant.GenConstants;
+import com.pepper.common.constant.SMSCodeEnum;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
@@ -87,7 +88,7 @@ public class ClientUserLoginController extends BaseController
         String timeStr = validateStrArr[2];
         String codeType = validateStrArr[3];
 
-        if(!"2".equals(codeType)){
+        if(!SMSCodeEnum.L.toString().equals(codeType)){
             error("验证码非法，请重新发送！");
         }
 
@@ -112,12 +113,12 @@ public class ClientUserLoginController extends BaseController
         if(rememberMe == null){
             rememberMe = false;
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-        Subject subject = SecurityUtils.getSubject();
+        //UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+       // Subject subject = SecurityUtils.getSubject();
         try
         {
-            subject.login(token);
-            User sysUser = getSysUser();
+            //subject.login(token);
+            User sysUser = user;
             Long clientUserId = sysUser.getMerchantId();
             if(clientUserId==null || clientUserId == 0L){
                 // 非客户端用户

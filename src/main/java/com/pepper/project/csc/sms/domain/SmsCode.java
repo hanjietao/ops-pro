@@ -17,7 +17,7 @@ public class SmsCode extends BaseEntity
     private String mobilePhone;
 
     /** 区域名称 */
-    private Integer codeType;
+    private String codeType;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -45,11 +45,11 @@ public class SmsCode extends BaseEntity
         this.code = code;
     }
 
-    public Integer getCodeType() {
+    public String getCodeType() {
         return codeType;
     }
 
-    public void setCodeType(Integer codeType) {
+    public void setCodeType(String codeType) {
         this.codeType = codeType;
     }
 

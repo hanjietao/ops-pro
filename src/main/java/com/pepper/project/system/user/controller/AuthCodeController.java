@@ -3,6 +3,7 @@ package com.pepper.project.system.user.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.pepper.common.constant.GenConstants;
+import com.pepper.common.constant.SMSCodeEnum;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
@@ -49,11 +50,11 @@ public class AuthCodeController extends BaseController
             return error("手机号必须为11位数字组成！");
         }
 
-        int codeType = 0;
+        String codeType = null;
         if("client_register".equals(smsCodeType)){
-            codeType = 1;
+            codeType = SMSCodeEnum.R.toString();
         }else if("client_login".equals(smsCodeType)){
-            codeType = 2;
+            codeType = SMSCodeEnum.L.toString();
         }else {
             return error("非法短信验证码！");
         }

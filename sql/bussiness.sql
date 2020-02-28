@@ -360,7 +360,7 @@ CREATE TABLE sms_code(
     ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
     MOBILE_PHONE varchar(32) DEFAULT NULL COMMENT '手机号',
     code VARCHAR(30)   COMMENT '验证码' ,
-    code_type INT(11)  COMMENT '验证码类型，1-客户端注册，2-客户端用户手机登陆。。。' ,
+    code_type VARCHAR(20) COMMENT '验证码类型，R-客户端注册，L-客户端用户手机登陆。。。' ,
     STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     SEND_TIME DATETIME COMMENT '发送时间',
     PRIMARY KEY(ID)
