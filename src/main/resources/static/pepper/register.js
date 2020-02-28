@@ -1,6 +1,10 @@
 
 $(function() {
     validateRule();
+    $('.imgcode').click(function() {
+        var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
+        $(".imgcode").attr("src", url);
+    });
 });
 
 $.validator.setDefaults({
@@ -14,6 +18,9 @@ function register() {
 	$.modal.loading($("#btnSubmit").data("loading"));
 	var loginName = $.common.trim($("input[name='loginName']").val());
     var password = $.common.trim($("input[name='password']").val());
+    var validateCode = $("input[name='validateCode']").val();
+    var phonenumber = $("input[name='phonenumber']").val();
+    var smsCode = $("input[name='smsCode']").val();
     var repassword = $.common.trim($("input[name='repassword']").val());
     $.ajax({
         type: "post",
@@ -22,8 +29,8 @@ function register() {
             "loginName": loginName,
             "password": password,
             "repassword": repassword,
-            //"validateCode" : validateCode,
-            //"rememberMe": rememberMe,
+            "smsCode" : smsCode,
+            "phonenumber": phonenumber,
             "sys-client-user": "clientUserRegister"
         },
         success: function(r) {

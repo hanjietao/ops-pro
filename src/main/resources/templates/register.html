@@ -27,9 +27,25 @@
             <div class="col-sm-12">
                 <form id="registerForm" class="form-horizontal m">
                     <h4 class="no-margins">注册：</h4>
+                    <input  name="smsCodeType" type="hidden"   value="register" />
                     <input type="text"     name="loginName" class="form-control uname"     placeholder="登录名" value=""    />
                     <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="" />
                     <input type="password" name="repassword" class="form-control pword"     placeholder="再输入一次密码"   value="" />
+                    <input type="text" name="phonenumber" class="form-control pword"     placeholder="绑定手机号"   value="" />
+                    <input type="text" name="smsCode" class="form-control"     placeholder="短信验证码"   value="" />
+                    <a class="btn btn-success" onclick="sendSmsCode()" >
+                        <i class="fa fa-plus"></i> 发送短信验证码
+                    </a>
+                    <div class="row m-t" th:if="${captchaEnabled==true}">
+                        <div class="col-xs-6">
+                            <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" autocomplete="off">
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="javascript:void(0);" title="点击更换验证码">
+                                <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+                            </a>
+                        </div>
+                    </div>
                     <button class="btn btn-success btn-block" id="btnSubmit">注册</button>
                 </form>
             </div>
@@ -43,6 +59,33 @@
 <script th:inline="javascript">
 
     var ctx = [[@{/}]];
+    var captchaType = [[${captchaType}]];
+
+    function sendSmsCode() {
+        var phonenumber = $.common.trim($("input[name='phonenumber']").val());
+        var smsCodeType = $.common.trim($("input[name='smsCodeType']").val());
+        $.ajax({
+            type: "post",
+            url: ctx + "authcode/gen",
+            data: {
+                "mobilePhone": phonenumber,
+                "smsCodeType": smsCodeType,
+                "sys-client-user": "clientUserRegister"
+            },
+            success: function(r) {
+                if (r.code == 0) {
+                    $.modal.alertSuccess(r.msg)
+                } else {
+                    $.modal.closeLoading();
+                    $.modal.msg(r.msg);
+                }
+                $.modal.closeLoading();
+            }
+        });
+    };
+
+
+
 
 </script>
 <!-- 全局js -->

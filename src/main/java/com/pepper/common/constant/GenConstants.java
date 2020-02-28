@@ -91,4 +91,7 @@ public class GenConstants
 
     /** 需要 */
     public static final String REQUIRE = "1";
+
+    /** 短信验证码 */
+    public static final String SMS_CODE_ATTR = "sms_code_attr";
 }

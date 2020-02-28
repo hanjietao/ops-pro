@@ -351,3 +351,17 @@ alter table ch_hospital modify column id bigint(20);
 alter table sys_user AUTO_INCREMENT= 600000000;
 
  -- <p class="m-t-md">你若不离不弃，我必生死相依 admin  admin123  hant  123456</p>
+
+
+
+-- 系统表创建  短信验证码保存表
+drop table if exists sms_code ;
+CREATE TABLE sms_code(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    MOBILE_PHONE varchar(32) DEFAULT NULL COMMENT '手机号',
+    code VARCHAR(30)   COMMENT '验证码' ,
+    code_type INT(11)  COMMENT '验证码类型，1-客户端注册，2-客户端用户手机登陆。。。' ,
+    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    SEND_TIME DATETIME COMMENT '发送时间',
+    PRIMARY KEY(ID)
+)AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';

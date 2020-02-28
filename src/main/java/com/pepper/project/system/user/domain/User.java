@@ -117,6 +117,9 @@ public class User extends BaseEntity
     /** 业务系统名称 初始化业务系统 非数据库字段 */
     private String merchantName;
 
+    /** 短信验证码 */
+    private String smsCode;
+
     public User()
     {
 
@@ -418,6 +421,14 @@ public class User extends BaseEntity
 
     public void setClientUser(ClientUser clientUser) {
         this.clientUser = clientUser;
+    }
+
+    public String getSmsCode() {
+        return smsCode;
+    }
+
+    public void setSmsCode(String smsCode) {
+        this.smsCode = smsCode;
     }
 
     @Override

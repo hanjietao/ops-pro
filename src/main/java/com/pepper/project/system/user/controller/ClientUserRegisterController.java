@@ -1,5 +1,6 @@
 package com.pepper.project.system.user.controller;
 
+import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.UserConstants;
 import com.pepper.common.utils.ServletUtils;
 import com.pepper.common.utils.StringUtils;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ClientUserRegisterController extends BaseController {
@@ -47,7 +49,7 @@ public class ClientUserRegisterController extends BaseController {
     @Log(title = "注册客户端用户", businessType = BusinessType.INSERT)
     @PostMapping("/register")
     @ResponseBody
-    public AjaxResult ajaxRegister(@Validated User user)
+    public AjaxResult ajaxRegister(HttpServletRequest request, @Validated User user)
     {
 
         if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName())))
@@ -66,6 +68,28 @@ public class ClientUserRegisterController extends BaseController {
 //        if(user.getRoleId() == null || user.getRoleId() == 0){
 //            return error("角色不可以不选！");
 //        }
+        HttpSession session = request.getSession();
+        String validateStr = (String) session.getAttribute(GenConstants.SMS_CODE_ATTR);
+        if(StringUtils.isEmpty(validateStr)){
+            error("请先发送短信验证码！");
+        }
+
+        String[] validateStrArr = validateStr.split("_");
+        String mobile = validateStrArr[0];
+        String smsCode = validateStrArr[1];
+        String timeStr = validateStrArr[2];
+        long time = System.currentTimeMillis();
+        if(time - Long.valueOf(timeStr) > 3 * 60 * 1000){
+            error("验证码已过期，时效3分钟！请重新发送短信验证码！");
+        }
+
+        if(!mobile.equals(user.getPhonenumber())){
+            error("短信验证码与手机号不一致，请重新发送短信验证码！");
+        }
+
+        if(!smsCode.equals(user.getSmsCode())){
+            error("验证码错误！请校对验证码！");
+        }
 
         // 设置系统用户类型为  客户端用户
         user.setMerchantFlag(SysUserType.client.getType());
