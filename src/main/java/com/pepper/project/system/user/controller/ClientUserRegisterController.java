@@ -78,6 +78,7 @@ public class ClientUserRegisterController extends BaseController {
         String mobile = validateStrArr[0];
         String smsCode = validateStrArr[1];
         String timeStr = validateStrArr[2];
+        String codeType = validateStrArr[3];
         long time = System.currentTimeMillis();
         if(time - Long.valueOf(timeStr) > 3 * 60 * 1000){
             error("验证码已过期，时效3分钟！请重新发送短信验证码！");

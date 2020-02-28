@@ -257,6 +257,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/client/login", "anon");
         filterChainDefinitionMap.put("/authcode/gen", "anon");
+        filterChainDefinitionMap.put("/client/sms/login", "anon"); // 短信登陆
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

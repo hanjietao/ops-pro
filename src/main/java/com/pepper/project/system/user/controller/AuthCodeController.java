@@ -50,8 +50,10 @@ public class AuthCodeController extends BaseController
         }
 
         int codeType = 0;
-        if("register".equals(smsCodeType)){
+        if("client_register".equals(smsCodeType)){
             codeType = 1;
+        }else if("client_login".equals(smsCodeType)){
+            codeType = 2;
         }else {
             return error("非法短信验证码！");
         }
@@ -59,7 +61,7 @@ public class AuthCodeController extends BaseController
         String code = smsCode();
         logger.info("sms mobilePhone={}, code={}",mobilePhone,code);
         long time = System.currentTimeMillis();
-        String validateStr = mobilePhone+"_"+code+"_"+time; // 手机号_验证码_时间戳
+        String validateStr = mobilePhone+"_"+code+"_"+time+"_"+codeType; // 手机号_验证码_时间戳
         // 保存验证码到数据库
         // 发送验证码  调用三方接口
 
