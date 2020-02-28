@@ -3,6 +3,8 @@ package com.pepper.project.system.user.domain;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import com.pepper.project.sm.user.domain.ClientUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -63,6 +65,9 @@ public class User extends BaseEntity
     /** 密码 */
     private String password;
 
+    /** 重复输入密码 */
+    private String repassword;
+
     /** 盐加密 */
     private String salt;
 
@@ -100,9 +105,11 @@ public class User extends BaseEntity
     private String merchantFlag;
 
     /** 商户id*/
-    private Integer merchantId;
+    private Long merchantId;
 
     private Merchant merchant;
+
+    private ClientUser clientUser;
 
     /** 区域id 初始化业务系统  非数据库字段 */
     private String areaId;
@@ -246,6 +253,14 @@ public class User extends BaseEntity
         this.password = password;
     }
 
+    public String getRepassword() {
+        return repassword;
+    }
+
+    public void setRepassword(String repassword) {
+        this.repassword = repassword;
+    }
+
     public String getSalt()
     {
         return salt;
@@ -359,11 +374,11 @@ public class User extends BaseEntity
         this.merchantFlag = merchantFlag;
     }
 
-    public Integer getMerchantId() {
+    public Long getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Integer merchantId) {
+    public void setMerchantId(Long merchantId) {
         this.merchantId = merchantId;
     }
 
@@ -394,6 +409,17 @@ public class User extends BaseEntity
         this.merchantName = merchantName;
     }
 
+    public ClientUser getClientUser() {
+        if(clientUser == null){
+            clientUser = new ClientUser();
+        }
+        return clientUser;
+    }
+
+    public void setClientUser(ClientUser clientUser) {
+        this.clientUser = clientUser;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -419,6 +445,7 @@ public class User extends BaseEntity
             .append("dept", getDept())
             .append("merchantFlag", getMerchantFlag())
             .append("merchant", getMerchant())
+            .append("clientUser", getClientUser())
             .append("merchantId", getMerchantId())
             .append("areaId", getAreaId())
             .append("merchantName", getMerchantName())

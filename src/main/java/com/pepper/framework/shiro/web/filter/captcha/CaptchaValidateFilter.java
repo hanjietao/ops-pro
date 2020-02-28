@@ -21,6 +21,8 @@ public class CaptchaValidateFilter extends AccessControlFilter
      */
     private boolean captchaEnabled = true;
 
+    private String sysClientUserFlag = "pepper-client";
+
     /**
      * 验证码类型
      */
@@ -54,6 +56,11 @@ public class CaptchaValidateFilter extends AccessControlFilter
         {
             return true;
         }
+        // 客户端用户 不需要进行验证码判断
+        if(sysClientUserFlag.equals(httpServletRequest.getParameter(ShiroConstants.SYS_CLIENT_USER))){
+            return true;
+        }
+
         return validateResponse(httpServletRequest, httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
     }
 

@@ -2,6 +2,9 @@ package com.pepper.project.system.user.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.pepper.project.sm.user.domain.ClientUser;
+import com.pepper.project.sm.user.mapper.ClientUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class UserServiceImpl implements IUserService
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ClientUserMapper clientUserMapper;
 
     @Autowired
     private RoleMapper roleMapper;
@@ -191,6 +197,36 @@ public class UserServiceImpl implements IUserService
         user.setCreateBy(ShiroUtils.getLoginName());
         // 新增用户信息
         int rows = userMapper.insertUser(user);
+        // 新增用户岗位关联
+        insertUserPost(user);
+        // 新增用户与角色管理
+        insertUserRole(user);
+        return rows;
+    }
+
+    /**
+     * 新增保存用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public int insertUserClient(User user, ClientUser clientUser)
+    {
+        clientUserMapper.insertClientUser(clientUser);
+        user.randomSalt();
+        user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
+        user.setCreateBy("client_user_register"); // 客户端用户注册
+        user.setMerchantId(clientUser.getUserId());
+        // 新增用户信息
+        int rows = userMapper.insertUser(user);
+
+        // 更新用户nikename
+        clientUser.setNikeName("ch_"+user.getUserId());
+        clientUser.setUserName("ch_"+user.getUserId());
+        clientUserMapper.updateClientUser(clientUser);
+
         // 新增用户岗位关联
         insertUserPost(user);
         // 新增用户与角色管理

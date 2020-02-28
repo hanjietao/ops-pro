@@ -55,7 +55,7 @@ public class ActivityApply extends BaseEntity{
     private ClientUser clientUser;
 
     /** 为了在权限区分是，筛选特定社区的活动 */
-    private Integer communityId;
+    private Long communityId;
 
     public Integer getId() {
         return id;
@@ -161,11 +161,11 @@ public class ActivityApply extends BaseEntity{
         this.clientUser = clientUser;
     }
 
-    public Integer getCommunityId() {
+    public Long getCommunityId() {
         return communityId;
     }
 
-    public void setCommunityId(Integer communityId) {
+    public void setCommunityId(Long communityId) {
         this.communityId = communityId;
     }
 

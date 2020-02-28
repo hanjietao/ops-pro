@@ -23,7 +23,7 @@ public class Note extends BaseEntity{
     private String content;
 
     /** 所属社区 */
-    private Integer communityId;
+    private Long communityId;
 
     /** 用户id */
     private Long userId;
@@ -68,11 +68,11 @@ public class Note extends BaseEntity{
         this.content = content;
     }
 
-    public Integer getCommunityId() {
+    public Long getCommunityId() {
         return communityId;
     }
 
-    public void setCommunityId(Integer communityId) {
+    public void setCommunityId(Long communityId) {
         this.communityId = communityId;
     }
 

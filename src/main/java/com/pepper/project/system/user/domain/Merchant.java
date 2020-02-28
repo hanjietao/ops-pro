@@ -26,7 +26,7 @@ public class Merchant extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    private Integer merchantId;
+    private Long merchantId;
 
     private String merchantCode;
 
@@ -42,11 +42,11 @@ public class Merchant extends BaseEntity
         return serialVersionUID;
     }
 
-    public Integer getMerchantId() {
+    public Long getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Integer merchantId) {
+    public void setMerchantId(Long merchantId) {
         this.merchantId = merchantId;
     }
 

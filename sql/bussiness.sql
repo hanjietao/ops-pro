@@ -20,7 +20,7 @@ CREATE TABLE csc_area(
 -- 社区
 drop table if exists cm_community ;
 CREATE TABLE cm_community(
-    ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '社区ID' ,
     COMMUNITY_CODE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '社区编码' ,
     COMMUNITY_NAME VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '社区名称' ,
     AREA_ID INT    COMMENT '社区所属区域ID' ,
@@ -94,7 +94,7 @@ CREATE TABLE cm_note(
 -- 社区医院
 drop table if exists ch_hospital ;
 CREATE TABLE ch_hospital(
-    ID INT NOT NULL AUTO_INCREMENT COMMENT '医院ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '医院ID' ,
     HOS_NAME VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '医院名称' ,
     HOS_CODE VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '医院英文名' ,
     INTRODUCTION TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '医院介绍' ,
@@ -164,7 +164,7 @@ CREATE TABLE ch_appointment(
 -- 物业
 drop table if exists pm_property ;
 CREATE TABLE pm_property(
-    ID INT  AUTO_INCREMENT  COMMENT '社区ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '社区ID' ,
     PROPERTY_CODE VARCHAR(128)    COMMENT '社区编码' ,
     PROPERTY_NAME VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '社区名称' ,
     AREA_ID INT    COMMENT '社区所属区域ID' ,
@@ -316,7 +316,7 @@ CREATE TABLE fp_loop_image(
 -- 系统会员表 sm
 drop table if exists sm_client_user ;
 CREATE TABLE `sm_client_user` (
-  `USER_ID` bigint(20) NOT NULL COMMENT '用户ID',
+  `USER_ID` bigint(20) AUTO_INCREMENT NOT NULL COMMENT '用户ID',
   `NIKE_NAME` varchar(128) DEFAULT NULL COMMENT '用户昵称',
   `USER_CURRENT_POINTS` bigint(20) DEFAULT NULL COMMENT '用户当前积分',
   `USER_ACC_POINTS` bigint(20) DEFAULT NULL COMMENT '用户累计积分',
@@ -341,6 +341,13 @@ CREATE TABLE `sm_client_user` (
 
 -- sys_user update
 alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
-alter table sys_user add column merchant_Id int(11) default '0' comment '商户id';
+alter table sys_user add column merchant_Id bigint(11) default '0' comment '商户id';
+
+alter table cm_community modify column id bigint(20);
+alter table pm_property modify column id bigint(20);
+alter table ch_hospital modify column id bigint(20);
+
+-- 设置系统用户自增长值从6亿开始，为了区分与sm_client_user  user_id 很清楚得区分开
+alter table sys_user AUTO_INCREMENT= 600000000;
 
  -- <p class="m-t-md">你若不离不弃，我必生死相依 admin  admin123  hant  123456</p>

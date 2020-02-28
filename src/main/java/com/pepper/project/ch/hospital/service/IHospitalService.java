@@ -11,7 +11,7 @@ public interface IHospitalService {
 
     int deleteHospitalByIds(String ids);
 
-    Hospital selectHospitalById(Integer id);
+    Hospital selectHospitalById(Long id);
 
     int updateHospital(Hospital hospital);
 

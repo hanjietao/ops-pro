@@ -19,7 +19,7 @@ public class Activity extends BaseEntity{
     /** 唯一键索引id */
     private Integer id;
 
-    private Integer communityId;
+    private Long communityId;
 
     /** title */
     private String title;
@@ -52,11 +52,11 @@ public class Activity extends BaseEntity{
         this.id = id;
     }
 
-    public Integer getCommunityId() {
+    public Long getCommunityId() {
         return communityId;
     }
 
-    public void setCommunityId(Integer communityId) {
+    public void setCommunityId(Long communityId) {
         this.communityId = communityId;
     }
 

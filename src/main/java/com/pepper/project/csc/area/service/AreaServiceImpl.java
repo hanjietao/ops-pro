@@ -55,7 +55,7 @@ public class AreaServiceImpl implements IAreaService {
     }
 
     @Override
-    public Object selectAreaListByHosId(Integer hosId) {
+    public Object selectAreaListByHosId(Long hosId) {
         Hospital hospital = hospitalService.selectHospitalById(hosId);
         String communityIds =hospital.getCommunityIds();
         List<Area> areas = areaDao.selectAreaList(new Area());

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface HospitalMapper {
 
-    Hospital selectHospitalById(Integer id);
+    Hospital selectHospitalById(Long id);
     List<Hospital> selectHospitalList(Hospital hospital);
 
     /**

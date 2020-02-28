@@ -51,7 +51,7 @@ public class PropertyServiceImpl implements IPropertyService {
     }
 
     @Override
-    public Property selectPropertyById(Integer id) {
+    public Property selectPropertyById(Long id) {
         return propertyDao.selectPropertyById(id);
     }
 

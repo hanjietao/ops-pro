@@ -11,9 +11,9 @@ public interface ICommunityService {
 
     int deleteCommunityByIds(String ids);
 
-    Community selectCommunityById(Integer id);
+    Community selectCommunityById(Long id);
 
     int updateCommunity(Community community);
 
-    List<Community> selectCommunityListByHospitalId(Integer hospitalId);
+    List<Community> selectCommunityListByHospitalId(Long hospitalId);
 }

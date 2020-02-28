@@ -12,6 +12,8 @@ import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.sm.user.domain.ClientUser;
+import com.pepper.project.sm.user.service.IClientUserService;
 import com.pepper.project.system.user.domain.Merchant;
 import com.pepper.project.system.user.domain.User;
 import org.apache.shiro.SecurityUtils;
@@ -45,6 +47,9 @@ public class LoginController extends BaseController
     @Autowired
     private IPropertyService propertyService;
 
+    @Autowired
+    private IClientUserService clientUserService;
+
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response)
     {
@@ -68,7 +73,7 @@ public class LoginController extends BaseController
             subject.login(token);
             User sysUser = getSysUser();
             if(!SysUserType.admin.getType().equals(sysUser.getMerchantFlag())){
-                Integer merchantId = sysUser.getMerchantId();
+                Long merchantId = sysUser.getMerchantId();
                 Merchant merchant = new Merchant();
                 String flg = sysUser.getMerchantFlag();
                 String merchantIntro = null;

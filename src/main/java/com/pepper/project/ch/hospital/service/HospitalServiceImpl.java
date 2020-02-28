@@ -50,7 +50,7 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public Hospital selectHospitalById(Integer id) {
+    public Hospital selectHospitalById(Long id) {
         return hospitalDao.selectHospitalById(id);
     }
 

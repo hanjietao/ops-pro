@@ -55,7 +55,7 @@ public class ActivityApplyPm extends BaseEntity{
     private ClientUser clientUser;
 
     /** 为了在权限区分是，筛选特定物业的活动 */
-    private Integer propertyId;
+    private Long propertyId;
 
     public Integer getId() {
         return id;
@@ -161,11 +161,11 @@ public class ActivityApplyPm extends BaseEntity{
         this.clientUser = clientUser;
     }
 
-    public Integer getPropertyId() {
+    public Long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(Integer propertyId) {
+    public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }
 

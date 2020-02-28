@@ -35,7 +35,7 @@ public class ClientUserServiceImpl implements IClientUserService {
     }
 
     @Override
-    public ClientUser selectClientUserById(Integer id) {
+    public ClientUser selectClientUserById(Long id) {
         return clientUserDao.selectClientUserById(id);
     }
 

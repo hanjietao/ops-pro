@@ -71,4 +71,6 @@ public interface ShiroConstants
      * 系统活跃用户缓存
      */
     public static final String SYS_USERCACHE = "sys-userCache";
+
+    public static final String SYS_CLIENT_USER = "sys-client-user";
 }

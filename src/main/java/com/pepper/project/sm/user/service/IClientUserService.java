@@ -12,7 +12,7 @@ public interface IClientUserService {
 
     int deleteClientUserByIds(String ids);
 
-    ClientUser selectClientUserById(Integer id);
+    ClientUser selectClientUserById(Long userId);
 
     int updateClientUser(ClientUser activity);
 

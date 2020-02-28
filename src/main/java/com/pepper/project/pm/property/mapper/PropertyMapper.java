@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PropertyMapper {
 
-    Property selectPropertyById(Integer id);
+    Property selectPropertyById(Long id);
     List<Property> selectPropertyList(Property property);
 
     /**

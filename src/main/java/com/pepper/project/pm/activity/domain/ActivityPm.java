@@ -18,7 +18,7 @@ public class ActivityPm extends BaseEntity{
     /** 唯一键索引id */
     private Integer id;
 
-    private Integer propertyId;
+    private Long propertyId;
 
     /** title */
     private String title;
@@ -55,11 +55,11 @@ public class ActivityPm extends BaseEntity{
         this.id = id;
     }
 
-    public Integer getPropertyId() {
+    public Long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(Integer propertyId) {
+    public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }
 

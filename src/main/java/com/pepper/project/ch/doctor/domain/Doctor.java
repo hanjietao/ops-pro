@@ -31,7 +31,7 @@ public class Doctor extends BaseEntity{
     private Integer doctorType;
 
     /** 所属医院 */
-    private Integer hospitalId;
+    private Long hospitalId;
 
     //private String deleteFlag;
 
@@ -92,11 +92,11 @@ public class Doctor extends BaseEntity{
         this.doctorType = doctorType;
     }
 
-    public Integer getHospitalId() {
+    public Long getHospitalId() {
         return hospitalId;
     }
 
-    public void setHospitalId(Integer hospitalId) {
+    public void setHospitalId(Long hospitalId) {
         this.hospitalId = hospitalId;
     }
 

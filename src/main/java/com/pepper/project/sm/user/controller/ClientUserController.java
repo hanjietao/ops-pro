@@ -66,7 +66,7 @@ public class ClientUserController extends BaseController {
      * 修改活动
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         mmap.put("clientUser", clientUserService.selectClientUserById(id));
         return prefix + "/edit";

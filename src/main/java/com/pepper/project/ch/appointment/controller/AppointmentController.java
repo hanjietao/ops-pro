@@ -125,7 +125,7 @@ public class AppointmentController extends BaseController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
-        mmap.put("areas",areaService.selectAreaListByHosId(id));
+        //mmap.put("areas",areaService.selectAreaListByHosId(id));
         mmap.put("appointment", appointmentService.selectAppointmentById(id));
         return prefix + "/edit";
     }

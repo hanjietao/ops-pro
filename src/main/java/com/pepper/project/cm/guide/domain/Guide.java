@@ -25,7 +25,7 @@ public class Guide extends BaseEntity{
     private String content;
 
     /** 所属社区 */
-    private Integer communityId;
+    private Long communityId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -72,11 +72,11 @@ public class Guide extends BaseEntity{
         this.content = content;
     }
 
-    public Integer getCommunityId() {
+    public Long getCommunityId() {
         return communityId;
     }
 
-    public void setCommunityId(Integer communityId) {
+    public void setCommunityId(Long communityId) {
         this.communityId = communityId;
     }
 

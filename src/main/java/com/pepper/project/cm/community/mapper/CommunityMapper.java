@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommunityMapper {
 
-    Community selectCommunityById(Integer id);
+    Community selectCommunityById(Long id);
     List<Community> selectCommunityList(Community community);
 
     /**

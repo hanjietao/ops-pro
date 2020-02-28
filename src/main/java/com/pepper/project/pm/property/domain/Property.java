@@ -16,7 +16,7 @@ public class Property extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
-    private Integer id;
+    private Long id;
 
     /** 区域码Code */
     private String propertyCode;
@@ -50,11 +50,11 @@ public class Property extends BaseEntity{
     /** 区域 */
     private Area area;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

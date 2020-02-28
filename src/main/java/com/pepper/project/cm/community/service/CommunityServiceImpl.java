@@ -57,7 +57,7 @@ public class CommunityServiceImpl implements ICommunityService {
     }
 
     @Override
-    public Community selectCommunityById(Integer id) {
+    public Community selectCommunityById(Long id) {
         return communityDao.selectCommunityById(id);
     }
 
@@ -68,7 +68,7 @@ public class CommunityServiceImpl implements ICommunityService {
     }
 
     @Override
-    public List<Community> selectCommunityListByHospitalId(Integer hospitalId) {
+    public List<Community> selectCommunityListByHospitalId(Long hospitalId) {
         Hospital hospital = hospitalService.selectHospitalById(hospitalId);
         String communityIds =hospital.getCommunityIds();
         List<Community> communitys = communityDao.selectCommunityList(new Community());

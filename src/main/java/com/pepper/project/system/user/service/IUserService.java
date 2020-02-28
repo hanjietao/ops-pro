@@ -1,5 +1,6 @@
 package com.pepper.project.system.user.service;
 
+import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.system.user.domain.User;
 import java.util.List;
 
@@ -178,4 +179,6 @@ public interface IUserService
      * @return 结果
      */
     public int changeStatus(User user);
+
+    int insertUserClient(User user, ClientUser clientUser);
 }

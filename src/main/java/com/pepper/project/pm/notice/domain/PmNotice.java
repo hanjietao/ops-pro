@@ -24,7 +24,7 @@ public class PmNotice extends BaseEntity{
     private String content;
 
     /** 所属物业 */
-    private Integer propertyId;
+    private Long propertyId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -71,11 +71,11 @@ public class PmNotice extends BaseEntity{
         this.content = content;
     }
 
-    public Integer getPropertyId() {
+    public Long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(Integer propertyId) {
+    public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }
 

@@ -23,7 +23,7 @@ public class NotePm extends BaseEntity{
     private String content;
 
     /** 所属物业 */
-    private Integer propertyId;
+    private Long propertyId;
 
     /** 用户id */
     private Long userId;
@@ -68,11 +68,11 @@ public class NotePm extends BaseEntity{
         this.content = content;
     }
 
-    public Integer getPropertyId() {
+    public Long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(Integer propertyId) {
+    public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
     }
 

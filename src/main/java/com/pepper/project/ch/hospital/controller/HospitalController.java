@@ -81,7 +81,7 @@ public class HospitalController extends BaseController {
      * 修改医院
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         mmap.put("areas",areaService.selectAreaList(new Area()));
         mmap.put("communitys",communityService.selectCommunityListByHospitalId(id));

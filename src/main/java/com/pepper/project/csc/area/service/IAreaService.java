@@ -15,5 +15,5 @@ public interface IAreaService {
 
     int updateArea(Area area);
 
-    Object selectAreaListByHosId( Integer id);
+    Object selectAreaListByHosId( Long id);
 }

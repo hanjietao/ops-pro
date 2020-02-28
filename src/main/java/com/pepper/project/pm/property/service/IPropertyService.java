@@ -11,7 +11,7 @@ public interface IPropertyService {
 
     int deletePropertyByIds(String ids);
 
-    Property selectPropertyById(Integer id);
+    Property selectPropertyById(Long id);
 
     int updateProperty(Property property);
 

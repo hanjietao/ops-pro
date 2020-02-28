@@ -29,7 +29,7 @@ public class MedicalProject extends BaseEntity{
 
     private String deleteFlag;
 
-    private Integer hospitalId;
+    private Long hospitalId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -91,11 +91,11 @@ public class MedicalProject extends BaseEntity{
         this.deleteFlag = deleteFlag;
     }
 
-    public Integer getHospitalId() {
+    public Long getHospitalId() {
         return hospitalId;
     }
 
-    public void setHospitalId(Integer hospitalId) {
+    public void setHospitalId(Long hospitalId) {
         this.hospitalId = hospitalId;
     }
 

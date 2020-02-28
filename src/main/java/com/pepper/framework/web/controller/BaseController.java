@@ -158,7 +158,7 @@ public class BaseController
         ShiroUtils.setSysUser(user);
     }
 
-    public Integer getMerchantId(){
+    public Long getMerchantId(){
         String merchantFlag = getSysUser().getMerchantFlag();
         if(!"0".equals(merchantFlag)){
             if(!SysUserType.cadmin.equals(merchantFlag)
@@ -166,10 +166,10 @@ public class BaseController
                 && SysUserType.padmin.equals(merchantFlag)){
                 throw new BusinessException("未知类型用户，不允许打开此页面");
             }
-            Integer cId = getSysUser().getMerchantId();
+            Long cId = getSysUser().getMerchantId();
             return cId;
         }
-        return 0;
+        return 0L;
     }
 
     public Long getUserId()

@@ -33,9 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        from sm_client_user cu
     </sql>
 
-	<select id="selectClientUserById" parameterType="Integer" resultMap="ClientUserResult">
+	<select id="selectClientUserById" parameterType="Long" resultMap="ClientUserResult">
 		<include refid="selectClientUserVo"/>
-		where cu.id = #{id}
+		where cu.user_id = #{userId}
 	</select>
 
  	<select id="selectClientUserList" parameterType="ClientUser" resultMap="ClientUserResult">
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertClientUser" parameterType="ClientUser">
+	<insert id="insertClientUser" parameterType="ClientUser" useGeneratedKeys="true" keyProperty="userId">
 		insert into sm_client_user (
 		<if test="nikeName != null and nikeName != '' ">nike_name, </if>
 		<if test="userName != null and userName != '' ">user_name, </if>
@@ -72,8 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="age != null and age != '' ">age, </if>
 		<if test="birthday != null and birthday != '' ">birthday, </if>
 		<if test="status != null and status != '' ">status, </if>
-		<if test="createBy != null and createBy != ''">create_by,</if>
-		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		register_time,
 		last_login_time,
 		create_time,
@@ -87,8 +85,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="age != null and age != '' ">#{age}, </if>
 		<if test="birthday != null and birthday != '' ">#{birthday}, </if>
-		<if test="createBy != null and createBy != ''">#{createBy},</if>
-		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
         sysdate(),
         sysdate(),
 		sysdate(),
@@ -108,10 +104,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="status != null and status != ''">status = #{status}, </if>
 			<if test="avatarUrl != null and avatarUrl != ''">avatar_url = #{avatarUrl}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            last_login_time = sysdate()
+			<if test="lastLoginTime != null and lastLoginTime != ''">last_login_time = #{lastLoginTime},</if>
 			update_time = sysdate()
 		</set>
-		where id = #{id}
+		where user_id = #{userId}
 	</update>
 
     <delete id="deleteClientUserByIds" parameterType="String">

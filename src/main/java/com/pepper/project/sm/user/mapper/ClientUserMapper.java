@@ -9,7 +9,7 @@ public interface ClientUserMapper {
 
     public int deleteClientUserByIds(String[] toStrArray);
 
-    public ClientUser selectClientUserById(Integer id);
+    public ClientUser selectClientUserById(Long id);
 
     public int insertClientUser(ClientUser clientUser);
 

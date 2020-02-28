@@ -160,7 +160,7 @@ public class UserController extends BaseController
             return error("选择社区管理员/医院管理员/物业管理员 角色，需要选择【所属区域】,填写业务系统名称，用于初始化对应业务系统");
         }
         Integer insertValue = null;
-        Integer merchantId = null;
+        Long merchantId = null;
         if(SysBusinessRoleType.contains(user.getRoleId().toString())){
             if(SysBusinessRoleType.cadminrole.getType().equals(user.getRoleId().toString())){
                 Community community = new Community();

@@ -76,7 +76,7 @@ public class PropertyController extends BaseController {
      * 修改区域
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Area> areas = areaService.selectAreaList(new Area());
         mmap.put("areas",areas);

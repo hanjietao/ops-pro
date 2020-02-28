@@ -23,7 +23,7 @@ public class Appointment extends BaseEntity{
     private Long userId;
 
     /** 医院id */
-    private Integer hospitalId;
+    private Long hospitalId;
 
     /** 经纬医疗项目 */
     private Integer medicalProjectId;
@@ -77,11 +77,11 @@ public class Appointment extends BaseEntity{
         this.userId = userId;
     }
 
-    public Integer getHospitalId() {
+    public Long getHospitalId() {
         return hospitalId;
     }
 
-    public void setHospitalId(Integer hospitalId) {
+    public void setHospitalId(Long hospitalId) {
         this.hospitalId = hospitalId;
     }
 
