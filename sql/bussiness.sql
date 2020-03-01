@@ -360,6 +360,13 @@ alter table sys_user AUTO_INCREMENT= 600000000;
 
 -- admin 29c67a30398638269fe600f73a054934
 -- admin admin123 111111  cbc030ef6fc74743fda36e2f76d6908b
+INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (1, 103, 'admin', '韩结涛', '00', 'admin@163.com', '15888888888', '1', '/profile/avatar/2020/02/17/1d3120d56f3e28a7012ff5b05a36bfd7.png', 'cbc030ef6fc74743fda36e2f76d6908b', '111111', '0', '0', '127.0.0.1', '2020-03-01 15:17:07', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:17:06', '管理员', 0, 0, 'fcea920f7412b5da7be0cf42b8c93759');
+INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (2, 105, 'hant', 'hant', '00', 'hant@qq.com', '15666666666', '1', '', '19486052ecdfd0df9aa0b6f306cd962c', '546af6', '0', '0', '127.0.0.1', '2020-03-01 15:03:53', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:03:52', '测试员', 0, 0, 'db846859bcf906caf61ba74e22953a80');
+
+
+
+
+
 
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;
