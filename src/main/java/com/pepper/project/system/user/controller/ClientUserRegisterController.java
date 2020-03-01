@@ -2,27 +2,20 @@ package com.pepper.project.system.user.controller;
 
 import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.UserConstants;
-import com.pepper.common.utils.ServletUtils;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
-import com.pepper.framework.aspectj.lang.enums.SysBusinessRoleType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
-import com.pepper.project.ch.hospital.domain.Hospital;
-import com.pepper.project.cm.community.domain.Community;
-import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.system.user.domain.User;
 import com.pepper.project.system.user.service.IUserService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +34,6 @@ public class ClientUserRegisterController extends BaseController {
     {
         return "register";
     }
-
 
     /**
      *  注册客户端用户

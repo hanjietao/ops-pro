@@ -68,6 +68,8 @@ public class User extends BaseEntity
     /** 重复输入密码 */
     private String repassword;
 
+    private String pwdMd5;
+
     /** 盐加密 */
     private String salt;
 
@@ -262,6 +264,14 @@ public class User extends BaseEntity
 
     public void setRepassword(String repassword) {
         this.repassword = repassword;
+    }
+
+    public String getPwdMd5() {
+        return pwdMd5;
+    }
+
+    public void setPwdMd5(String pwdMd5) {
+        this.pwdMd5 = pwdMd5;
     }
 
     public String getSalt()

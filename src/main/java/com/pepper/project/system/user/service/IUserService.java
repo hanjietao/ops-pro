@@ -92,6 +92,8 @@ public interface IUserService
      */
     public int insertUser(User user);
 
+    int insertUserClient(User user, ClientUser clientUser);
+
     /**
      * 保存用户信息
      *
@@ -180,5 +182,5 @@ public interface IUserService
      */
     public int changeStatus(User user);
 
-    int insertUserClient(User user, ClientUser clientUser);
+
 }

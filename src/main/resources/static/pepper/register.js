@@ -17,11 +17,11 @@ function register() {
     debugger
 	$.modal.loading($("#btnSubmit").data("loading"));
 	var loginName = $.common.trim($("input[name='loginName']").val());
-    var password = $.common.trim($("input[name='password']").val());
+    var password = $.MD5($.common.trim($("input[name='password']").val()));
     var validateCode = $("input[name='validateCode']").val();
     var phonenumber = $("input[name='phonenumber']").val();
     var smsCode = $("input[name='smsCode']").val();
-    var repassword = $.common.trim($("input[name='repassword']").val());
+    var repassword = $.MD5($.common.trim($("input[name='repassword']").val()));
     $.ajax({
         type: "post",
         url: ctx + "register",

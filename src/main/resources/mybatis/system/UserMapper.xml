@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="sex"          column="sex"          />
 		<result property="avatar"       column="avatar"       />
 		<result property="password"     column="password"     />
+		<result property="pwdMd5"       column="pwd_md5"      />
 		<result property="salt"         column="salt"         />
 		<result property="status"       column="status"       />
 		<result property="delFlag"      column="del_flag"     />
@@ -49,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectUserVo">
-        select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,u.merchant_flag,u.merchant_id,
+        select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.password, u.pwd_md5, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,u.merchant_flag,u.merchant_id,
        		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
        		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
 		from sys_user u
@@ -198,6 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
  			<if test="sex != null and sex != ''">sex,</if>
  			<if test="password != null and password != ''">password,</if>
+ 			<if test="pwdMd5 != null and pwdMd5 != ''">pwd_md5,</if>
  			<if test="salt != null and salt != ''">salt,</if>
 			<if test="merchantFlag != null and merchantFlag != ''">merchant_flag,</if>
 			<if test="merchantId != null and merchantId != ''">merchant_id,</if>
@@ -215,6 +217,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
  			<if test="sex != null and sex != ''">#{sex},</if>
  			<if test="password != null and password != ''">#{password},</if>
+ 			<if test="pwdMd5 != null and pwdMd5 != ''">#{pwdMd5},</if>
  			<if test="salt != null and salt != ''">#{salt},</if>
 			<if test="merchantFlag != null and merchantFlag != ''">#{merchantFlag},</if>
 			<if test="merchantId != null and merchantId != ''">#{merchantId},</if>

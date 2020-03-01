@@ -193,9 +193,8 @@ public class UserServiceImpl implements IUserService
     public int insertUser(User user)
     {
         user.randomSalt();
-//        user.setLoginName("admin");
-//        user.setSalt("111111");
-//        user.setPassword("0192023a7bbd73250516f069df18b500");
+
+        user.setPwdMd5(user.getPassword()); // record
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(ShiroUtils.getLoginName());
         // 新增用户信息
@@ -219,6 +218,7 @@ public class UserServiceImpl implements IUserService
     {
         clientUserMapper.insertClientUser(clientUser);
         user.randomSalt();
+        user.setPwdMd5(user.getPassword()); // record
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy("client_user_register"); // 客户端用户注册
         user.setMerchantId(clientUser.getUserId());
@@ -525,5 +525,10 @@ public class UserServiceImpl implements IUserService
     public int changeStatus(User user)
     {
         return userMapper.updateUser(user);
+    }
+
+    public static void main(String[] args) {
+        PasswordService passwordService1 = new PasswordService();
+        System.out.println(passwordService1.encryptPassword("hant", "db846859bcf906caf61ba74e22953a80", "546af6"));
     }
 }

@@ -108,17 +108,18 @@ public class ClientUserLoginController extends BaseController
         User user = userService.selectUserByPhoneNumber(mobilePhone);
 
         String username = user.getLoginName();
-        String password = user.getPassword();
+        String password = user.getPwdMd5();
 
         if(rememberMe == null){
             rememberMe = false;
         }
-        //UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-       // Subject subject = SecurityUtils.getSubject();
+
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        Subject subject = SecurityUtils.getSubject();
         try
         {
-            //subject.login(token);
-            User sysUser = user;
+            subject.login(token);
+            User sysUser = getSysUser();
             Long clientUserId = sysUser.getMerchantId();
             if(clientUserId==null || clientUserId == 0L){
                 // 非客户端用户
@@ -130,7 +131,8 @@ public class ClientUserLoginController extends BaseController
             }
             sysUser.setClientUser(clientUser);// 将用户信息表存入系统用户对象中，方便session中获取用户信息
             setSysUser(sysUser);
-            return success();
+            // TODO need empty the session sms code before
+            return success("login success client");
         }
         catch (AuthenticationException e)
         {

@@ -342,6 +342,7 @@ CREATE TABLE `sm_client_user` (
 -- sys_user update
 alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
 alter table sys_user add column merchant_Id bigint(11) default '0' comment '商户id';
+alter table sys_user add column pwd_md5 varchar(128) default null comment '20200301, 修改前端传明文密码的方式，使用chang32 md5传输，并保存md5到数据库，已实现兼容shiro并实现多方式登录';
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);
@@ -372,4 +373,3 @@ CREATE TABLE sms_code(
     PRIMARY KEY(ID)
 )AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';
 
-29c67a30398638269fe600f73a054934
