@@ -103,7 +103,7 @@ public class ProfileController extends BaseController
             user.setPassword(newPassword);
             if (userService.resetUserPwd(user) > 0)
             {
-                setSysUser(userService.selectUserById(user.getUserId()));
+                setSysUser(user);//userService.selectUserById(user.getUserId())
                 return success();
             }
             return error();
@@ -152,7 +152,7 @@ public class ProfileController extends BaseController
         currentUser.setSex(user.getSex());
         if (userService.updateUserInfo(currentUser) > 0)
         {
-            setSysUser(userService.selectUserById(currentUser.getUserId()));
+            setSysUser(currentUser);
             return success();
         }
         return error();
@@ -201,7 +201,7 @@ public class ProfileController extends BaseController
         {
             Merchant merchant1 = currentUser.getMerchant();
             merchant1.setMerchantName(merchant.getMerchantName());
-            merchant1.setMerchantIntroduce(merchant1.getMerchantIntroduce());
+            merchant1.setMerchantIntroduce(merchant.getMerchantIntroduce());
             currentUser.setMerchant(merchant1);
             setSysUser(currentUser);
             return success();
@@ -227,7 +227,7 @@ public class ProfileController extends BaseController
                 currentUser.setAvatar(avatar);
                 if (userService.updateUserInfo(currentUser) > 0)
                 {
-                    setSysUser(userService.selectUserById(currentUser.getUserId()));
+                    setSysUser(currentUser);//userService.selectUserById(currentUser.getUserId())
                     return success();
                 }
             }

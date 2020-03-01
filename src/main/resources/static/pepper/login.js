@@ -15,9 +15,10 @@ $.validator.setDefaults({
 });
 
 function login() {
+    debugger
 	$.modal.loading($("#btnSubmit").data("loading"));
 	var username = $.common.trim($("input[name='username']").val());
-    var password = $.common.trim($("input[name='password']").val());
+    var password = $.MD5($.common.trim($("input[name='password']").val()),16);
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
     $.ajax({

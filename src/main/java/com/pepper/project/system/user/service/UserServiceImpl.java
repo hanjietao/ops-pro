@@ -193,6 +193,9 @@ public class UserServiceImpl implements IUserService
     public int insertUser(User user)
     {
         user.randomSalt();
+//        user.setLoginName("admin");
+//        user.setSalt("111111");
+//        user.setPassword("0192023a7bbd73250516f069df18b500");
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(ShiroUtils.getLoginName());
         // 新增用户信息

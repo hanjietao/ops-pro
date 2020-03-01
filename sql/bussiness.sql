@@ -343,16 +343,22 @@ CREATE TABLE `sm_client_user` (
 alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
 alter table sys_user add column merchant_Id bigint(11) default '0' comment '商户id';
 
-alter table cm_community modify column id bigint(20);
-alter table pm_property modify column id bigint(20);
-alter table ch_hospital modify column id bigint(20);
+-- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
+-- alter table cm_community modify column id bigint(20);
+-- alter table pm_property modify column id bigint(20);
+-- alter table ch_hospital modify column id bigint(20);
 
 -- 设置系统用户自增长值从6亿开始，为了区分与sm_client_user  user_id 很清楚得区分开
 alter table sys_user AUTO_INCREMENT= 600000000;
 
  -- <p class="m-t-md">你若不离不弃，我必生死相依 admin  admin123  hant  123456</p>
+-- 密码改造（原因: shiro密码登陆方式，很难进行拓展其他方式登陆，但是记录密码原文到数据库有密码泄露风险，遂计划使用md5）：
+--          1. 前端页面上传登陆或者注册/重置密码，统一上传密码得md5
+--          2. 从而将密码更换成md5，然后进行  loginName+密码+salt进行加密保存数据库
+--          3. 保存md5密码，方便下次通过其他方式登陆（手机号，凭证自动登陆）
 
-
+-- admin 29c67a30398638269fe600f73a054934
+-- admin admin123 111111  cbc030ef6fc74743fda36e2f76d6908b
 
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;
@@ -365,3 +371,5 @@ CREATE TABLE sms_code(
     SEND_TIME DATETIME COMMENT '发送时间',
     PRIMARY KEY(ID)
 )AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';
+
+29c67a30398638269fe600f73a054934

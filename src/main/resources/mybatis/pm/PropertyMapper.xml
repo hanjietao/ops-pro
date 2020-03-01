@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        left join csc_area a on p.area_id = a.id
     </sql>
 
-	<select id="selectPropertyById" parameterType="Integer" resultMap="PropertyResult">
+	<select id="selectPropertyById" parameterType="Long" resultMap="PropertyResult">
 		<include refid="selectPropertyVo"/>
 		where p.id = #{id}
 	</select>

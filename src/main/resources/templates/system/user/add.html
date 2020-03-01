@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">登录密码：</label>
                         <div class="col-sm-8">
-                            <input name="password" placeholder="请输入登录密码" class="form-control" type="password" th:value="${@config.getKey('sys.user.initPassword')}" required>
+                            <input name="passOrigin" id="passOrigin" placeholder="请输入登录密码" class="form-control" type="password" th:value="${@config.getKey('sys.user.initPassword')}" required>
                         </div>
                     </div>
                 </div>
@@ -163,6 +163,7 @@
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: select2-js" />
     <th:block th:include="include :: bootstrap-select-js" />
+    <th:block th:include="include :: jquery-md5-js" />
 	<script>
 	    var prefix = ctx + "system/user";
 
@@ -242,11 +243,13 @@
 	        if ($.validate.form()) {
 	        	var data = $("#form-user-add").serializeArray();
 	        	var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
+	        	var powd = $("#passOrigin").val();
 	        	//var roleIds = $.form.selectCheckeds("role");
 	        	var postIds = $.form.selectSelects("post");
 	        	data.push({"name": "status", "value": status});
 	        	//data.push({"name": "roleIds", "value": roleIds});
 	        	data.push({"name": "postIds", "value": postIds});
+	        	data.push({"name": "password", "value": $.MD5(powd)});
 	        	$.operate.saveTab(prefix + "/add", data);
 	        }
 	    }
@@ -276,6 +279,8 @@
 		}
 
 		$(function() {
+		    debugger
+            console.log($.MD5("admin123"));
             $('#post').select2({
                 placeholder: "请选择岗位",
                 allowClear: true

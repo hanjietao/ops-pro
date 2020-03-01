@@ -9,7 +9,7 @@ pepper:
   # 实例演示开关
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/pepper/uploadPath，Linux配置 /home/pepper/uploadPath）
-  profile: /home/hospital/uploadPath
+  profile: C:/projects/community_hospital/pepper/uploadPath
   # 获取ip地址开关
   addressEnabled: true
 
@@ -31,7 +31,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.ruoyi: debug
+    com.pepper: debug
     org.springframework: warn
 
 # 用户配置

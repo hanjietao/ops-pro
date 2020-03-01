@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        select create_time, create_by, update_time, update_by, id,hos_name, hos_code, introduction,community_ids,area_id,status from ch_hospital
     </sql>
 
-	<select id="selectHospitalById" parameterType="Integer" resultMap="HospitalResult">
+	<select id="selectHospitalById" parameterType="Long" resultMap="HospitalResult">
 		<include refid="selectHospitalVo"/>
 		where id = #{id}
 	</select>
