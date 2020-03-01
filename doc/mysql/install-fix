@@ -1,0 +1,11 @@
+[root@ecs-29a3 ~]# history|grep "yum"
+   23  2020-02-23 17:30:37 root yum list installed|grep docker
+   25  2020-02-23 17:31:01 root yum install -y yum-utils device-mapper-persistent-data lvm2
+   28  2020-02-23 17:34:12 root yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+   29  2020-02-23 17:34:23 root yum makecache fast
+   30  2020-02-23 17:34:34 root yum install docker-ce -y
+
+
+  173  2020-02-24 13:41:43 root libfontmanager.so:yum install libgcc.i686 --setopt=protected_multilib=false
+  174  2020-02-24 13:41:44 root yum install libgcc.i686 --setopt=protected_multilib=false
+  254  2020-02-24 12:44:12 root yum install glibc.i686

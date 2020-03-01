@@ -1,0 +1,2 @@
+## jvm 运行参数
+-Dsun.net.inetaddr.ttl=60 -server -d64 -Xmx768m -Xms768m -Xmn256m -XX:AutoBoxCacheMax=20000 -XX:+AlwaysPreTouch -XX:-UseBiasedLocking -XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=2 -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError
