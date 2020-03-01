@@ -1,12 +1,12 @@
 #!/bin/bash
-
+echo "1111"
 AppName=OpsPro.jar
-
+echo "223333"
 #JVM参数
 JVM_OPTS="-Dname=$AppName  -Duser.timezone=Asia/Shanghai -Xms512M -Xmx512M -XX:PermSize=256M -XX:MaxPermSize=512M -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDateStamps  -XX:+PrintGCDetails -XX:NewRatio=1 -XX:SurvivorRatio=30 -XX:+UseParallelGC -XX:+UseParallelOldGC"
 APP_HOME=`pwd`
 LOG_PATH=$APP_HOME/logs/$AppName.log
-
+echo "111111111111"
 if [ "$1" = "" ];
 then
     echo -e "\033[0;31m 未输入操作名 \033[0m  \033[0;34m {start|stop|restart|status} \033[0m"
@@ -26,7 +26,7 @@ function start()
 	if [ x"$PID" != x"" ]; then
 	    echo "$AppName is running..."
 	else
-		nohup java -jar  $JVM_OPTS target/$AppName > /dev/null 2>&1 &
+		nohup java -jar  $JVM_OPTS $AppName > /dev/null 2>&1 &
 		echo "Start $AppName success..."
 	fi
 }
