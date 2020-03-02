@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.pepper</groupId>
-	<artifactId>OpsPro</artifactId>
-	<version>4.1.0</version>
+	<artifactId>Opspro</artifactId>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>OpsPro</name>
-	<url>http://www.ops.vip</url>
-	<description>社区医院管理系统</description>
+	<name>Opspro</name>
+	<url>http://www.hant-ops.pro</url>
+	<description>Opspro管理系统</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

@@ -55,11 +55,11 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
-                slf4j:
-                    enabled: true
-                    statement-log-enabled: true
-                    statement-executable-sql-log-enable: true
-                    statement-parameter-set-log-enabled: true
-logging:
-    level:
-        druid.sql.Statement: DEBUG
+#                slf4j:
+#                    enabled: true
+#                    statement-log-enabled: true
+#                    statement-executable-sql-log-enable: true
+#                    statement-parameter-set-log-enabled: true
+#logging:
+#    level:
+#        druid.sql.Statement: DEBUG
