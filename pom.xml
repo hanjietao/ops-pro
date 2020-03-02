@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>Opspro</name>
-	<url>http://www.hant-ops.pro</url>
+	<url>http://www.pepper-ops.pro</url>
 	<description>Opspro管理系统</description>
 
 	<parent>
