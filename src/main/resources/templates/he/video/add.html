@@ -20,7 +20,7 @@
 			<label class="col-sm-2 control-label">视频上传（单个）：</label>
 			<div class="col-sm-10">
 				<div class="file-loading">
-					<input id="videoinput" type="file" data-browse-on-zone-click="true">
+					<input id="videoinput" type="file" data-browse-on-zone-click="true" accept=".mp4">
 				</div>
 			</div>
 		</div>
@@ -59,6 +59,8 @@
 			'uploadUrl': 'upload',
 			overwriteInitial: false,
 			initialPreviewAsData: true,
+			allowedFileExtensions: ['mp4'],
+			allowedFileTypes: ['video'],
 			uploadExtraData:function(){
 				var data = {
 					uploadModule:'healthEducation'
