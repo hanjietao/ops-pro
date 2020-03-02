@@ -106,13 +106,22 @@
 					title: '视频',
 					field: 'videoUrl',
 					formatter: function(value, row, index) {
-						debugger
 						// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
 						// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
 						/*width: 108% !important;
-    height: 100% !important;*/
+    						height: 100% !important;
+     					$.common.sprintf("
+     					关闭预览：
+     					<div style='width:100px;height:100px'>
+							<video src='%s' controls='controls' style='width: 100% !important;height: 100% !important;'
+								preload='none'>
+								您的浏览器不支持该视频播放插件
+							</video>
+     					</div>
+     					", row.videoUrl);
+    */
 						if(row.videoUrl){
-							return $.common.sprintf("<div style='width:100px;height:100px'><video src='%s' preload='none' controls='controls' style='width: 100% !important;height: 100% !important;' preload='none'>您的浏览器不支持该视频播放插件</video></div>", row.videoUrl);
+							return $.common.sprintf("<div style='width:100px;height:100px'><video src='%s' controls='controls' style='width: 100% !important;height: 100% !important;'>您的浏览器不支持该视频播放插件</video></div>", row.videoUrl);
 						}else {
 							return '无';
 						}
