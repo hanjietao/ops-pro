@@ -1,6 +1,7 @@
 package com.pepper.project.fp.loop.controller;
 
 import com.pepper.common.utils.file.FileUploadUtils;
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.config.OpsConfig;
@@ -11,6 +12,7 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.fp.loop.domain.LoopImage;
 import com.pepper.project.fp.loop.service.ILoopImageService;
+import com.pepper.project.system.user.domain.User;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -163,6 +165,7 @@ public class LoopImageController extends BaseController {
     public TableDataInfo getList(LoopImage loopImage)
     {
         startPage();
+        User user = ShiroUtils.getSysUser();
         List<LoopImage> list = loopImageService.selectLoopImageList(loopImage);
         return getDataTable(list);
     }

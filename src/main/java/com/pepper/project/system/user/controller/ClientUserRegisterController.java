@@ -96,6 +96,7 @@ public class ClientUserRegisterController extends BaseController {
 
         user.setPostIds(new Long[]{5L}); // 这个是在岗位管理里面新增的给客户端用户得岗位类型，这个配置不能删除  TODO
         user.setRoleId(107L); // 客户端用户登陆权限，这个是在权限管理里面配置新增得角色，也是不能删除得配置
+        user.setDeptId(112L); // 配置部门 客户端用户
 
         // 注册客户端用户，需要将sm_client_user表得id记录到sys_user表的merchantId
         return toAjax(userService.insertUserClient(user,clientUser));

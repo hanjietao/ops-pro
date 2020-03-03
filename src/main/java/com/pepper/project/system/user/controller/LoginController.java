@@ -47,9 +47,6 @@ public class LoginController extends BaseController
     @Autowired
     private IPropertyService propertyService;
 
-    @Autowired
-    private IClientUserService clientUserService;
-
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response)
     {

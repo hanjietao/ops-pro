@@ -260,11 +260,17 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/client/login", "anon");
         filterChainDefinitionMap.put("/authcode/gen", "anon");
         filterChainDefinitionMap.put("/client/sms/login", "anon"); // 短信登陆
+
+        /** 业务请求 */
+        // 获取轮播图列表
+        filterChainDefinitionMap.put("/fp/loopImage/getList","anon");
+
+
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-        filters.put("outsession", shiroLoginRedirectFilter());
+        filters.put("outSession", shiroLoginRedirectFilter());
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
         filters.put("captchaValidate", captchaValidateFilter());
