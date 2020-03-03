@@ -72,5 +72,6 @@ public interface ShiroConstants
      */
     public static final String SYS_USERCACHE = "sys-userCache";
 
-    public static final String SYS_CLIENT_USER = "sys-client-user";
+    /** 登陆类型 */
+    public static final String LOGIN_TYPE = "login-type";
 }
