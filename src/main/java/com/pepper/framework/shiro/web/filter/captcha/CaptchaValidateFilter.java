@@ -8,6 +8,7 @@ import com.google.code.kaptcha.Constants;
 import com.pepper.common.constant.ShiroConstants;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.security.ShiroUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 验证码过滤器
@@ -21,7 +22,8 @@ public class CaptchaValidateFilter extends AccessControlFilter
      */
     private boolean captchaEnabled = true;
 
-    private String sysClientUserFlag = "pepper-client";
+    @Value("${pepper.clientLoginType}")
+    private String clientLoginType;
 
     /**
      * 验证码类型
@@ -57,7 +59,7 @@ public class CaptchaValidateFilter extends AccessControlFilter
             return true;
         }
         // 客户端用户 不需要进行验证码判断
-        if(sysClientUserFlag.equals(httpServletRequest.getParameter(ShiroConstants.SYS_CLIENT_USER))){
+        if(clientLoginType.equals(httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE))){
             return true;
         }
 

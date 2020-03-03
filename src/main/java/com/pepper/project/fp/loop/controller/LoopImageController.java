@@ -154,4 +154,16 @@ public class LoopImageController extends BaseController {
             return error(e.getMessage());
         }
     }
+
+
+    /**     客户端接口区    */
+
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(LoopImage loopImage)
+    {
+        startPage();
+        List<LoopImage> list = loopImageService.selectLoopImageList(loopImage);
+        return getDataTable(list);
+    }
 }

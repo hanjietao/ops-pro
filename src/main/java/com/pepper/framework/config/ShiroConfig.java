@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.Filter;
+
+import com.pepper.framework.shiro.web.filter.ShiroLoginRedirectFilter;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -262,10 +264,12 @@ public class ShiroConfig
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        filters.put("outsession", shiroLoginRedirectFilter());
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
         filters.put("captchaValidate", captchaValidateFilter());
         filters.put("kickout", kickoutSessionFilter());
+
         // 注销成功，则跳转到指定页面
         filters.put("logout", logoutFilter());
         shiroFilterFactoryBean.setFilters(filters);
@@ -289,7 +293,17 @@ public class ShiroConfig
     }
 
     /**
-     * 自定义在线用户同步过滤器
+     * 自定义在线用户处理过滤器
+     */
+    @Bean
+    public ShiroLoginRedirectFilter shiroLoginRedirectFilter()
+    {
+        ShiroLoginRedirectFilter shiroLoginRedirectFilter = new ShiroLoginRedirectFilter();
+        return shiroLoginRedirectFilter;
+    }
+
+    /**
+     *  自定义客户端用户登陆失效过滤器，返回json数据101
      */
     @Bean
     public SyncOnlineSessionFilter syncOnlineSessionFilter()

@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND id = #{id}
 			</if>
 		</where>
+		order by sort desc
 	</select>
 
 	<insert id="insertLoopImage" parameterType="LoopImage">

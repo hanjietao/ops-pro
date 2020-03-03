@@ -1,0 +1,4 @@
+problem resolve：
+   1. <th:block th:include="include :: summernote-css"/>  video-edit 引入导致视频上传的选择按钮变形
+
+   2. 替换area字符，导致页面无法缩放，因为修改了静态文件里面使用的area变量

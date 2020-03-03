@@ -9,9 +9,12 @@ pepper:
   # 实例演示开关
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/pepper/uploadPath，Linux配置 /home/pepper/uploadPath）
+  #profile: C:/projects/community_hospital/pepper/uploadPath
   profile: /home/hospital/uploadPath
   # 获取ip地址开关
   addressEnabled: true
+  #loginType client
+  clientLoginType: p-client
 
 # 开发环境配置
 server:
