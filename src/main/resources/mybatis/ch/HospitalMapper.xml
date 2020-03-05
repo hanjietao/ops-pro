@@ -6,50 +6,74 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="Hospital" id="HospitalResult">
 		<id     property="id"         		column="id"         />
-		<result property="hosName"         column="hos_name"        />
-		<result property="hosCode"         column="hos_code"        />
-		<result property="introduction"       column="introduction"         />
-		<result property="communityIds"       column="community_ids"         />
-		<result property="areaId"       column="area_id"         />
+		<result property="hosName"          column="hos_name"        />
+		<result property="hosCode"          column="hos_code"        />
+		<result property="introduction"     column="introduction"         />
+		<result property="communityIds"     column="community_ids"         />
+		<result property="areaId"           column="area_id"         />
 		<result property="status"           column="status"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
+		<association property="area"        column="id" javaType="Area" resultMap="AreaResult" />
+		<association property="community"   column="id" javaType="Community" resultMap="CommunityResult" />
+	</resultMap>
+
+	<resultMap type="Community" id="CommunityResult">
+		<id     property="id"         		column="id"         />
+		<result property="communityCode"    column="community_code"        />
+		<result property="communityName"    column="community_name"        />
+		<result property="areaId"           column="area_id"         />
+		<result property="introduction"     column="introduction1"         />
+		<result property="status"           column="status"         />
+	</resultMap>
+
+	<resultMap type="Area" id="AreaResult">
+		<id     property="id"               column="id"         />
+		<result property="areaCode"         column="area_code"        />
+		<result property="areaName"         column="area_name"        />
+		<result property="coordinate"       column="coordinate"         />
+		<result property="status"           column="status"         />
 	</resultMap>
 
 	<sql id="selectHospitalVo">
-       select create_time, create_by, update_time, update_by, id,hos_name, hos_code, introduction,community_ids,area_id,status from ch_hospital
+       select h.create_time, h.create_by, h.update_time, h.update_by, h.id,h.hos_name, h.hos_code, h.introduction,h.community_ids,h.area_id,h.status,
+       a.id,a.area_code,a.area_name,a.coordinate,a.status,
+       c.id,c.community_code,c.community_name,c.area_id,c.introduction as introduction1,c.status
+       from ch_hospital h
+       left join csc_area a on h.area_id = a.id
+       left join cm_community c on h.community_ids = c.id
     </sql>
 
 	<select id="selectHospitalById" parameterType="Long" resultMap="HospitalResult">
 		<include refid="selectHospitalVo"/>
-		where id = #{id}
+		where h.id = #{id}
 	</select>
 
  	<select id="selectHospitalList" parameterType="Community" resultMap="HospitalResult">
 		<include refid="selectHospitalVo"/>
 		<where>
 			<if test="hosName != null and hosName != ''">
-				AND hos_name like concat('%', #{hosName}, '%')
+				AND h.hos_name like concat('%', #{hosName}, '%')
 			</if>
 			<if test="hosCode != null and hosCode != ''">
-				AND hos_code like concat('%', #{hosCode}, '%')
+				AND h.hos_code like concat('%', #{hosCode}, '%')
 			</if>
 			<if test="hosCode != null and hosCode != ''">
-				AND hos_code like concat('%', #{hosCode}, '%')
+				AND h.hos_code like concat('%', #{hosCode}, '%')
 			</if>
 			<if test="areaId != null and areaId != ''">
-				AND area_id = #{areaId}
+				AND h.area_id = #{areaId}
 			</if>
 			<if test="communityIds != null and communityIds != ''">
-				AND community_ids like concat('%', #{communityIds}, '%')
+				AND h.community_ids like concat('%', #{communityIds}, '%')
 			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND h.status = #{status}
 			</if>
 			<if test="id != null and id != 0">
-				AND id = #{id}
+				AND h.id = #{id}
 			</if>
 		</where>
 	</select>

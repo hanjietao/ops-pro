@@ -11,14 +11,20 @@ import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.pm.property.domain.Property;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
+@Api("医院")
 @Controller
 @RequestMapping("/ch/hospital")
 public class HospitalController extends BaseController {
@@ -113,4 +119,30 @@ public class HospitalController extends BaseController {
         return toAjax(hospitalService.deleteHospitalByIds(ids));
     }
 
+
+    @ApiOperation("医院列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList()
+    {
+        startPage();
+        List<Hospital> list = hospitalService.selectHospitalList(new Hospital());
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取医院详细")
+    @ApiImplicitParam(name = "id", value = "医院id", dataType = "Long", required = true, paramType = "query")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Long id)
+    {
+        if (id != 0L)
+        {
+            return hospitalService.selectHospitalById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

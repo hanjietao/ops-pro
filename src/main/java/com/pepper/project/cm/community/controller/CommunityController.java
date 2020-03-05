@@ -9,14 +9,19 @@ import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
+@Api("社区")
 @Controller
 @RequestMapping("/cm/community")
 public class CommunityController extends BaseController {
@@ -108,4 +113,29 @@ public class CommunityController extends BaseController {
         return toAjax(communityService.deleteCommunityByIds(ids));
     }
 
+    @ApiOperation("社区列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList()
+    {
+        startPage();
+        List<Community> list = communityService.selectCommunityList(new Community());
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取社区详细")
+    @ApiImplicitParam(name = "id", value = "社区id", dataType = "Long", required = true, paramType = "query")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Long id)
+    {
+        if (id != 0L)
+        {
+            return communityService.selectCommunityById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

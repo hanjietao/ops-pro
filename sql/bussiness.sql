@@ -366,8 +366,6 @@ INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_na
 
 
 
-
-
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;
 CREATE TABLE sms_code(

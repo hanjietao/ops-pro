@@ -9,14 +9,19 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
+@Api("物业")
 @Controller
 @RequestMapping("/pm/property")
 public class PropertyController extends BaseController {
@@ -108,4 +113,29 @@ public class PropertyController extends BaseController {
         return toAjax(propertyService.deletePropertyByIds(ids));
     }
 
+    @ApiOperation("物业列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList()
+    {
+        startPage();
+        List<Property> list = propertyService.selectPropertyList(new Property());
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取社区详细")
+    @ApiImplicitParam(name = "id", value = "物业id", dataType = "Long", required = true, paramType = "query")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Long id)
+    {
+        if (id != 0L)
+        {
+            return propertyService.selectPropertyById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

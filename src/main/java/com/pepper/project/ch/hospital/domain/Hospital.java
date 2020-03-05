@@ -1,6 +1,8 @@
 package com.pepper.project.ch.hospital.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.cm.community.domain.Community;
+import com.pepper.project.csc.area.domain.Area;
 
 import java.util.Date;
 
@@ -48,6 +50,12 @@ public class Hospital extends BaseEntity{
 
     /** 区域名称 */
     private String areaName;
+
+    /** 区域 */
+    private Area area;
+
+    /** 社区 */
+    private Community community;
 
     public Long getId() {
         return id;
@@ -153,6 +161,28 @@ public class Hospital extends BaseEntity{
         this.areaName = areaName;
     }
 
+    public Area getArea() {
+        if(area == null){
+            area = new Area();
+        }
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public Community getCommunity() {
+        if(community == null){
+            community = new Community();
+        }
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -167,6 +197,8 @@ public class Hospital extends BaseEntity{
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
+                ", area=" + area +
+                ", community='" + getCommunity() + '\'' +
                 '}';
     }
 }

@@ -56,7 +56,7 @@ public class GuideController extends BaseController {
     }
 
     /**
-     * 新增区域
+     * 新增社区指南
      */
     @GetMapping("/add")
     public String add(ModelMap mmap)
@@ -67,7 +67,7 @@ public class GuideController extends BaseController {
     }
 
     /**
-     * 新增保存区域设置
+     * 新增保存社区指南
      */
     @Log(title = "社区指南", businessType = BusinessType.INSERT)
     @RequiresPermissions("cm:guide:add")
@@ -84,7 +84,7 @@ public class GuideController extends BaseController {
     }
 
     /**
-     * 修改区域
+     * 修改社区指南
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
@@ -108,7 +108,7 @@ public class GuideController extends BaseController {
     }
 
     /**
-     * 删除区域
+     * 删除社区指南
      */
     @RequiresPermissions("cm:guide:remove")
     @Log(title = "社区指南", businessType = BusinessType.DELETE)

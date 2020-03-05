@@ -2,3 +2,6 @@ problem resolve：
    1. <th:block th:include="include :: summernote-css"/>  video-edit 引入导致视频上传的选择按钮变形
 
    2. 替换area字符，导致页面无法缩放，因为修改了静态文件里面使用的area变量
+
+   3. 目前整合客户端登陆，让客户端的用户也可以在在线用户列表出现，并且可以强退操作，
+        然后客户端再次访问需要登陆接口，会返回101错误码（登陆失效，重新登陆）

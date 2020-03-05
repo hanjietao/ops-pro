@@ -256,7 +256,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
-        filterChainDefinitionMap.put("/register", "anon");
+        filterChainDefinitionMap.put("/register", "anon,captchaValidate");//,captchaValidate
         filterChainDefinitionMap.put("/client/login", "anon");
         filterChainDefinitionMap.put("/authcode/gen", "anon");
         filterChainDefinitionMap.put("/client/sms/login", "anon"); // 短信登陆
@@ -264,6 +264,8 @@ public class ShiroConfig
         /** 业务请求 */
         // 获取轮播图列表
         filterChainDefinitionMap.put("/fp/loopImage/getList","anon");
+        filterChainDefinitionMap.put("/cm/community/getList","anon");
+        filterChainDefinitionMap.put("/cm/community/detail","anon");
 
 
         // 系统权限列表

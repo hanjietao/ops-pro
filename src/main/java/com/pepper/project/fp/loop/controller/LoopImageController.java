@@ -13,6 +13,8 @@ import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.fp.loop.domain.LoopImage;
 import com.pepper.project.fp.loop.service.ILoopImageService;
 import com.pepper.project.system.user.domain.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Api("轮播图")
 @Controller
 @RequestMapping("/fp/loopImage")
 public class LoopImageController extends BaseController {
+
+
 
     private String prefix = "fp/loopImage";
 
@@ -52,7 +57,7 @@ public class LoopImageController extends BaseController {
     }
 
     /**
-     * 新增宣教板块
+     * 新增轮播图
      */
     @GetMapping("/add")
     public String add(ModelMap mmap)
@@ -63,9 +68,9 @@ public class LoopImageController extends BaseController {
     }
 
     /**
-     * 新增保存宣教板块
+     * 新增保存轮播图
      */
-    @Log(title = "宣教板块", businessType = BusinessType.INSERT)
+    @Log(title = "轮播图", businessType = BusinessType.INSERT)
     @RequiresPermissions("fp:loop:add")
     @PostMapping("/add")
     @ResponseBody
@@ -75,7 +80,7 @@ public class LoopImageController extends BaseController {
     }
 
     /**
-     * 修改宣教板块
+     * 修改轮播图
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
@@ -87,10 +92,10 @@ public class LoopImageController extends BaseController {
     }
 
     /**
-     * 修改保存宣教板块
+     * 修改保存轮播图
      */
     @RequiresPermissions("fp:loop:edit")
-    @Log(title = "宣教板块", businessType = BusinessType.UPDATE)
+    @Log(title = "轮播图", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(LoopImage loopImage)
@@ -99,10 +104,10 @@ public class LoopImageController extends BaseController {
     }
 
     /**
-     * 删除宣教板块
+     * 删除轮播图
      */
     @RequiresPermissions("fp:loop:remove")
-    @Log(title = "宣教板块", businessType = BusinessType.DELETE)
+    @Log(title = "轮播图", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
@@ -160,13 +165,14 @@ public class LoopImageController extends BaseController {
 
     /**     客户端接口区    */
 
+    @ApiOperation("轮播图列表")
     @PostMapping("/getList")
     @ResponseBody
-    public TableDataInfo getList(LoopImage loopImage)
+    public TableDataInfo getList()
     {
         startPage();
-        User user = ShiroUtils.getSysUser();
-        List<LoopImage> list = loopImageService.selectLoopImageList(loopImage);
+        List<LoopImage> list = loopImageService.selectLoopImageList(new LoopImage());
         return getDataTable(list);
     }
+
 }

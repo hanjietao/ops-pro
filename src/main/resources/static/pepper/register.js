@@ -39,6 +39,7 @@ function register() {
         },
         success: function(r) {
             if (r.code == 0) {
+                $.modal.closeLoading();
                 $.modal.alertSuccess(r.msg)
                 $("#loginName").val("");
                 $("#password").val("");
@@ -49,7 +50,7 @@ function register() {
             	$(".code").val("");
             	$.modal.msg(r.msg);
             }
-            $.modal.closeLoading();
+
         }
     });
 }

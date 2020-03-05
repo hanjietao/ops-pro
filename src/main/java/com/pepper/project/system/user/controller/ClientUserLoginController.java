@@ -79,7 +79,7 @@ public class ClientUserLoginController extends BaseController
         HttpSession session = request.getSession();
         String validateStr = (String) session.getAttribute(GenConstants.SMS_CODE_ATTR);
         if(StringUtils.isEmpty(validateStr)){
-            error("请先发送短信验证码！");
+            return error("请先发送短信验证码！");
         }
 
         String[] validateStrArr = validateStr.split("_");
@@ -89,20 +89,20 @@ public class ClientUserLoginController extends BaseController
         String codeType = validateStrArr[3];
 
         if(!SMSCodeEnum.L.toString().equals(codeType)){
-            error("验证码非法，请重新发送！");
+            return error("验证码非法，请重新发送！");
         }
 
         long time = System.currentTimeMillis();
         if(time - Long.valueOf(timeStr) > 3 * 60 * 1000){
-            error("验证码已过期，时效3分钟！请重新发送短信验证码！");
+            return error("验证码已过期，时效3分钟！请重新发送短信验证码！");
         }
 
         if(!mobile.equals(mobilePhone)){
-            error("短信验证码与手机号不一致，请重新发送短信验证码！");
+            return error("短信验证码与手机号不一致，请重新发送短信验证码！");
         }
 
         if(!smsCode1.equals(smsCode)){
-            error("验证码错误！请校对验证码！");
+            return error("验证码错误！请校对验证码！");
         }
 
         User user = userService.selectUserByPhoneNumber(mobilePhone);
