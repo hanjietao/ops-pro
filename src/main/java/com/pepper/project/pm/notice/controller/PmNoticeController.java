@@ -6,17 +6,21 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.cm.guide.domain.Guide;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.pm.notice.domain.PmNotice;
 import com.pepper.project.pm.notice.service.IPmNoticeService;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
+import com.pepper.project.system.notice.domain.Notice;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -55,7 +59,7 @@ public class PmNoticeController extends BaseController {
     }
 
     /**
-     * 新增社区通知
+     * 新增物业通知
      */
     @GetMapping("/add")
     public String add(ModelMap mmap)
@@ -118,4 +122,29 @@ public class PmNoticeController extends BaseController {
         return toAjax(pmNoticeService.deletePmNoticeByIds(ids));
     }
 
+    @ApiOperation("物业通知列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long propertyId)
+    {
+        PmNotice pmNotice = new PmNotice();
+        pmNotice.setPropertyId(propertyId);
+        List<PmNotice> list = pmNoticeService.selectPmNoticeList(pmNotice);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("物业通知详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return pmNoticeService.selectPmNoticeById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

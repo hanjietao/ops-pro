@@ -5,10 +5,12 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -105,4 +107,14 @@ public class BoardController extends BaseController {
         return toAjax(boardService.deleteBoardByIds(ids));
     }
 
+
+    @ApiOperation("宣教板块列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList()
+    {
+        startPage();
+        List<Board> list = boardService.selectBoardList(new Board());
+        return getDataTable(list);
+    }
 }

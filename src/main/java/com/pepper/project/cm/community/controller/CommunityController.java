@@ -116,10 +116,15 @@ public class CommunityController extends BaseController {
     @ApiOperation("社区列表")
     @PostMapping("/getList")
     @ResponseBody
-    public TableDataInfo getList()
+    public TableDataInfo getList(Integer areaId)
     {
         startPage();
-        List<Community> list = communityService.selectCommunityList(new Community());
+        Community community = new Community();
+        if(areaId != null && areaId != 0){
+            community.setAreaId(areaId.toString());
+        }
+
+        List<Community> list = communityService.selectCommunityList(community);
         return getDataTable(list);
     }
 

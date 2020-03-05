@@ -7,16 +7,19 @@ import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.pm.notice.domain.PmNotice;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
 import com.pepper.project.pm.guide.domain.GuidePm;
 import com.pepper.project.pm.guide.service.IGuidePmService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -117,4 +120,30 @@ public class GuidePmController extends BaseController {
         return toAjax(guideService.deleteGuideByIds(ids));
     }
 
+
+    @ApiOperation("物业指南列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long propertyId)
+    {
+        GuidePm guidePm = new GuidePm();
+        guidePm.setPropertyId(propertyId);
+        List<GuidePm> list = guideService.selectGuideList(guidePm);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("物业指南详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return guideService.selectGuideById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

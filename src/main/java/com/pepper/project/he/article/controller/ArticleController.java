@@ -11,12 +11,15 @@ import com.pepper.project.he.article.domain.Article;
 import com.pepper.project.he.article.service.IArticleService;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
+import com.pepper.project.he.video.domain.Video;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -109,4 +112,30 @@ public class ArticleController extends BaseController {
         return toAjax(articleService.deleteArticleByIds(ids));
     }
 
+    @ApiOperation("宣教文章列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Integer boardId)
+    {
+        startPage();
+        Article article = new Article();
+        article.setBoardId(boardId);
+        List<Article> list = articleService.selectArticleList(article);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取宣教文章详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0L)
+        {
+            return articleService.selectArticleById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

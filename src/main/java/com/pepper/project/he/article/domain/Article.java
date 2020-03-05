@@ -18,7 +18,7 @@ public class Article extends BaseEntity{
     /** 唯一键索引id */
     private Integer id;
 
-    private String boardId;
+    private Integer boardId;
 
     /** 区域名称 */
     private String title;
@@ -56,11 +56,11 @@ public class Article extends BaseEntity{
         this.id = id;
     }
 
-    public String getBoardId() {
+    public Integer getBoardId() {
         return boardId;
     }
 
-    public void setBoardId(String boardId) {
+    public void setBoardId(Integer boardId) {
         this.boardId = boardId;
     }
 

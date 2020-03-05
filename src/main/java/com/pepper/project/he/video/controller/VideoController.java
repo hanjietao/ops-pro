@@ -11,6 +11,8 @@ import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
 import com.pepper.project.he.video.domain.Video;
 import com.pepper.project.he.video.service.IVideoService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -169,6 +172,35 @@ public class VideoController extends BaseController {
         {
             //logger.error("修改头像失败！", e);
             return error(e.getMessage());
+        }
+    }
+
+
+
+    @ApiOperation("宣教视频列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Integer boardId)
+    {
+        startPage();
+        Video video = new Video();
+        video.setBoardId(boardId);
+        List<Video> list = videoService.selectVideoList(video);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取宣教视频详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0L)
+        {
+            return videoService.selectVideoById(id);
+        }
+        else
+        {
+            return new HashMap<>();
         }
     }
 

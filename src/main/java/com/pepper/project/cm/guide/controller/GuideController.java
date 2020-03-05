@@ -6,18 +6,21 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.cm.guide.domain.Guide;
 import com.pepper.project.cm.guide.service.IGuideService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -118,5 +121,32 @@ public class GuideController extends BaseController {
     {
         return toAjax(guideService.deleteGuideByIds(ids));
     }
+
+    @ApiOperation("社区指南列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long communityId)
+    {
+        Guide guide = new Guide();
+        guide.setCommunityId(communityId);
+        List<Guide> list = guideService.selectGuideList(guide);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("社区指南详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return guideService.selectGuideById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
+
 
 }

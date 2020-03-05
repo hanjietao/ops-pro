@@ -7,6 +7,8 @@ import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.he.board.domain.Board;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,5 +98,14 @@ public class AreaController extends BaseController{
         return toAjax(areaService.deleteAreaByIds(ids));
     }
 
+    @ApiOperation("区域列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList()
+    {
+        startPage();
+        List<Area> list = areaService.selectAreaList(new Area());
+        return getDataTable(list);
+    }
 }
 

@@ -116,10 +116,14 @@ public class PropertyController extends BaseController {
     @ApiOperation("物业列表")
     @PostMapping("/getList")
     @ResponseBody
-    public TableDataInfo getList()
+    public TableDataInfo getList(Integer areaId)
     {
         startPage();
-        List<Property> list = propertyService.selectPropertyList(new Property());
+        Property property = new Property();
+        if(areaId != null && areaId != 0){
+            property.setAreaId(areaId.toString());
+        }
+        List<Property> list = propertyService.selectPropertyList(property);
         return getDataTable(list);
     }
 

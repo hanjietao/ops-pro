@@ -256,7 +256,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
-        filterChainDefinitionMap.put("/register", "anon,captchaValidate");//,captchaValidate
+        filterChainDefinitionMap.put("/register", "anon");//,captchaValidate
         filterChainDefinitionMap.put("/client/login", "anon");
         filterChainDefinitionMap.put("/authcode/gen", "anon");
         filterChainDefinitionMap.put("/client/sms/login", "anon"); // 短信登陆

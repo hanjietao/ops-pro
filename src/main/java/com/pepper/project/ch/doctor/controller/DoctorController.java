@@ -10,12 +10,15 @@ import com.pepper.project.ch.doctor.domain.Doctor;
 import com.pepper.project.ch.doctor.service.IDoctorService;
 import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.ch.medical.domain.MedicalProject;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -115,4 +118,29 @@ public class DoctorController extends BaseController {
         return toAjax(doctorService.deleteDoctorByIds(ids));
     }
 
+    @ApiOperation("医院医生列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long hosId)
+    {
+        Doctor doctor = new Doctor();
+        doctor.setHospitalId(hosId);
+        List<Doctor> list = doctorService.selectDoctorList(doctor);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取医生详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return doctorService.selectDoctorById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 }

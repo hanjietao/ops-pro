@@ -6,12 +6,14 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.ch.doctor.domain.Doctor;
 import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.cm.activity.service.IActivityService;
 import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -143,6 +146,31 @@ public class ActivityController extends BaseController {
         return "cm/activity/apply/apply";
     }
 
+    @ApiOperation("社区活动列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long communityId)
+    {
+        Activity activity = new Activity();
+        activity.setCommunityId(communityId);
+        List<Activity> list = activityService.selectActivityList(activity);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("社区活动详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return activityService.selectActivityById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 
 
 }

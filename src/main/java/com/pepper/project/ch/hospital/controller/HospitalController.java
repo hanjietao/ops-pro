@@ -123,10 +123,17 @@ public class HospitalController extends BaseController {
     @ApiOperation("医院列表")
     @PostMapping("/getList")
     @ResponseBody
-    public TableDataInfo getList()
+    public TableDataInfo getList(Integer areaId,Long communityId)
     {
         startPage();
-        List<Hospital> list = hospitalService.selectHospitalList(new Hospital());
+        Hospital hospital = new Hospital();
+        if(areaId != null && areaId != 0){
+            hospital.setAreaId(areaId.toString());
+        }
+        if(communityId != null && communityId != 0L){
+            hospital.setCommunityIds(communityId.toString());
+        }
+        List<Hospital> list = hospitalService.selectHospitalList(hospital);
         return getDataTable(list);
     }
 

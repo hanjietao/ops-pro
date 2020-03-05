@@ -11,14 +11,19 @@ import com.pepper.project.ch.hospital.service.IHospitalService;
 import com.pepper.project.ch.medical.domain.MedicalProject;
 import com.pepper.project.ch.medical.service.IMedicalProjectService;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
+@Api("医疗项目")
 @Controller
 @RequestMapping("/ch/medical")
 public class MedicalController extends BaseController {
@@ -111,6 +116,32 @@ public class MedicalController extends BaseController {
     public AjaxResult remove(String ids)
     {
         return toAjax(medicalProjectService.deleteMedicalProjectByIds(ids));
+    }
+
+    @ApiOperation("医院医疗项目列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long hosId)
+    {
+        MedicalProject medicalProject = new MedicalProject();
+        medicalProject.setHospitalId(hosId);
+        List<MedicalProject> list = medicalProjectService.selectMedicalProjectList(medicalProject);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("获取医疗项目详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return medicalProjectService.selectMedicalProjectById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
     }
 
 }

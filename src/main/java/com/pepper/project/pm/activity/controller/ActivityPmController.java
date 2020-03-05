@@ -6,18 +6,21 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.pm.activity.domain.ActivityPm;
 import com.pepper.project.pm.activity.service.IActivityPmService;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -142,6 +145,31 @@ public class ActivityPmController extends BaseController {
         return "pm/activity/apply/apply";
     }
 
+    @ApiOperation("物业活动列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public TableDataInfo getList(Long propertyId)
+    {
+        ActivityPm activityPm = new ActivityPm();
+        activityPm.setPropertyId(propertyId);
+        List<ActivityPm> list = activityService.selectActivityList(activityPm);
+        return getDataTable(list);
+    }
+
+    @ApiOperation("物业活动详细")
+    @PostMapping("/getDetail")
+    @ResponseBody
+    public Object getDetail(Integer id)
+    {
+        if (id != 0)
+        {
+            return activityService.selectActivityById(id);
+        }
+        else
+        {
+            return new HashMap<>();
+        }
+    }
 
 
 }
