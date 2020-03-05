@@ -76,7 +76,7 @@ public class AuthCodeController extends BaseController
         HttpSession session = request.getSession();
         session.setAttribute(GenConstants.SMS_CODE_ATTR, validateStr);
 
-        return success("验证码发送成功");
+        return success("验证码发送成功"+code);
     }
 
 
