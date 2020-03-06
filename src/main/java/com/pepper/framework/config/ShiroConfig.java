@@ -263,10 +263,34 @@ public class ShiroConfig
 
         /** 业务请求 */
         // 获取轮播图列表
-        filterChainDefinitionMap.put("/fp/loopImage/getList","anon");
-        filterChainDefinitionMap.put("/cm/community/getList","anon");
         filterChainDefinitionMap.put("/cm/community/detail","anon");
-
+        filterChainDefinitionMap.put("/cm/activity/getDetail","anon");
+        filterChainDefinitionMap.put("/cm/activity/getList","anon");
+        filterChainDefinitionMap.put("/pm/activity/getDetail","anon");
+        filterChainDefinitionMap.put("/pm/activity/getList","anon");
+        filterChainDefinitionMap.put("/csc/area/getList","anon");
+        filterChainDefinitionMap.put("/he/article/getDetail","anon");
+        filterChainDefinitionMap.put("/he/article/getList","anon");
+        filterChainDefinitionMap.put("/he/board/getList","anon");
+        filterChainDefinitionMap.put("/cm/community/getDetail","anon");
+        filterChainDefinitionMap.put("/cm/community/getList","anon");
+        filterChainDefinitionMap.put("/ch/doctor/getDetail","anon");
+        filterChainDefinitionMap.put("/ch/doctor/getList","anon");
+        filterChainDefinitionMap.put("/cm/guide/getDetail","anon");
+        filterChainDefinitionMap.put("/cm/guide/getList","anon");
+        filterChainDefinitionMap.put("/pm/guide/getDetail","anon");
+        filterChainDefinitionMap.put("/pm/guide/getList","anon");
+        filterChainDefinitionMap.put("/ch/hospital/getDetail","anon");
+        filterChainDefinitionMap.put("/ch/hospital/getList","anon");
+        filterChainDefinitionMap.put("/fp/loopImage/getList","anon");
+        filterChainDefinitionMap.put("/ch/medical/getDetail","anon");
+        filterChainDefinitionMap.put("/ch/medical/getList","anon");
+        filterChainDefinitionMap.put("/pm/notice/getDetail","anon");
+        filterChainDefinitionMap.put("/pm/notice/getList","anon");
+        filterChainDefinitionMap.put("/pm/property/getDetail","anon");
+        filterChainDefinitionMap.put("/pm/property/getList","anon");
+        filterChainDefinitionMap.put("/he/video/getDetail","anon");
+        filterChainDefinitionMap.put("/he/video/getList","anon");
 
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
