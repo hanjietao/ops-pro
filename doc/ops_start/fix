@@ -1,5 +1,6 @@
 sed -i "s/\r//" ops_start.sh
 
+java -jar xx.jar --spring.profiles.active=test
 
 解决“/bin/bash^M: bad interpreter: No such file or directory”
 转载hxpjava1 最后发布于2018-03-27 13:24:44 阅读数 16334  收藏
