@@ -1,7 +1,7 @@
 package com.pepper.common.utils;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
+
 import com.pepper.common.utils.text.StrFormatter;
 
 /**
@@ -394,5 +394,48 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 回车换行转换为list
+     * @param s
+     * @return
+     */
+    public static List<String> stringToList(String s){
+        String[] lines = s.split("\\r?\\n");
+        return Arrays.asList(lines);
+    }
+
+    public static ArrayList Dikaerji0(ArrayList al0) {
+
+        ArrayList a0 = (ArrayList) al0.get(0);// l1
+        ArrayList result = new ArrayList();// 组合的结果
+        for (int i = 1; i < al0.size(); i++) {
+            ArrayList a1 = (ArrayList) al0.get(i);
+            ArrayList temp = new ArrayList();
+            // 每次先计算两个集合的笛卡尔积，然后用其结果再与下一个计算
+            for (int j = 0; j < a0.size(); j++) {
+                for (int k = 0; k < a1.size(); k++) {
+                    ArrayList cut = new ArrayList();
+
+                    if (a0.get(j) instanceof ArrayList) {
+                        cut.addAll((ArrayList) a0.get(j));
+                    } else {
+                        cut.add(a0.get(j));
+                    }
+                    if (a1.get(k) instanceof ArrayList) {
+                        cut.addAll((ArrayList) a1.get(k));
+                    } else {
+                        cut.add(a1.get(k));
+                    }
+                    temp.add(cut);
+                }
+            }
+            a0 = temp;
+            if (i == al0.size() - 1) {
+                result = temp;
+            }
+        }
+        return result;
     }
 }
