@@ -5,3 +5,10 @@ problem resolve：
 
    3. 目前整合客户端登陆，让客户端的用户也可以在在线用户列表出现，并且可以强退操作，
         然后客户端再次访问需要登陆接口，会返回101错误码（登陆失效，重新登陆）
+
+   4. 开发打开druid mybatis执行日志方法
+    logging:
+      level:
+        com.pepper: debug  -- important
+        org.springframework: warn
+        druid.sql.Statement: debug  -- no influence
