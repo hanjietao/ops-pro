@@ -33,6 +33,19 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">奖励积分：</label>
+			<div class="col-sm-10">
+				<label class="radio-box"> <input type="radio" name="sendPoint" th:field="*{sendPoint}" value="N" /> 否 </label>
+				<label class="radio-box"> <input type="radio" name="sendPoint" th:field="*{sendPoint}" value="Y" /> 是 </label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">奖励积分数：</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" name="awardPoints" th:field="*{awardPoints}" id="awardPoints">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">状态：</label>
 			<div class="col-sm-10">
 				<div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
@@ -49,6 +62,31 @@
 <th:block th:include="include :: bootstrap-fileinput-js"/>
 <script type="text/javascript">
 	var prefix = ctx + "he/video";
+
+	$("#form-video-add").validate({
+		onkeyup: false,
+		rules: {
+			sendPoint: {
+				required: true,
+			},
+			awardPoints:{
+				digits:true
+			},
+		},
+		focusCleanup: true
+	});
+
+	$(function() {
+		$("#awardPoints").parents(".form-group").hide();
+		$('input').on('ifChecked', function(event){
+			var sendPoint = $(event.target).val();
+			if (sendPoint == "N") {
+				$("#awardPoints").parents(".form-group").hide();
+			} else if (sendPoint == "Y") {
+				$("#awardPoints").parents(".form-group").show();
+			}
+		});
+	});
 
 	$(document).ready(function () {
 		debugger
@@ -87,13 +125,18 @@
 	});
 
 	function submitHandler() {
-		debugger
 		if ($.validate.form()) {
 			var videoUrl = $("#videoUrl").val();
 			if(videoUrl){
 				$("#videoUrl").val(videoUrl)
 			}else{
 				$.modal.alertWarning("未发现上传成功的视频文件，请先选择视频，并点击上传。");
+				return
+			}
+			var sendPoint = $("input[name='sendPoint']:checked").val();
+			var awardPoints = $('#awardPoints').val();
+			if(sendPoint == 'Y' && awardPoints == ''){
+				$.modal.alertWarning("请填写奖励积分数！");
 				return
 			}
 			$.operate.save(prefix + "/add", $('#form-video-add').serialize());

@@ -32,6 +32,19 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label is-required">奖励积分：</label>
+                <div class="col-sm-10">
+                    <label class="radio-box"> <input type="radio" name="sendPoint" th:field="*{sendPoint}" value="N" /> 否 </label>
+                    <label class="radio-box"> <input type="radio" name="sendPoint" th:field="*{sendPoint}" value="Y" /> 是 </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">奖励积分数：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="awardPoints" th:field="*{awardPoints}" id="awardPoints">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label is-required">状态：</label>
                 <div class="col-sm-8">
                     <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
@@ -50,7 +63,12 @@
         var prefix = ctx + "he/article";
 
 	    $(function() {
-
+            var sendPoint = $('input[name="sendPoint"]:checked').val();
+            awardPointsVisible(sendPoint);
+            $('input').on('ifChecked', function(event) {
+                var sendPoint = $(event.target).val();
+                awardPointsVisible(sendPoint);
+            });
 		    $('.summernote').summernote({
 		    	placeholder: '请输入公告内容',
 		    	height : 192,
@@ -65,6 +83,15 @@
 			var content = $("#content").val();
 		    $('#editor').summernote('code', content);
 	    });
+
+        function awardPointsVisible(sendPoint) {
+            if (sendPoint == "N") {
+                $("#awardPoints").parents(".form-group").hide();
+                $("#awardPoints").val('');
+            } else if (sendPoint == "Y") {
+                $("#awardPoints").parents(".form-group").show();
+            }
+        }
 
 	    // 上传文件
 	    function sendFile(file, obj) {
@@ -92,11 +119,29 @@
 	    }
 
 		$("#form-article-edit").validate({
-			focusCleanup: true
+            onkeyup: false,
+            rules: {
+                sendPoint: {
+                    required: true,
+                },
+                awardPoints:{
+                    digits:true
+                },
+            },
+            focusCleanup: true
 		});
 
         function submitHandler() {
             if ($.validate.form()) {
+                var sendPoint = $("input[name='sendPoint']:checked").val();
+                var awardPoints = $('#awardPoints').val();
+                if(sendPoint == 'Y' && awardPoints == ''){
+                    $.modal.alertWarning("请填写奖励积分数！");
+                    return
+                }
+                if(sendPoint == 'N'){
+                    $("#awardPoints").val('0')
+                }
                 var sHTML = $('.summernote').summernote('code');
                 $("#content").val(sHTML);
                 $.operate.save(prefix + "/edit", $('#form-article-edit').serialize());

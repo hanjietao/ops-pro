@@ -65,12 +65,13 @@
 <script type="text/javascript">
     var prefix = ctx + "he/video";
 
-    $("#form-video-edit").validate({
-        focusCleanup: true
-    });
-
     $(document).ready(function () {
-        debugger
+        var sendPoint = $('input[name="sendPoint"]:checked').val();
+        awardPointsVisible(sendPoint);
+        $('input').on('ifChecked', function(event) {
+            var sendPoint = $(event.target).val();
+            awardPointsVisible(sendPoint);
+        });
         var val = $("#videoUrl1").val();
         $("#videoUrl").attr('src', val);
         $("#videoinput").fileinput({
@@ -105,6 +106,28 @@
         });
     });
 
+    function awardPointsVisible(sendPoint) {
+        if (sendPoint == "N") {
+            $("#awardPoints").parents(".form-group").hide();
+            $("#awardPoints").val('');
+        } else if (sendPoint == "Y") {
+            $("#awardPoints").parents(".form-group").show();
+        }
+    }
+
+    $("#form-video-edit").validate({
+        onkeyup: false,
+        rules: {
+            sendPoint: {
+                required: true,
+            },
+            awardPoints:{
+                digits:true
+            },
+        },
+        focusCleanup: true
+    });
+
     function submitHandler() {
         debugger
         if ($.validate.form()) {
@@ -112,6 +135,16 @@
             if(videoUrl1){
                 $("#videoUrl").val(videoUrl1)
             }
+            var sendPoint = $("input[name='sendPoint']:checked").val();
+            var awardPoints = $('#awardPoints').val();
+            if(sendPoint == 'Y' && awardPoints == ''){
+                $.modal.alertWarning("请填写奖励积分数！");
+                return
+            }
+            if(sendPoint == 'N'){
+                $("#awardPoints").val('0')
+            }
+
             $.operate.save(prefix + "/edit", $('#form-video-edit').serialize());
         }
     }

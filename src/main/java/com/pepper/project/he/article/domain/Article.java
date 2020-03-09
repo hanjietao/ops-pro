@@ -27,6 +27,10 @@ public class Article extends BaseEntity{
 
     private Integer watchCount;
 
+    private String sendPoint;
+
+    private Integer awardPoints;
+
     /** 区域状态（0正常 1关闭） */
     private String status;
 
@@ -86,6 +90,22 @@ public class Article extends BaseEntity{
 
     public void setWatchCount(Integer watchCount) {
         this.watchCount = watchCount;
+    }
+
+    public String getSendPoint() {
+        return sendPoint;
+    }
+
+    public void setSendPoint(String sendPoint) {
+        this.sendPoint = sendPoint;
+    }
+
+    public Integer getAwardPoints() {
+        return awardPoints;
+    }
+
+    public void setAwardPoints(Integer awardPoints) {
+        this.awardPoints = awardPoints;
     }
 
     public String getStatus() {
@@ -155,6 +175,8 @@ public class Article extends BaseEntity{
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", watchCount=" + watchCount +
+                ", sendPoint=" + sendPoint +
+                ", awardPoints=" + awardPoints +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +

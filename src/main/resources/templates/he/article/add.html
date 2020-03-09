@@ -31,6 +31,19 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">奖励积分：</label>
+			<div class="col-sm-10">
+				<label class="radio-box"> <input type="radio" name="sendPoint" value="N" /> 否 </label>
+				<label class="radio-box"> <input type="radio" name="sendPoint" value="Y" /> 是 </label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">奖励积分数：</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" name="awardPoints" id="awardPoints">
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">状态：</label>
 			<div class="col-sm-10">
 				<div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
@@ -48,6 +61,19 @@
 <script type="text/javascript">
 	var prefix = ctx + "he/article";
 
+	$("#form-article-add").validate({
+		onkeyup: false,
+		rules: {
+			sendPoint: {
+				required: true,
+			},
+			awardPoints:{
+				digits:true
+			},
+		},
+		focusCleanup: true
+	});
+
 	$('.summernote').summernote({
 		placeholder: '请输入医院介绍',
 		height : 192,
@@ -58,6 +84,18 @@
 				sendFile(files[0], this);
 			}
 		}
+	});
+
+	$(function() {
+		$("#awardPoints").parents(".form-group").hide();
+		$('input').on('ifChecked', function(event){
+			var sendPoint = $(event.target).val();
+			if (sendPoint == "N") {
+				$("#awardPoints").parents(".form-group").hide();
+			} else if (sendPoint == "Y") {
+				$("#awardPoints").parents(".form-group").show();
+			}
+		});
 	});
 
 	// 上传文件
@@ -87,6 +125,12 @@
 
 	function submitHandler() {
 		if ($.validate.form()) {
+			var sendPoint = $("input[name='sendPoint']:checked").val();
+			var awardPoints = $('#awardPoints').val();
+			if(sendPoint == 'Y' && awardPoints == ''){
+				$.modal.alertWarning("请填写奖励积分数！");
+				return
+			}
 			var sHTML = $('.summernote').summernote('code');
 			$("#content").val(sHTML);
 			$.operate.save(prefix + "/add", $('#form-article-add').serialize());

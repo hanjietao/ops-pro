@@ -132,6 +132,22 @@
 					title: '观看人数'
 				},
 				{
+					field: 'sendPoint',
+					title: '是否奖励积分',
+					formatter: function(value, item, index) {
+						if (value == 'Y') {
+							return '<span class="label label-primary">是</span>';
+						}
+						else if (value == 'N') {
+							return '<span class="label label-primary">否</span>';
+						}
+					}
+				},
+				{
+					field: 'awardPoints',
+					title: '奖励积分数'
+				},
+				{
 					field: 'board.boardName',
 					title: '所属板块'
 				},
