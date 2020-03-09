@@ -10,9 +10,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="hospitalId"         column="hospital_id"        />
 		<result property="medicalProjectId"       column="medical_project_id"         />
 		<result property="appointmentTime"       column="appointment_time"         />
+		<result property="appointmentStartTime"       column="appointment_start_time"         />
+		<result property="appointmentEndTime"       column="appointment_end_time"         />
 		<result property="appointmentName"       column="appointment_name"         />
 		<result property="appointmentPhone"       column="appointment_phone"         />
 		<result property="status"           column="status"         />
+		<result property="appointmentReason"       column="appointment_reason"            />
+		<result property="cancelReason"       column="cancel_reason"            />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
@@ -42,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectAppointmentVo">
     	select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.user_id,a.hospital_id,
-		a.medical_project_id,a.appointment_time,a.appointment_name,a.appointment_phone,a.status,
+		a.medical_project_id,a.appointment_time,a.appointment_start_time,a.appointment_end_time,a.appointment_name,
+		a.appointment_phone,a.status,a.appointment_reason,a.cancel_reason,
 		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
 		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
 		from ch_appointment a
@@ -58,7 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="selectAppointmentList" parameterType="Appointment" resultMap="AppointmentResult">
 <!--		<include refid="selectAppointmentVo"/>-->
 		select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.user_id,a.hospital_id,
-		a.medical_project_id,a.appointment_time,a.appointment_name,a.appointment_phone,a.status,
+		a.medical_project_id,a.appointment_time,a.appointment_start_time,a.appointment_end_time,a.appointment_name,
+		a.appointment_phone,a.status,a.appointment_reason,a.cancel_reason,
 		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
 		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
 		from ch_appointment a
@@ -103,8 +109,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hospitalId != null and hospitalId != '' ">hospital_id, </if>
 		<if test="medicalProjectId != null and medicalProjectId != '' ">medical_project_id, </if>
 		<if test="appointmentTime != null">appointment_time, </if>
+		<if test="appointmentStartTime != null">appointment_start_time, </if>
+		<if test="appointmentEndTime != null">appointment_end_time, </if>
 		<if test="appointmentName != null and appointmentName != '' ">appointment_name, </if>
 		<if test="appointmentPhone != null and appointmentPhone != '' ">appointment_phone, </if>
+		<if test="appointmentReason != null and appointmentReason != '' ">appointment_reason, </if>
+		<if test="cancelReason != null and cancelReason != '' ">cancel_reason, </if>
 		<if test="status != null and status != '' ">status, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
@@ -115,8 +125,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="hospitalId != null and hospitalId != ''">#{hospitalId}, </if>
 		<if test="medicalProjectId != null and medicalProjectId != ''">#{medicalProjectId}, </if>
 		<if test="appointmentTime != null">#{appointmentTime,jdbcType=DATE}, </if>
+		<if test="appointmentStartTime != null">#{appointmentStartTime,jdbcType=DATE}, </if>
+		<if test="appointmentEndTime != null">#{appointmentEndTime,jdbcType=DATE}, </if>
 		<if test="appointmentName != null and appointmentName != ''">#{appointmentName}, </if>
 		<if test="appointmentPhone != null and appointmentPhone != ''">#{appointmentPhone}, </if>
+		<if test="appointmentReason != null and appointmentReason != ''">#{appointmentReason}, </if>
+		<if test="cancelReason != null and cancelReason != ''">#{cancelReason}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
@@ -132,8 +146,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="hospitalId != null and hospitalId != ''">hospital_id = #{hospitalId}, </if>
 			<if test="medicalProjectId != null and medicalProjectId != ''">medical_project_id = #{medicalProjectId}, </if>
 			<if test="appointmentTime != null">appointment_time = #{appointmentTime}, </if>
+			<if test="appointmentStartTime != null">appointment_start_time = #{appointmentStartTime}, </if>
+			<if test="appointmentEndTime != null">appointment_end_time = #{appointmentEndTime}, </if>
 			<if test="appointmentName != null">appointment_name = #{appointmentName}, </if>
 			<if test="appointmentPhone != null">appointment_phone = #{appointmentPhone}, </if>
+			<if test="appointmentReason != null">appointment_reason = #{appointmentReason}, </if>
+			<if test="cancelReason != null">cancel_reason = #{cancelReason}, </if>
 			<if test="status != null">status = #{status}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()

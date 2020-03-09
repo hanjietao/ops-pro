@@ -28,11 +28,25 @@
 				<input class="form-control" type="text" name="medicalProjectId" id="medicalProjectId" required>
 			</div>
 		</div>
+<!--		<div class="form-group">-->
+<!--			<label class="col-sm-2 control-label is-required">预约日期：</label>-->
+<!--			<div class="col-sm-10 input-group date">-->
+<!--				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+<!--				<input type="text" class="form-control" name="appointmentTimeStr" id="appointmentTimeStr" placeholder="yyyy-MM-dd HH:mm:ss" required>-->
+<!--			</div>-->
+<!--		</div>-->
 		<div class="form-group">
-			<label class="col-sm-2 control-label is-required">预约日期：</label>
+			<label class="col-sm-2 control-label is-required">预约时间起始：</label>
 			<div class="col-sm-10 input-group date">
 				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				<input type="text" class="form-control" name="appointmentTimeStr" id="appointmentTimeStr" placeholder="yyyy-MM-dd HH:mm:ss" required>
+				<input type="text" class="form-control" name="appointmentStartTimeStr" id="appointmentStartTimeStr" placeholder="yyyy-MM-dd HH:mm:ss" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">预约时间结束：</label>
+			<div class="col-sm-10 input-group date">
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				<input type="text" class="form-control" name="appointmentEndTimeStr" id="appointmentEndTimeStr" placeholder="yyyy-MM-dd HH:mm:ss" required>
 			</div>
 		</div>
 		<div class="form-group">
@@ -45,6 +59,12 @@
 			<label class="col-sm-2 control-label is-required">联系电话：</label>
 			<div class="col-sm-10">
 				<input class="form-control" type="text" name="appointmentPhone" id="appointmentPhone" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">预约原因：</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" name="appointmentReason" id="appointmentReason" required>
 			</div>
 		</div>
 		<div class="form-group">
@@ -111,6 +131,16 @@
 			var laydate = layui.laydate;
 			laydate.render({
 				elem: '#appointmentTimeStr',
+				type: 'datetime',
+				trigger: 'click'
+			});
+			laydate.render({
+				elem: '#appointmentStartTimeStr',
+				type: 'datetime',
+				trigger: 'click'
+			});
+			laydate.render({
+				elem: '#appointmentEndTimeStr',
 				type: 'datetime',
 				trigger: 'click'
 			});

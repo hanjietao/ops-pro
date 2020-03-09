@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="name"         column="name"        />
 		<result property="serviceContent"         column="service_content"        />
 		<result property="price"          column="price"         />
+		<result property="fees"          column="fees"         />
 		<result property="deleteFlag"          column="delete_flag"         />
 		<result property="status"          column="status"         />
 		<result property="createTime"            column="create_time"            />
@@ -29,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectMedicalProjectVo">
-       select mp.create_time, mp.create_by, mp.update_time, mp.update_by, mp.id,mp.name, mp.service_content, mp.price,mp.hospital_id,mp.delete_flag,mp.status,
+       select mp.create_time, mp.create_by, mp.update_time, mp.update_by, mp.id,mp.name, mp.service_content, mp.price, mp.fees,mp.hospital_id,mp.delete_flag,mp.status,
        h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status
        from ch_medical_project mp
        left join ch_hospital h on mp.hospital_id = h.id
@@ -63,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="name != null and name != '' ">name, </if>
 		<if test="serviceContent != null and serviceContent != '' ">service_content, </if>
 		<if test="price != null and price != '' ">price, </if>
+		<if test="fees != null and fees != '' ">fees, </if>
 		<if test="hospitalId != null and hospitalId != '' ">hospital_id, </if>
 		<if test="status != null and status != '' ">status, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
@@ -73,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="name != null and name != ''">#{name}, </if>
 		<if test="serviceContent != null and serviceContent != ''">#{serviceContent}, </if>
 		<if test="price != null and price != ''">#{price}, </if>
+		<if test="fees != null and fees != ''">#{fees}, </if>
 		<if test="hospitalId != null and hospitalId != ''">#{hospitalId}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
@@ -88,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="name != null and name != ''">name = #{name}, </if>
 			<if test="serviceContent != null and serviceContent != ''">service_content = #{serviceContent}, </if>
 			<if test="price != null">price = #{price}, </if>
+			<if test="fees != null">fees = #{fees}, </if>
 			<if test="hospitalId != null">hospital_id = #{hospitalId}, </if>
 			<if test="status != null">status = #{status}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>

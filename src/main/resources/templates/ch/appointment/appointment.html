@@ -109,11 +109,15 @@
 					// }
 				},
 				{
-		            field: 'appointmentTime',
-		            title: '预约时间',
+		            field: 'appointmentStartTime',
+		            title: '预约时间起始',
 					sortable: true
-
 		        },
+				{
+					field: 'appointmentEndTime',
+					title: '预约时间结束',
+					sortable: true
+				},
 				{
 					field : 'appointmentName',
 					title : '患者姓名'
@@ -149,10 +153,10 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	debugger
 						if(row.status == '0'){
 							actions.push('<a class="btn btn-primary btn-xs ' + changeStatusFlag + '" href="javascript:void(0)" onclick="cancel(\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i> 取消预约</a> ');
 						}
+						actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						actions.push('<a class="btn btn-warning btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-search"></i>详细</a> ');
                         return actions.join('');

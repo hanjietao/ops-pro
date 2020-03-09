@@ -6,44 +6,88 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-notice-edit" th:object="${notice}">
-            <input id="noticeId" name="noticeId" th:field="*{noticeId}"  type="hidden">
+        <form class="form-horizontal m" id="form-notice-edit" th:object="${appointment}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">公告标题：</label>
+                <label class="col-sm-2 control-label is-required">用户id：</label>
                 <div class="col-sm-10">
-                    <input id="noticeTitle" name="noticeTitle" th:field="*{noticeTitle}" class="form-control" type="text" required>
+                    <input class="form-control" disabled type="text" name="userId" th:field="*{userId}" value="10000001" id="userId" required>
+                </div>
+            </div>
+            <!--		<div class="form-group">-->
+            <!--			<label class="col-sm-2 control-label is-required">预约医院：</label>-->
+            <!--			<div class="col-sm-10">-->
+            <!--				<input class="form-control" type="text" name="hospitalId" id="hospitalId" required>-->
+            <!--			</div>-->
+            <!--		</div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="col-sm-2 control-label is-required">预约服务：</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input class="form-control" type="text" name="medicalProjectId" th:field="*{medicalProjectId}" id="medicalProjectId" required>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">预约服务：</label>
+                <div class="col-sm-10">
+                    <select id="medicalProjectId" disabled name="medicalProjectId" class="form-control noselect2 selectpicker" data-none-selected-text="请选择预约服务">
+                        <option th:each="medicalProject:${medicalProjects}" th:value="${medicalProject.id}" th:text="${medicalProject.name}" th:field="*{medicalProjectId}"></option>
+                    </select>
+                </div>
+            </div>
+            <!--		<div class="form-group">-->
+            <!--			<label class="col-sm-2 control-label is-required">预约日期：</label>-->
+            <!--			<div class="col-sm-10 input-group date">-->
+            <!--				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+            <!--				<input type="text" class="form-control" name="appointmentTimeStr" id="appointmentTimeStr" placeholder="yyyy-MM-dd HH:mm:ss" required>-->
+            <!--			</div>-->
+            <!--		</div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">预约时间起始：</label>
+                <div class="col-sm-10 input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control" name="appointmentStartTimeStr" id="appointmentStartTimeStr" th:value="${#dates.format(appointment.appointmentStartTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="yyyy-MM-dd HH:mm:ss" required>
                 </div>
             </div>
             <div class="form-group">
-				<label class="col-sm-2 control-label">公告类型：</label>
-				<div class="col-sm-10">
-					<select name="noticeType" class="form-control m-b" th:with="type=${@dict.getType('sys_notice_type')}">
-	                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{noticeType}"></option>
-	                </select>
-				</div>
-			</div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">公告内容：</label>
-                <div class="col-sm-10">
-                    <input id="noticeContent" name="noticeContent" th:field="*{noticeContent}" type="hidden">
-                    <div id="editor" class="summernote"></div>
+                <label class="col-sm-2 control-label is-required">预约时间结束：</label>
+                <div class="col-sm-10 input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control" name="appointmentEndTimeStr" id="appointmentEndTimeStr" th:value="${#dates.format(appointment.appointmentEndTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="yyyy-MM-dd HH:mm:ss" required>
                 </div>
             </div>
             <div class="form-group">
-				<label class="col-sm-2 control-label">公告状态：</label>
-				<div class="col-sm-10">
-					<div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
-						<input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
-						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
-					</div>
-				</div>
-			</div>
+                <label class="col-sm-2 control-label is-required">患者姓名：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" disabled type="text" name="appointmentName" th:field="*{appointmentName}" id="appointmentName" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">联系电话：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" disabled type="text" name="appointmentPhone" id="appointmentPhone" th:field="*{appointmentPhone}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">预约原因：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" disabled type="text" name="appointmentReason" id="appointmentReason" th:field="*{appointmentReason}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">预约状态：</label>
+                <div class="col-sm-10">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
+                        <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
+                        <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
 		</form>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: summernote-js" />
     <script type="text/javascript">
-        var prefix = ctx + "csc/appointment";
+        var prefix = ctx + "ch/appointment";
 
 	    $(function() {
 		    $('.summernote').summernote({
@@ -86,7 +130,29 @@
 	        });
 	    }
 
-		$("#form-notice-edit").validate({
+        $(function(){
+            <!-- laydate示例 -->
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#appointmentTimeStr',
+                    type: 'datetime',
+                    trigger: 'click'
+                });
+                laydate.render({
+                    elem: '#appointmentStartTimeStr',
+                    type: 'datetime',
+                    trigger: 'click'
+                });
+                laydate.render({
+                    elem: '#appointmentEndTimeStr',
+                    type: 'datetime',
+                    trigger: 'click'
+                });
+            });
+        });
+
+        $("#form-notice-edit").validate({
 			focusCleanup: true
 		});
 

@@ -371,6 +371,13 @@ alter table he_article add column img_urls text CHARACTER SET utf8mb4 COLLATE ut
 alter table he_video add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
 alter table he_video add column award_points int(11) default 0 comment '奖励积分数量';
 
+-- 修改医疗项目收费标准字段的类型
+alter table ch_medical_project add column fees varchar(128) default null comment '收费标准';
+
+-- 预约 修改成  起止时间配置
+alter table ch_appointment add column appointment_start_time DATETIME default null comment '预约时间起始';
+alter table ch_appointment add column appointment_end_time DATETIME default null comment '预约时间结束';
+alter table ch_appointment add column appointment_reason varchar(256) default null comment '预约原因';
 
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;

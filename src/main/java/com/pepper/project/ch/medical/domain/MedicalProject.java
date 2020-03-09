@@ -27,6 +27,9 @@ public class MedicalProject extends BaseEntity{
     /** 经纬度 */
     private String price;
 
+    /** 收费标准 */
+    private String fees;
+
     private String deleteFlag;
 
     private Long hospitalId;
@@ -81,6 +84,14 @@ public class MedicalProject extends BaseEntity{
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getFees() {
+        return fees;
+    }
+
+    public void setFees(String fees) {
+        this.fees = fees;
     }
 
     public String getDeleteFlag() {
@@ -173,6 +184,7 @@ public class MedicalProject extends BaseEntity{
                 ", name='" + name + '\'' +
                 ", serviceContent='" + serviceContent + '\'' +
                 ", price='" + price + '\'' +
+                ", fees='" + fees + '\'' +
                 ", deleteFlag='" + deleteFlag + '\'' +
                 ", hospitalId='" + hospitalId + '\'' +
                 ", status='" + status + '\'' +

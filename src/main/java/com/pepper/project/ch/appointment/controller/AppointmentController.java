@@ -10,6 +10,8 @@ import com.pepper.project.ch.appointment.domain.Appointment;
 import com.pepper.project.ch.appointment.service.IAppointmentService;
 import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.service.IHospitalService;
+import com.pepper.project.ch.medical.domain.MedicalProject;
+import com.pepper.project.ch.medical.service.IMedicalProjectService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,6 +36,9 @@ public class AppointmentController extends BaseController {
 
     @Autowired
     private IHospitalService hospitalService;
+
+    @Autowired
+    private IMedicalProjectService medicalProjectService;
 
     @Autowired
     private IAreaService areaService;
@@ -69,18 +74,20 @@ public class AppointmentController extends BaseController {
     }
 
     /**
-     * 新增保存区域设置
+     * 新增保存预约
      */
-    @Log(title = "医院介绍", businessType = BusinessType.INSERT)
+    @Log(title = "预约检查", businessType = BusinessType.INSERT)
     @RequiresPermissions("ch:appointment:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(String appointmentTimeStr, Appointment appointment)
+    public AjaxResult addSave(String appointmentStartTimeStr,String appointmentEndTimeStr, Appointment appointment)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date time = null;
+        Date startTime = null;
+        Date endTime = null;
         try {
-            time = sdf.parse(appointmentTimeStr);
+            startTime = sdf.parse(appointmentStartTimeStr);
+            endTime = sdf.parse(appointmentEndTimeStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -89,7 +96,8 @@ public class AppointmentController extends BaseController {
             return  error("非医院业务系统用户 无法添加医院预约");
         }
         appointment.setHospitalId(getMerchantId());
-        appointment.setAppointmentTime(time);
+        appointment.setAppointmentStartTime(startTime);
+        appointment.setAppointmentEndTime(endTime);
         return toAjax(appointmentService.insertAppointment(appointment));
     }
 
@@ -120,12 +128,16 @@ public class AppointmentController extends BaseController {
     }
 
     /**
-     * 修改区域
+     * 修改预约检查
      */
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
         //mmap.put("areas",areaService.selectAreaListByHosId(id));
+        MedicalProject medicalProject = new MedicalProject();
+        medicalProject.setHospitalId(getMerchantId());
+        List<MedicalProject> medicalProjects = medicalProjectService.selectMedicalProjectList(medicalProject);
+        mmap.put("medicalProjects",medicalProjects);
         mmap.put("appointment", appointmentService.selectAppointmentById(id));
         return prefix + "/edit";
     }
@@ -134,11 +146,27 @@ public class AppointmentController extends BaseController {
      * 修改预约信息
      */
     @RequiresPermissions("ch:appointment:edit")
-    @Log(title = "医院介绍", businessType = BusinessType.UPDATE)
+    @Log(title = "预约检查", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Appointment appointment)
+    public AjaxResult editSave(String appointmentStartTimeStr,String appointmentEndTimeStr, Appointment appointment)
     {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = null;
+        Date endTime = null;
+        try {
+            startTime = sdf.parse(appointmentStartTimeStr);
+            endTime = sdf.parse(appointmentEndTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(getMerchantId()==null || getMerchantId() == 0 ||
+                !SysUserType.hadmin.getType().equals(getSysUser().getMerchantFlag())){
+            return  error("非医院业务系统用户 无法添加医院预约");
+        }
+        appointment.setHospitalId(getMerchantId());
+        appointment.setAppointmentStartTime(startTime);
+        appointment.setAppointmentEndTime(endTime);
         return toAjax(appointmentService.updateAppointment(appointment));
     }
 
@@ -146,7 +174,7 @@ public class AppointmentController extends BaseController {
      * 删除区域
      */
     @RequiresPermissions("ch:appointment:remove")
-    @Log(title = "医院介绍", businessType = BusinessType.DELETE)
+    @Log(title = "预约检查", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

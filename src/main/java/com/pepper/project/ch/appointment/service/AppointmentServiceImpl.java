@@ -34,10 +34,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public int insertAppointment(Appointment area) {
-        area.setCreateBy(ShiroUtils.getLoginName());
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return appointmentDao.insertAppointment(area);
+    public int insertAppointment(Appointment appointment) {
+        appointment.setCreateBy(ShiroUtils.getLoginName());
+        appointment.setUpdateBy(ShiroUtils.getLoginName());
+        return appointmentDao.insertAppointment(appointment);
     }
 
     @Override
