@@ -1,17 +1,15 @@
 package com.pepper.project.he.article.controller;
 
+import com.pepper.common.utils.JsoupUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
-import com.pepper.project.csc.area.domain.Area;
-import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.he.article.domain.Article;
 import com.pepper.project.he.article.service.IArticleService;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
-import com.pepper.project.he.video.domain.Video;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +71,9 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(Article article)
     {
+        String content = article.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        article.setImgUrls(result);
         return toAjax(articleService.insertArticle(article));
     }
 
@@ -97,6 +98,9 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(Article article)
     {
+        String content = article.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        article.setImgUrls(result);
         return toAjax(articleService.updateArticle(article));
     }
 

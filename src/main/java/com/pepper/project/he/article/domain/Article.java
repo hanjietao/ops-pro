@@ -31,6 +31,8 @@ public class Article extends BaseEntity{
 
     private Integer awardPoints;
 
+    private String imgUrls;
+
     /** 区域状态（0正常 1关闭） */
     private String status;
 
@@ -108,6 +110,14 @@ public class Article extends BaseEntity{
         this.awardPoints = awardPoints;
     }
 
+    public String getImgUrls() {
+        return imgUrls;
+    }
+
+    public void setImgUrls(String imgUrls) {
+        this.imgUrls = imgUrls;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -177,6 +187,7 @@ public class Article extends BaseEntity{
                 ", watchCount=" + watchCount +
                 ", sendPoint=" + sendPoint +
                 ", awardPoints=" + awardPoints +
+                ", imgUrls=" + imgUrls +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +

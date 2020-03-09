@@ -366,6 +366,7 @@ INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_na
 -- 宣教文章/视频，新增积分激励配置
 alter table he_article add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
 alter table he_article add column award_points int(11) default 0 comment '奖励积分数量';
+alter table he_article add column img_urls text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url';
 
 alter table he_video add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
 alter table he_video add column award_points int(11) default 0 comment '奖励积分数量';
