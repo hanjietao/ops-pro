@@ -11,6 +11,7 @@ import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
 import com.pepper.project.pm.note.domain.NotePm;
 import com.pepper.project.pm.note.service.INotePmService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,4 +119,15 @@ public class NotePmController extends BaseController {
         return toAjax(noteService.deleteNoteByIds(ids));
     }
 
+    @ApiOperation("新增物业留言")
+    @Log(title = "新增物业留言", businessType = BusinessType.INSERT)
+    @PostMapping("/addNote")
+    public AjaxResult addNote(@RequestParam(required = true) Long propertyId,
+                              @RequestParam(required = true) String content)
+    {
+        NotePm notePm = new NotePm();
+        notePm.setPropertyId(propertyId);
+        notePm.setContent(content);
+        return AjaxResult.success(noteService.insertNote(notePm));
+    }
 }

@@ -15,3 +15,5 @@ java -jar xx.jar --spring.profiles.active=test
 （1）使用linux命令dos2unix filename，直接把文件转换为unix格式
 （2）使用sed命令sed -i "s/\r//" filename  或者 sed -i "s/^M//" filename直接替换结尾符为unix格式
 （3）vi filename打开文件，执行 : set ff=unix 设置文件为unix，然后执行:wq，保存成unix格式。
+
+create database pepper_ops_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ;

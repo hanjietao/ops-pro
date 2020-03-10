@@ -56,7 +56,7 @@ public class SwaggerConfig
                 // 设置标题
                 .title("标题：社区医院管理系统_接口文档")
                 // 描述
-                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
+                .description("描述：客户端接口访问，请带上请求头(尤其是需要登陆接口)：login-type=p-client  ")
                 // 作者信息
                 .contact(new Contact(opsConfig.getName(), null, null))
                 // 版本

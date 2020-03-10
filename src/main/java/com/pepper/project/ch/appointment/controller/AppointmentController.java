@@ -1,5 +1,6 @@
 package com.pepper.project.ch.appointment.controller;
 
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -14,6 +15,7 @@ import com.pepper.project.ch.medical.domain.MedicalProject;
 import com.pepper.project.ch.medical.service.IMedicalProjectService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -182,4 +184,38 @@ public class AppointmentController extends BaseController {
         return toAjax(appointmentService.deleteAppointmentByIds(ids));
     }
 
+
+    @ApiOperation("新增医院预约检查")
+    @Log(title = "新增医院预约检查", businessType = BusinessType.INSERT)
+    @PostMapping("/addAppointment")
+    public AjaxResult addAppointment(@RequestParam(required = true) String appointmentStartTimeStr,
+                           @RequestParam(required = true) String appointmentEndTimeStr,
+                           @RequestParam(required = true) Integer medicalProjectId,
+                           @RequestParam(required = true) Long hospitalId,
+                           @RequestParam(required = true) String appointmentReason,
+                           @RequestParam(required = true) String appointmentName,
+                           @RequestParam(required = true) String appointmentPhone)
+    {
+        Appointment appointment = new Appointment();
+        appointment.setUserId(ShiroUtils.getSysUser().getClientUser().getUserId());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = null;
+        Date endTime = null;
+        try {
+            startTime = sdf.parse(appointmentStartTimeStr);
+            endTime = sdf.parse(appointmentEndTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        appointment.setHospitalId(getMerchantId());
+        appointment.setAppointmentStartTime(startTime);
+        appointment.setAppointmentEndTime(endTime);
+        appointment.setHospitalId(hospitalId);
+        appointment.setAppointmentName(appointmentName);
+        appointment.setAppointmentPhone(appointmentPhone);
+        appointment.setMedicalProjectId(medicalProjectId);
+        appointment.setAppointmentReason(appointmentReason);
+        appointment.setStatus("0");
+        return AjaxResult.success(appointmentService.insertAppointment(appointment));
+    }
 }

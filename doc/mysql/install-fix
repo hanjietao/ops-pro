@@ -9,3 +9,9 @@
   173  2020-02-24 13:41:43 root libfontmanager.so:yum install libgcc.i686 --setopt=protected_multilib=false
   174  2020-02-24 13:41:44 root yum install libgcc.i686 --setopt=protected_multilib=false
   254  2020-02-24 12:44:12 root yum install glibc.i686
+
+-- database create,data copy
+./mysqldump -u root -p pepper_ops > /home/hospital/pepper_ops_db_bak.sql
+create database pepper_ops_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ;
+use pepper_ops_prod #进入dzbak数据库目录
+source /home/hospital/pepper_ops_db_bak.sql pepper_ops_db_bak.sql到数据库pepper_ops_prod中

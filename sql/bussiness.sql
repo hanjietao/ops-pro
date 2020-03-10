@@ -317,7 +317,7 @@ CREATE TABLE fp_loop_image(
 drop table if exists sm_client_user ;
 CREATE TABLE `sm_client_user` (
   `USER_ID` bigint(20) AUTO_INCREMENT NOT NULL COMMENT '用户ID',
-  `NIKE_NAME` varchar(128) DEFAULT NULL COMMENT '用户昵称',
+  `NIKE_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户昵称',
   `USER_CURRENT_POINTS` bigint(20) DEFAULT NULL COMMENT '用户当前积分',
   `USER_ACC_POINTS` bigint(20) DEFAULT NULL COMMENT '用户累计积分',
   `USER_USED_POINTS` bigint(20) DEFAULT NULL COMMENT '用户已用积分',
@@ -378,6 +378,11 @@ alter table ch_medical_project add column fees varchar(128) default null comment
 alter table ch_appointment add column appointment_start_time DATETIME default null comment '预约时间起始';
 alter table ch_appointment add column appointment_end_time DATETIME default null comment '预约时间结束';
 alter table ch_appointment add column appointment_reason varchar(256) default null comment '预约原因';
+
+---------------------------------------ops/ops_prod execute-----------------------------------------
+-- note reply
+alter table cm_note add column replay_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
+alter table cm_note add column replay_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
 
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;

@@ -1,6 +1,5 @@
 package com.pepper.project.cm.note.controller;
 
-import com.pepper.common.exception.BusinessException;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -12,6 +11,7 @@ import com.pepper.project.cm.community.service.ICommunityService;
 import com.pepper.project.cm.note.domain.Note;
 import com.pepper.project.cm.note.service.INoteService;
 import com.pepper.project.csc.area.service.IAreaService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,4 +119,15 @@ public class NoteController extends BaseController {
         return toAjax(noteService.deleteNoteByIds(ids));
     }
 
+    @ApiOperation("新增社区留言")
+    @Log(title = "新增社区留言", businessType = BusinessType.INSERT)
+    @PostMapping("/addNote")
+    public AjaxResult addNote(@RequestParam(required = true) Long communityId,
+                           @RequestParam(required = true) String content)
+    {
+        Note note = new Note();
+        note.setCommunityId(communityId);
+        note.setContent(content);
+        return AjaxResult.success(noteService.insertNote(note));
+    }
 }
