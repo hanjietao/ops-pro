@@ -381,8 +381,35 @@ alter table ch_appointment add column appointment_reason varchar(256) default nu
 
 ---------------------------------------ops/ops_prod execute-----------------------------------------
 -- note reply
-alter table cm_note add column replay_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
-alter table cm_note add column replay_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
+alter table cm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
+alter table cm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
+
+alter table pm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
+alter table pm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
+
+
+
+
+
+drop table if exists sm_user_point_detail ;
+CREATE TABLE sm_user_point_detail(
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
+    USER_ID BIGINT(20) NOT NULL COMMENT '用户id',
+    SYS_USER_ID BIGINT(20) NOT NULL COMMENT '用户系统id',
+    POINTS BIGINT(20) default 0  COMMENT '积分数' ,
+    ADD_OR_DEDUCT char(1) COMMENT '增加还是减少,0-减，1-加' ,
+    OPERATE_TYPE char(1) COMMENT '操作类型：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
+    OPERATE_TYPE_INFO varchar(256) COMMENT '操作类型描述：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
+    OPERATE_PROJECT_ID BIGINT(20) DEFAULT NULL COMMENT '操作项目id',
+    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '用户积分明细表 ';
+
+
 
 -- 系统表创建  短信验证码保存表
 drop table if exists sms_code ;

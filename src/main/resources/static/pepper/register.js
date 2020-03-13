@@ -29,13 +29,15 @@ function register() {
     $.ajax({
         type: "post",
         url: ctx + "register",
+        headers: {
+            "login-type": "p-client"
+        },
         data: {
             "loginName": loginName,
             "password": password,
             "repassword": repassword,
             "smsCode" : smsCode,
-            "phonenumber": phonenumber,
-            "sys-client-user": "clientUserRegister"
+            "phonenumber": phonenumber
         },
         success: function(r) {
             if (r.code == 0) {

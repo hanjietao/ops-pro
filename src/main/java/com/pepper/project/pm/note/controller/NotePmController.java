@@ -1,5 +1,6 @@
 package com.pepper.project.pm.note.controller;
 
+import com.pepper.common.utils.StringUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -104,6 +105,10 @@ public class NotePmController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(NotePm note)
     {
+        // 如果为空，则说明是在做回复操作，不是驳回
+        if(StringUtils.isEmpty(note.getReplyStatus())){
+            note.setReplyStatus("0");
+        }
         return toAjax(noteService.updateNote(note));
     }
 

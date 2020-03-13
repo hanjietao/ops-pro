@@ -104,10 +104,12 @@
         $.ajax({
             type: "post",
             url: ctx + "authcode/gen",
+            headers: {
+                "login-type": "p-client"
+            },
             data: {
                 "mobilePhone": phonenumber,
-                "smsCodeType": smsCodeType,
-                "sys-client-user": "clientUserRegister"
+                "smsCodeType": smsCodeType
             },
             success: function(r) {
                 if (r.code == 0) {

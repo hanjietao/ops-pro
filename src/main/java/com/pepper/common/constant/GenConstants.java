@@ -94,4 +94,7 @@ public class GenConstants
 
     /** 短信验证码 */
     public static final String SMS_CODE_ATTR = "sms_code_attr";
+
+    /** 积分项目累计 */
+    public static final String POINT_PROJECT_INFO = "point_project_info";
 }

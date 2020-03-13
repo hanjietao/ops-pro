@@ -48,6 +48,12 @@ public class Note extends BaseEntity{
     /** 客户端用户 */
     private ClientUser clientUser;
 
+    /** 是否回复 */
+    private String replyStatus;
+
+    /** 回复内容 */
+    private String replyContent;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -154,6 +160,22 @@ public class Note extends BaseEntity{
         this.clientUser = clientUser;
     }
 
+    public String getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(String replyStatus) {
+        this.replyStatus = replyStatus;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -168,6 +190,8 @@ public class Note extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", community=" + getCommunity() +
                 ", clientUser=" + getClientUser() +
+                ", replyStatus=" + replyStatus +
+                ", replyContent=" + replyContent +
                 '}';
     }
 }

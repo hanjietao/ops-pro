@@ -48,6 +48,12 @@ public class NotePm extends BaseEntity{
     /** 客户端用户 */
     private ClientUser clientUser;
 
+    /** 是否回复 */
+    private String replyStatus;
+
+    /** 回复内容 */
+    private String replyContent;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -154,9 +160,25 @@ public class NotePm extends BaseEntity{
         this.clientUser = clientUser;
     }
 
+    public String getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(String replyStatus) {
+        this.replyStatus = replyStatus;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
     @Override
     public String toString() {
-        return "Note{" +
+        return "NotePm{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", propertyId=" + propertyId +
@@ -168,6 +190,8 @@ public class NotePm extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", property=" + getProperty() +
                 ", clientUser=" + getClientUser() +
+                ", replyStatus=" + replyStatus +
+                ", replyContent=" + replyContent +
                 '}';
     }
 }

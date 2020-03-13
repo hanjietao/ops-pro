@@ -4,6 +4,8 @@ import com.pepper.common.constant.ShiroConstants;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,8 @@ import java.io.IOException;
  *  @Date: 2020/3/3 10:31
  */
 public class ShiroLoginRedirectFilter extends FormAuthenticationFilter {
+
+    Logger logger = LoggerFactory.getLogger(ShiroLoginRedirectFilter.class);
 
     @Value("${pepper.clientLoginType}")
     private String clientLoginType;
@@ -33,7 +37,9 @@ public class ShiroLoginRedirectFilter extends FormAuthenticationFilter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        if (clientLoginType.equals(httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE))) {
+        String loginType = httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE);
+        logger.info("loginType={}",loginType);
+        if (clientLoginType.equals(loginType)) {
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("application/json");
 

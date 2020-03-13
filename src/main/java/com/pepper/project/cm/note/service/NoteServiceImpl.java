@@ -26,9 +26,9 @@ public class NoteServiceImpl implements INoteService {
      *  @Date: 2020/2/6 0:23
      */
     @Override
-    public List<Note> selectNoteList(Note guide) {
+    public List<Note> selectNoteList(Note note) {
 
-        List<Note> list = noteDao.selectNoteList(guide);
+        List<Note> list = noteDao.selectNoteList(note);
 //        for (Note hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
@@ -37,10 +37,10 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public int insertNote(Note area) {
-        area.setCreateBy(ShiroUtils.getLoginName());
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return noteDao.insertNote(area);
+    public int insertNote(Note note) {
+        note.setCreateBy(ShiroUtils.getLoginName());
+        note.setUpdateBy(ShiroUtils.getLoginName());
+        return noteDao.insertNote(note);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public int updateNote(Note area) {
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return noteDao.updateNote(area);
+    public int updateNote(Note note) {
+        note.setUpdateBy(ShiroUtils.getLoginName());
+        return noteDao.updateNote(note);
     }
 
 

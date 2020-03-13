@@ -2,9 +2,12 @@ package com.pepper.project.sm.user.controller;
 
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.cm.activity.domain.Activity;
+import com.pepper.project.sm.point.service.IPointService;
 import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.sm.user.service.IClientUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,6 +26,9 @@ public class ClientUserController extends BaseController {
 
     @Autowired
     private IClientUserService clientUserService;
+
+    @Autowired
+    private IPointService pointService;
 
     @RequiresPermissions("sm:client:view")
     @GetMapping()
@@ -94,6 +100,18 @@ public class ClientUserController extends BaseController {
     public AjaxResult remove(String ids)
     {
         return toAjax(clientUserService.deleteClientUserByIds(ids));
+    }
+
+    /**
+     * 查询报名详情
+     * userId client user
+     */
+    @RequiresPermissions("sm:clientuser:list")
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long userId, ModelMap mmap)
+    {
+        mmap.put("clientUser", clientUserService.selectClientUserById(userId));
+        return "sm/point/point";
     }
 
 }

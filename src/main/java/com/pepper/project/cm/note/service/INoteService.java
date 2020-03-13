@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface INoteService {
 
-    List<Note> selectNoteList(Note guide);
-    int insertNote(Note guide);
+    List<Note> selectNoteList(Note note);
+    int insertNote(Note note);
 
     int deleteNoteByIds(String ids);
 
     Note selectNoteById(Integer id);
 
-    int updateNote(Note guide);
+    int updateNote(Note note);
 
 }

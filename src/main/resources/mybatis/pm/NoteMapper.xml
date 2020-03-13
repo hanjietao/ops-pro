@@ -10,12 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"         column="user_id"        />
 		<result property="propertyId"       column="property_id"         />
 		<result property="status"           column="status"         />
+		<result property="replyStatus"           column="reply_status"         />
+		<result property="replyContent"           column="reply_content"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
 		<association property="property"    column="id" javaType="Property" resultMap="PropertyResult" />
-        <association property="clientUser"    column="id" javaType="ClientUser" resultMap="ClientUserResult" />
+        <association property="clientUser"    column="userId" javaType="ClientUser" resultMap="ClientUserResult" />
     </resultMap>
 
 	<resultMap type="Property" id="PropertyResult">
@@ -35,7 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectNoteVo">
-       select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id, bg.content,bg.user_id, bg.property_id,bg.status,
+       select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id, bg.content,bg.user_id,
+       bg.property_id,bg.status,bg.reply_status,bg.reply_content,
        p.id,p.property_code,p.property_name,p.area_id,p.status,
        cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
         from pm_note bg
@@ -60,6 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="status != null and status != ''">
 				AND bg.status = #{status}
 			</if>
+			<if test="replyStatus != null and replyStatus != ''">
+				AND bg.reply_status = #{replyStatus}
+			</if>
 			<if test="id != null and id != 0">
 				AND bg.id = #{id}
 			</if>
@@ -72,6 +78,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="propertyId != null and propertyId != '' ">property_id, </if>
         <if test="userId != null and userId != '' ">user_id, </if>
 		<if test="status != null and status != '' ">status, </if>
+		<if test="replyStatus != null and replyStatus != '' ">reply_status, </if>
+		<if test="replyContent != null and replyContent != '' ">reply_content, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		create_time,
@@ -81,6 +89,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="propertyId != null and propertyId != ''">#{propertyId}, </if>
         <if test="userId != null and userId != ''">#{userId}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="replyStatus != null and replyStatus != '' ">#{replyStatus}, </if>
+		<if test="replyContent != null and replyContent != '' ">#{replyContent}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),
@@ -95,6 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="propertyId != null">property_id = #{propertyId}, </if>
 			<if test="userId != null">user_id = #{userId}, </if>
 			<if test="status != null">status = #{status}, </if>
+			<if test="replyStatus != null">reply_status = #{replyStatus}, </if>
+			<if test="replyContent != null">reply_content = #{replyContent}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>
