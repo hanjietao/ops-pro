@@ -11,7 +11,7 @@ public interface IPmNoteService {
 
     int deleteNoteByIds(String ids);
 
-    PmNote selectNoteById(Integer id);
+    PmNote selectNoteById(Long id);
 
     int updateNote(PmNote note);
 

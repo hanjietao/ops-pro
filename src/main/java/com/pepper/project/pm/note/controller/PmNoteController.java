@@ -88,7 +88,7 @@ public class PmNoteController extends BaseController {
      * 修改物业留言
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
 //        List<Property> propertys = propertyService.selectPropertyList(new Property());
 //        mmap.put("propertys",propertys);

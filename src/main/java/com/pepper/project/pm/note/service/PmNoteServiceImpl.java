@@ -49,7 +49,7 @@ public class PmNoteServiceImpl implements IPmNoteService {
     }
 
     @Override
-    public PmNote selectNoteById(Integer id) {
+    public PmNote selectNoteById(Long id) {
         return noteDao.selectNoteById(id);
     }
 

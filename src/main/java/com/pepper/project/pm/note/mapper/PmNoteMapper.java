@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PmNoteMapper {
 
-    PmNote selectNoteById(Integer id);
+    PmNote selectNoteById(Long id);
     List<PmNote> selectNoteList(PmNote note);
 
     public int insertNote(PmNote note);

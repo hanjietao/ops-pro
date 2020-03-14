@@ -81,7 +81,9 @@ CREATE TABLE cm_note(
     ID BIGINT(20)  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '留言内容' ,
     USER_ID BIGINT(20) COMMENT '用户id',
-    COMMUNITY_ID INT    COMMENT '所属社区' ,
+    COMMUNITY_ID BIGINT(20)    COMMENT '所属社区' ,
+    REPLY_STATUS char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复',
+    REPLY_CONTENT varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容',
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
@@ -115,6 +117,7 @@ CREATE TABLE ch_medical_project(
     SERVICE_CONTENT VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '服务内容' ,
     PRICE DECIMAL(32,2)    COMMENT '收费标准 45' ,
     HOSPITAL_ID INT(11)    COMMENT '医院id' ,
+    fees varchar(128) default null comment '收费标准',
     DELETE_FLAG VARCHAR(1)  DEFAULT '0'  COMMENT '删除标志 1-已删除，0-未删除' ,
     STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '创建人' ,
@@ -150,6 +153,9 @@ CREATE TABLE ch_appointment(
     APPOINTMENT_NAME VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '预约人姓名' ,
     APPOINTMENT_PHONE VARCHAR(20)    COMMENT '预约人手机号' ,
     CANCEL_REASON VARCHAR(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '取消原因' ,
+    APPOINTMENT_START_TIME DATETIME default null comment '预约时间起始',
+    APPOINTMENT_END_TIME DATETIME default null comment '预约时间结束',
+    APPOINTMENT_REASON varchar(256) default null comment '预约原因',
     STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭（取消预约）' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
@@ -225,7 +231,9 @@ CREATE TABLE pm_note(
     ID BIGINT(20)  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '留言内容' ,
     USER_ID BIGINT(20) COMMENT '用户id',
-    PROPERTY_ID INT    COMMENT '所属物业' ,
+    PROPERTY_ID BIGINT(20) COMMENT '所属物业' ,
+    REPLY_STATUS char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复',
+    REPLY_CONTENT varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容',
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
@@ -264,20 +272,25 @@ CREATE TABLE he_board(
     PRIMARY KEY(ID)
 ) AUTO_INCREMENT = 5000 COMMENT = '健康宣教板块 ';
 
-drop table if exists he_article ;
-CREATE TABLE he_article(
-    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
-    BOARD_ID INT(11)    COMMENT '板块编码' ,
-    TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '文章标题' ,
-    CONTENT TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容' ,
-    WATCH_COUNT INT COMMENT '观看数',
-    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
-    CREATE_BY VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '创建人' ,
-    CREATE_TIME DATETIME    COMMENT '创建时间' ,
-    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
-    UPDATE_TIME DATETIME    COMMENT '更新时间',
-    PRIMARY KEY(ID)
-) COMMENT = '健康宣教宣教文章 ';
+
+DROP TABLE IF EXISTS `he_article`;
+CREATE TABLE `he_article`  (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `BOARD_ID` int(11) DEFAULT NULL COMMENT '板块编码',
+  `TITLE` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '文章标题',
+  `CONTENT` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容',
+  `WATCH_COUNT` int(11) DEFAULT NULL COMMENT '观看数',
+  `send_point` varchar(16) default null comment '是否奖励积分，Y-是，N-否',
+  `award_points` int(11) default 0 comment '奖励积分数量',
+  `img_urls` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url',
+  `STATUS` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '状态 状态 状态 0-正常，1-关闭',
+  `CREATE_BY` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `CREATE_TIME` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_BY` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '更新人',
+  `UPDATE_TIME` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '健康宣教宣教文章 ' ROW_FORMAT = Dynamic;
+
 
 drop table if exists he_video ;
 CREATE TABLE he_video(
@@ -286,6 +299,8 @@ CREATE TABLE he_video(
     TITLE VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '视频标题' ,
     VIDEO_URL VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '视频地址' ,
     WATCH_COUNT INT COMMENT '观看数',
+    SEND_POINT varchar(16) default null comment '是否奖励积分，Y-是，N-否',
+    AWARD_POINTS int(11) default 0 comment '奖励积分数量',
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
@@ -340,9 +355,38 @@ CREATE TABLE `sm_client_user` (
 
 
 -- sys_user update
-alter table sys_user add column merchant_flag int(11) default '0' comment '0-管理员（默认值），1-社区，2-医院，3-物业';
-alter table sys_user add column merchant_Id bigint(11) default '0' comment '商户id';
-alter table sys_user add column pwd_md5 varchar(128) default null comment '20200301, 修改前端传明文密码的方式，使用chang32 md5传输，并保存md5到数据库，已实现兼容shiro并实现多方式登录';
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`  (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门ID',
+  `login_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录账号',
+  `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户昵称',
+  `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '00' COMMENT '用户类型（00系统用户）',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '用户邮箱',
+  `phonenumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '头像路径',
+  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '密码',
+  `salt` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '盐加密',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `login_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '最后登陆IP',
+  `login_date` datetime(0) DEFAULT NULL COMMENT '最后登陆时间',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '创建者',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '更新者',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `merchant_flag` int(11) DEFAULT 0 COMMENT '0-管理员（默认值），1-社区，2-医院，3-物业，101-客户端客户',
+  `merchant_Id` bigint(20) DEFAULT NULL,
+  `pwd_md5` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '20200301, 修改前端传明文密码的方式，使用md5传输，并保存md5到数据库，已实现兼容shiro并实现多方式登录',
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 600000000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'admin', '00', 'admin@163.com', '15888888888', '1', '/profile/avatar/2020/03/02/41abbd69b58a66d7c2f68cb804b2649b.png', 'cbc030ef6fc74743fda36e2f76d6908b', '111111', '0', '0', '127.0.0.1', '2020-03-14 14:57:55', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-14 14:57:55', '管理员', 0, 0, 'fcea920f7412b5da7be0cf42b8c93759');
+INSERT INTO `sys_user` VALUES (2, 105, 'hant', 'hant', '00', 'hant@qq.com', '15666666666', '1', '', '19486052ecdfd0df9aa0b6f306cd962c', '546af6', '0', '0', '127.0.0.1', '2020-03-03 10:34:45', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-03 10:34:45', '测试员', 0, 0, 'db846859bcf906caf61ba74e22953a80');
+
+
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);
@@ -350,7 +394,7 @@ alter table sys_user add column pwd_md5 varchar(128) default null comment '20200
 -- alter table ch_hospital modify column id bigint(20);
 
 -- 设置系统用户自增长值从6亿开始，为了区分与sm_client_user  user_id 很清楚得区分开
-alter table sys_user AUTO_INCREMENT= 600000000;
+-- alter table sys_user AUTO_INCREMENT= 600000000;
 
  -- <p class="m-t-md">你若不离不弃，我必生死相依 admin  admin123  hant  123456</p>
 -- 密码改造（原因: shiro密码登陆方式，很难进行拓展其他方式登陆，但是记录密码原文到数据库有密码泄露风险，遂计划使用md5）：
@@ -360,32 +404,32 @@ alter table sys_user AUTO_INCREMENT= 600000000;
 
 -- admin 29c67a30398638269fe600f73a054934
 -- admin admin123 111111  cbc030ef6fc74743fda36e2f76d6908b
-INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (1, 103, 'admin', '韩结涛', '00', 'admin@163.com', '15888888888', '1', '/profile/avatar/2020/02/17/1d3120d56f3e28a7012ff5b05a36bfd7.png', 'cbc030ef6fc74743fda36e2f76d6908b', '111111', '0', '0', '127.0.0.1', '2020-03-01 15:17:07', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:17:06', '管理员', 0, 0, 'fcea920f7412b5da7be0cf42b8c93759');
-INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (2, 105, 'hant', 'hant', '00', 'hant@qq.com', '15666666666', '1', '', '19486052ecdfd0df9aa0b6f306cd962c', '546af6', '0', '0', '127.0.0.1', '2020-03-01 15:03:53', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:03:52', '测试员', 0, 0, 'db846859bcf906caf61ba74e22953a80');
+-- INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (1, 103, 'admin', '韩结涛', '00', 'admin@163.com', '15888888888', '1', '/profile/avatar/2020/02/17/1d3120d56f3e28a7012ff5b05a36bfd7.png', 'cbc030ef6fc74743fda36e2f76d6908b', '111111', '0', '0', '127.0.0.1', '2020-03-01 15:17:07', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:17:06', '管理员', 0, 0, 'fcea920f7412b5da7be0cf42b8c93759');
+-- INSERT INTO `pepper-ops`.`sys_user`(`user_id`, `dept_id`, `login_name`, `user_name`, `user_type`, `email`, `phonenumber`, `sex`, `avatar`, `password`, `salt`, `status`, `del_flag`, `login_ip`, `login_date`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`, `merchant_flag`, `merchant_Id`, `pwd_md5`) VALUES (2, 105, 'hant', 'hant', '00', 'hant@qq.com', '15666666666', '1', '', '19486052ecdfd0df9aa0b6f306cd962c', '546af6', '0', '0', '127.0.0.1', '2020-03-01 15:03:53', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-01 15:03:52', '测试员', 0, 0, 'db846859bcf906caf61ba74e22953a80');
 
 -- 宣教文章/视频，新增积分激励配置
-alter table he_article add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
-alter table he_article add column award_points int(11) default 0 comment '奖励积分数量';
-alter table he_article add column img_urls text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url';
+-- alter table he_article add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
+-- alter table he_article add column award_points int(11) default 0 comment '奖励积分数量';
+-- alter table he_article add column img_urls text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url';
 
-alter table he_video add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
-alter table he_video add column award_points int(11) default 0 comment '奖励积分数量';
+-- alter table he_video add column send_point varchar(16) default null comment '是否奖励积分，Y-是，N-否';
+-- alter table he_video add column award_points int(11) default 0 comment '奖励积分数量';
 
 -- 修改医疗项目收费标准字段的类型
-alter table ch_medical_project add column fees varchar(128) default null comment '收费标准';
+-- alter table ch_medical_project add column fees varchar(128) default null comment '收费标准';
 
 -- 预约 修改成  起止时间配置
-alter table ch_appointment add column appointment_start_time DATETIME default null comment '预约时间起始';
-alter table ch_appointment add column appointment_end_time DATETIME default null comment '预约时间结束';
-alter table ch_appointment add column appointment_reason varchar(256) default null comment '预约原因';
+-- alter table ch_appointment add column appointment_start_time DATETIME default null comment '预约时间起始';
+-- alter table ch_appointment add column appointment_end_time DATETIME default null comment '预约时间结束';
+-- alter table ch_appointment add column appointment_reason varchar(256) default null comment '预约原因';
 
 ---------------------------------------ops/ops_prod execute-----------------------------------------
 -- note reply
-alter table cm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
-alter table cm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
+-- alter table cm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
+-- alter table cm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
 
-alter table pm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
-alter table pm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
+-- alter table pm_note add column reply_status char(1) DEFAULT '1' COMMENT '回复状态 0-已回复，1-未回复';
+-- alter table pm_note add column reply_content varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci default null comment '留言回复内容';
 
 
 
