@@ -3,12 +3,15 @@ package com.pepper.project.system.user.controller;
 import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.SMSCodeEnum;
 import com.pepper.common.utils.StringUtils;
+import com.pepper.framework.aspectj.lang.annotation.Log;
+import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.sm.user.service.IClientUserService;
 import com.pepper.project.system.user.domain.User;
 import com.pepper.project.system.user.service.IUserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -72,6 +75,7 @@ public class ClientUserLoginController extends BaseController
         }
     }
 
+    @ApiOperation("客户端用户登陆 手机号：18978786511 , 通过短信验证码登陆")
     @PostMapping("/client/sms/login")
     @ResponseBody
     public AjaxResult ajaxClientSmsLogin(HttpServletRequest request, String mobilePhone, String smsCode, Boolean rememberMe)

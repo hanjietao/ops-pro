@@ -9,6 +9,7 @@ import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.project.cm.activity.controller.ActivityApplyController;
 import com.pepper.project.csc.sms.domain.SmsCode;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ public class AuthCodeController extends BaseController
     /**
      * 验证码生成
      */
+    @ApiOperation("发送短信验证码, smsCodeType: client_register（注册）  或者  client_login（登陆）")
     @PostMapping(value = "/gen")
     @ResponseBody
     public AjaxResult genAuthCode(HttpServletRequest request, String mobilePhone,String smsCodeType, HttpServletResponse response)
@@ -56,7 +58,7 @@ public class AuthCodeController extends BaseController
         }else if("client_login".equals(smsCodeType)){
             codeType = SMSCodeEnum.L.toString();
         }else {
-            return error("非法短信验证码！");
+            return error("非法的短信获取短信验证码的方式！");
         }
 
         String code = smsCode();
