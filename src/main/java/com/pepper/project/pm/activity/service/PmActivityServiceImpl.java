@@ -49,7 +49,7 @@ public class PmActivityServiceImpl implements IPmActivityService {
     }
 
     @Override
-    public PmActivity selectActivityById(Integer id) {
+    public PmActivity selectActivityById(Long id) {
         return activityDao.selectActivityById(id);
     }
 

@@ -87,7 +87,7 @@ public class PmGuideController extends BaseController {
      * 修改区域
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Property> propertys = propertyService.selectPropertyList(new Property());
         mmap.put("propertys",propertys);
@@ -134,7 +134,7 @@ public class PmGuideController extends BaseController {
     @ApiOperation("物业指南详细")
     @PostMapping("/getDetail")
     @ResponseBody
-    public Object getDetail(Integer id)
+    public Object getDetail(Long id)
     {
         if (id != 0)
         {

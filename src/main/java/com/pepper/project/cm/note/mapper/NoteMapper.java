@@ -6,16 +6,10 @@ import java.util.List;
 
 public interface NoteMapper {
 
-    Note selectNoteById(Integer id);
+    Note selectNoteById(Long id);
     List<Note> selectNoteList(Note note);
 
-    /**
-     * 新增医院信息
-     *
-     * @param note 医院信息
-     * @return 结果
-     */
-    public int insertNote(Note note);
+    int insertNote(Note note);
 
     int deleteNoteByIds(String[] ids);
 

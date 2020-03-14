@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        left join pm_property p on a.property_id = p.id
     </sql>
 
-	<select id="selectActivityById" parameterType="Integer" resultMap="ActivityResult">
+	<select id="selectActivityById" parameterType="Long" resultMap="ActivityResult">
 		<include refid="selectActivityVo"/>
 		where a.id = #{id}
 	</select>

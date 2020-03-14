@@ -11,7 +11,7 @@ public interface IPmActivityService {
 
     int deleteActivityByIds(String ids);
 
-    PmActivity selectActivityById(Integer id);
+    PmActivity selectActivityById(Long id);
 
     int updateActivity(PmActivity pmActivity);
 

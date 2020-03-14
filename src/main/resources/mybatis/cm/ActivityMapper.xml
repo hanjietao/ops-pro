@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        left join cm_community c on a.community_id = c.id
     </sql>
 
-	<select id="selectActivityById" parameterType="Integer" resultMap="ActivityResult">
+	<select id="selectActivityById" parameterType="Long" resultMap="ActivityResult">
 		<include refid="selectActivityVo"/>
 		where a.id = #{id}
 	</select>

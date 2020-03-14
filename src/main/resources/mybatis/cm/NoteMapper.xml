@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join sm_client_user cu on bg.user_id = cu.user_id
     </sql>
 
-	<select id="selectNoteById" parameterType="Integer" resultMap="NoteResult">
+	<select id="selectNoteById" parameterType="Long" resultMap="NoteResult">
 		<include refid="selectNoteVo"/>
 		where bg.id = #{id}
 	</select>

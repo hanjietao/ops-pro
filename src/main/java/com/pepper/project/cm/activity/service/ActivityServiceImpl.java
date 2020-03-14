@@ -51,7 +51,7 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
-    public Activity selectActivityById(Integer id) {
+    public Activity selectActivityById(Long id) {
         return activityDao.selectActivityById(id);
     }
 

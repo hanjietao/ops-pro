@@ -11,7 +11,7 @@ public interface IGuideService {
 
     int deleteGuideByIds(String ids);
 
-    Guide selectGuideById(Integer id);
+    Guide selectGuideById(Long id);
 
     int updateGuide(Guide guide);
 

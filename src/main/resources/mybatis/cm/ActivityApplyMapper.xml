@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        left join sm_client_user cu on aa.user_id = cu.user_id
     </sql>
 
-	<select id="selectActivityApplyById" parameterType="Integer" resultMap="ActivityApplyResult">
+	<select id="selectActivityApplyById" parameterType="Long" resultMap="ActivityApplyResult">
 		<include refid="selectActivityApplyVo"/>
 		where aa.id = #{id}
 	</select>

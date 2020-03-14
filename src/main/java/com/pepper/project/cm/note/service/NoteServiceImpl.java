@@ -49,7 +49,7 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public Note selectNoteById(Integer id) {
+    public Note selectNoteById(Long id) {
         return noteDao.selectNoteById(id);
     }
 

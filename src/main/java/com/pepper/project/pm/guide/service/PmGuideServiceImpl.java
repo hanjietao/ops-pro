@@ -43,7 +43,7 @@ public class PmGuideServiceImpl implements IPmGuideService {
     }
 
     @Override
-    public PmGuide selectGuideById(Integer id) {
+    public PmGuide selectGuideById(Long id) {
         return guideDao.selectGuideById(id);
     }
 

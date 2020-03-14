@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ActivityApplyMapper {
 
-    ActivityApply selectActivityApplyById(Integer id);
+    ActivityApply selectActivityApplyById(Long id);
     List<ActivityApply> selectActivityApplyList(ActivityApply activity);
 
     /**

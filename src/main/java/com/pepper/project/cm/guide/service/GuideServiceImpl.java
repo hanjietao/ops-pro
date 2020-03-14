@@ -51,7 +51,7 @@ public class GuideServiceImpl implements IGuideService {
     }
 
     @Override
-    public Guide selectGuideById(Integer id) {
+    public Guide selectGuideById(Long id) {
         return guideDao.selectGuideById(id);
     }
 

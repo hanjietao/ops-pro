@@ -87,7 +87,7 @@ public class PmActivityController extends BaseController {
      * 修改活动
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
 //        List<Area> areas = areaService.selectAreaList(new Area());
 //        mmap.put("areas",areas);
@@ -125,7 +125,7 @@ public class PmActivityController extends BaseController {
      */
     @RequiresPermissions("pm:activity:list")
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Integer id, ModelMap mmap)
+    public String detail(@PathVariable("id") Long id, ModelMap mmap)
     {
         String merchantFlag = getSysUser().getMerchantFlag();
         PmActivity pmActivity = new PmActivity();
@@ -157,7 +157,7 @@ public class PmActivityController extends BaseController {
     @ApiOperation("物业活动详细")
     @PostMapping("/getDetail")
     @ResponseBody
-    public Object getDetail(Integer id)
+    public Object getDetail(Long id)
     {
         if (id != 0)
         {

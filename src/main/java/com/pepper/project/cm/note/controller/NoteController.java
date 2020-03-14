@@ -88,7 +88,7 @@ public class NoteController extends BaseController {
      * 修改社区留言
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Community> communitys = communityService.selectCommunityList(new Community());
         mmap.put("communitys",communitys);

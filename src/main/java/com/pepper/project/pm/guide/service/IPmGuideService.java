@@ -11,7 +11,7 @@ public interface IPmGuideService {
 
     int deleteGuideByIds(String ids);
 
-    PmGuide selectGuideById(Integer id);
+    PmGuide selectGuideById(Long id);
 
     int updateGuide(PmGuide guide);
 

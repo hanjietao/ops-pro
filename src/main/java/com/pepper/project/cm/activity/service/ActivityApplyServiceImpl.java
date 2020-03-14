@@ -49,7 +49,7 @@ public class ActivityApplyServiceImpl implements IActivityApplyService {
     }
 
     @Override
-    public ActivityApply selectActivityApplyById(Integer id) {
+    public ActivityApply selectActivityApplyById(Long id) {
         return activityApplyDao.selectActivityApplyById(id);
     }
 

@@ -22,7 +22,7 @@ public class PmActivityApply extends BaseEntity{
 
     /** 报名活动 */
     @Excel(name = "活动id")
-    private Integer activityId;
+    private Long activityId;
 
     /** 报名人id */
     private Long userId;
@@ -65,11 +65,11 @@ public class PmActivityApply extends BaseEntity{
         this.id = id;
     }
 
-    public Integer getActivityId() {
+    public Long getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(Integer activityId) {
+    public void setActivityId(Long activityId) {
         this.activityId = activityId;
     }
 

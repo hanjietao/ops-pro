@@ -11,7 +11,7 @@ public interface INoteService {
 
     int deleteNoteByIds(String ids);
 
-    Note selectNoteById(Integer id);
+    Note selectNoteById(Long id);
 
     int updateNote(Note note);
 

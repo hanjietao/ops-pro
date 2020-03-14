@@ -88,7 +88,7 @@ public class GuideController extends BaseController {
      * 修改社区指南
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Community> communitys = communityService.selectCommunityList(new Community());
         mmap.put("communitys",communitys);
@@ -148,7 +148,7 @@ public class GuideController extends BaseController {
     @ApiOperation("社区指南详细")
     @PostMapping("/getDetail")
     @ResponseBody
-    public Object getDetail(Integer id)
+    public Object getDetail(Long id)
     {
         if (id != 0)
         {

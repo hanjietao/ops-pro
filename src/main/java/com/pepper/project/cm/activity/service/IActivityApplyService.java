@@ -12,7 +12,7 @@ public interface IActivityApplyService {
 
     int deleteActivityApplyByIds(String ids);
 
-    ActivityApply selectActivityApplyById(Integer id);
+    ActivityApply selectActivityApplyById(Long id);
 
     int updateActivityApply(ActivityApply activityApply);
 

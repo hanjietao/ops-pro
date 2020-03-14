@@ -11,7 +11,7 @@ public interface IActivityService {
 
     int deleteActivityByIds(String ids);
 
-    Activity selectActivityById(Integer id);
+    Activity selectActivityById(Long id);
 
     int updateActivity(Activity activity);
 

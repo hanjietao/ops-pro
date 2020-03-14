@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PmActivityMapper {
 
-    PmActivity selectActivityById(Integer id);
+    PmActivity selectActivityById(Long id);
     List<PmActivity> selectActivityList(PmActivity pmActivity);
 
     /**

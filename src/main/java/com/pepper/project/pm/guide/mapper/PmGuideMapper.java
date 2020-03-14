@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PmGuideMapper {
 
-    PmGuide selectGuideById(Integer id);
+    PmGuide selectGuideById(Long id);
     List<PmGuide> selectGuideList(PmGuide guide);
 
     public int insertGuide(PmGuide guide);

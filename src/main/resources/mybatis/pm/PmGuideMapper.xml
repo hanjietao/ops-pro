@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join pm_property c on bg.property_id = c.id
     </sql>
 
-	<select id="selectGuideById" parameterType="Integer" resultMap="GuideResult">
+	<select id="selectGuideById" parameterType="Long" resultMap="GuideResult">
 		<include refid="selectGuideVo"/>
 		where bg.id = #{id}
 	</select>
