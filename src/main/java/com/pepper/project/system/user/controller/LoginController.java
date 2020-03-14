@@ -3,6 +3,7 @@ package com.pepper.project.system.user.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.cj.xdevapi.Client;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.service.DictService;
@@ -46,6 +47,9 @@ public class LoginController extends BaseController
 
     @Autowired
     private IPropertyService propertyService;
+
+    @Autowired
+    private IClientUserService clientUserService;
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response)
@@ -98,6 +102,11 @@ public class LoginController extends BaseController
                 merchant.setImageUrl(sysUser.getAvatar());
                 merchant.setMerchantId(merchantId);
                 sysUser.setMerchant(merchant);
+            }
+            if(SysUserType.client.getType().equals(sysUser.getMerchantFlag())){
+                Long merchantId = sysUser.getMerchantId();
+                ClientUser clientUser = clientUserService.selectClientUserById(merchantId);
+                sysUser.setClientUser(clientUser);
             }
 
             setSysUser(sysUser);

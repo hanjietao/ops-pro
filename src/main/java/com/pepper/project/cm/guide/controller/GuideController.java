@@ -131,6 +131,20 @@ public class GuideController extends BaseController {
         return getDataTable(list);
     }
 
+    /*@ApiOperation("社区指南列表")
+    @PostMapping("/getList")
+    @ResponseBody
+    public AjaxResult getList(Long communityId)
+    {
+        Guide guide = new Guide();
+        guide.setCommunityId(communityId);
+        List<Guide> list = guideService.selectGuideList(guide);
+        int a=1;
+        int b =0;
+        int c = a/b;
+        return AjaxResult.success(getDataTable(list));
+    }*/
+
     @ApiOperation("社区指南详细")
     @PostMapping("/getDetail")
     @ResponseBody

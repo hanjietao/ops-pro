@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/ch/appointment")
@@ -173,7 +172,7 @@ public class AppointmentController extends BaseController {
     }
 
     /**
-     * 删除区域
+     * 删除预约检查
      */
     @RequiresPermissions("ch:appointment:remove")
     @Log(title = "预约检查", businessType = BusinessType.DELETE)
@@ -188,6 +187,7 @@ public class AppointmentController extends BaseController {
     @ApiOperation("新增医院预约检查")
     @Log(title = "新增医院预约检查", businessType = BusinessType.INSERT)
     @PostMapping("/addAppointment")
+    @ResponseBody
     public AjaxResult addAppointment(@RequestParam(required = true) String appointmentStartTimeStr,
                            @RequestParam(required = true) String appointmentEndTimeStr,
                            @RequestParam(required = true) Integer medicalProjectId,
@@ -217,5 +217,22 @@ public class AppointmentController extends BaseController {
         appointment.setAppointmentReason(appointmentReason);
         appointment.setStatus("0");
         return AjaxResult.success(appointmentService.insertAppointment(appointment));
+    }
+
+    @ApiOperation("取消医院预约检查")
+    @Log(title = "取消医院预约检查", businessType = BusinessType.UPDATE)
+    @PostMapping("/cancel")
+    @ResponseBody
+    public AjaxResult cancelAppointment(@RequestParam(required = true) Integer id,
+                                        @RequestParam(required = false) String cancelReason)
+    {
+
+        Appointment appointment = appointmentService.selectAppointmentById(id);
+        if(appointment == null || getSysUser().getClientUser().getUserId().longValue() != appointment.getUserId().longValue()){
+            return error("抱歉，您不存在该预约");
+        }
+        appointment.setStatus("1");// 1关闭
+        appointment.setCancelReason(cancelReason);
+        return AjaxResult.success(appointmentService.updateAppointment(appointment));
     }
 }

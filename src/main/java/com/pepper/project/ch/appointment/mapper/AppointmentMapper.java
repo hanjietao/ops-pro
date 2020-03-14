@@ -8,6 +8,7 @@ public interface AppointmentMapper {
 
     Appointment selectAppointmentById(Integer id);
     List<Appointment> selectAppointmentList(Appointment appointment);
+    List<Appointment> selectUserInfoAppointmentList(Appointment appointment);
 
     /**
      * 新增预约
