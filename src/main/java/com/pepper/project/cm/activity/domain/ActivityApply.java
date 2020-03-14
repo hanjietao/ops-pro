@@ -18,7 +18,7 @@ public class ActivityApply extends BaseEntity{
 
     /** 唯一键索引id */
     @Excel(name = "活动报名序号", cellType = Excel.ColumnType.NUMERIC)
-    private Integer id;
+    private Long id;
 
     /** 报名活动 */
     @Excel(name = "活动id")
@@ -57,11 +57,11 @@ public class ActivityApply extends BaseEntity{
     /** 为了在权限区分是，筛选特定社区的活动 */
     private Long communityId;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

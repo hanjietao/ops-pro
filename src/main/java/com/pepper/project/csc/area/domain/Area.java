@@ -19,7 +19,7 @@ public class Area extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
-    private Integer id;
+    private Long id;
 
     /** 区域码Code */
     private String areaCode;
@@ -48,11 +48,11 @@ public class Area extends BaseEntity
     /** 是否存在此区域 默认不存在 */
     private boolean flag = false;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

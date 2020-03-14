@@ -4,7 +4,7 @@
 -- ----------------------------
 drop table if exists csc_area ;
 CREATE TABLE csc_area(
-    ID INT AUTO_INCREMENT NOT NULL   COMMENT '区域ID 区域管理ID' ,
+    ID BIGINT(20) AUTO_INCREMENT NOT NULL   COMMENT '区域ID 区域管理ID' ,
     AREA_CODE VARCHAR(64) NOT NULL   COMMENT '区域Code：沙区-sybk' ,
     AREA_NAME VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '区域名称 例如：沙依巴克区' ,
     COORDINATE VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '经纬度' ,
@@ -36,7 +36,7 @@ CREATE TABLE cm_community(
 
 drop table if exists cm_activity ;
 CREATE TABLE cm_activity(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     COMMUNITY_ID INT COMMENT '社区',
     TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '活动标题' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '活动内容' ,
@@ -50,7 +50,7 @@ CREATE TABLE cm_activity(
 
 drop table if exists cm_activity_apply ;
 CREATE TABLE cm_activity_apply(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     activity_id INT    COMMENT '活动id' ,
     USER_ID BIGINT(20)    COMMENT '用户id' ,
     USER_MOBILE VARCHAR(20) COMMENT '用户手机号，参加活动用',
@@ -64,7 +64,7 @@ CREATE TABLE cm_activity_apply(
 
 drop table if exists cm_business_guide ;
 CREATE TABLE cm_business_guide(
-    ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '办事指南ID' ,
     TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '指南标题' ,
     CONTENT TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '指南内容' ,
     COMMUNITY_ID INT    COMMENT '所属社区' ,
@@ -78,7 +78,7 @@ CREATE TABLE cm_business_guide(
 
 drop table if exists cm_note ;
 CREATE TABLE cm_note(
-    ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '留言内容' ,
     USER_ID BIGINT(20) COMMENT '用户id',
     COMMUNITY_ID INT    COMMENT '所属社区' ,
@@ -110,7 +110,7 @@ CREATE TABLE ch_hospital(
 
 drop table if exists ch_medical_project ;
 CREATE TABLE ch_medical_project(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '医疗项目ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '医疗项目ID' ,
     NAME VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '医疗项目名称' ,
     SERVICE_CONTENT VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '服务内容' ,
     PRICE DECIMAL(32,2)    COMMENT '收费标准 45' ,
@@ -126,7 +126,7 @@ CREATE TABLE ch_medical_project(
 
 drop table if exists ch_doctor ;
 CREATE TABLE ch_doctor(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '医生ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '医生ID' ,
     DOCTOR_CODE INT NOT NULL   COMMENT '医生ID' ,
     DOCTOR_NAME VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '医生名称' ,
     MAJOR_FIELD VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '专业方向介绍' ,
@@ -142,7 +142,7 @@ CREATE TABLE ch_doctor(
 
 drop table if exists ch_appointment ;
 CREATE TABLE ch_appointment(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '预约ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '预约ID' ,
     USER_ID BIGINT(20) NOT NULL COMMENT '用户id',
     HOSPITAL_ID INT    COMMENT '预约医院ID',
     MEDICAL_PROJECT_ID INT    COMMENT '预约服务项目ID' ,
@@ -180,7 +180,7 @@ CREATE TABLE pm_property(
 -- 需要新增活动所属社区
 drop table if exists pm_activity ;
 CREATE TABLE pm_activity(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     PROPERTY_ID INT COMMENT '物业',
     TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '活动标题' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '活动内容' ,
@@ -194,7 +194,7 @@ CREATE TABLE pm_activity(
 
 drop table if exists pm_activity_apply ;
 CREATE TABLE pm_activity_apply(
-    ID INT NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
+    ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '活动ID' ,
     activity_id INT    COMMENT '活动id' ,
     USER_ID BIGINT(20)    COMMENT '用户id' ,
     USER_MOBILE VARCHAR(20) COMMENT '用户手机号，参加活动用',
@@ -208,7 +208,7 @@ CREATE TABLE pm_activity_apply(
 
 drop table if exists pm_business_guide ;
 CREATE TABLE pm_business_guide(
-    ID INT  AUTO_INCREMENT  COMMENT '办事指南ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '办事指南ID' ,
     TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '指南标题' ,
     CONTENT TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '指南内容' ,
     PROPERTY_ID INT    COMMENT '所属物业' ,
@@ -222,7 +222,7 @@ CREATE TABLE pm_business_guide(
 
 drop table if exists pm_note ;
 CREATE TABLE pm_note(
-    ID INT  AUTO_INCREMENT  COMMENT '留言ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT '留言ID' ,
     CONTENT TEXT  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '留言内容' ,
     USER_ID BIGINT(20) COMMENT '用户id',
     PROPERTY_ID INT    COMMENT '所属物业' ,
@@ -236,7 +236,7 @@ CREATE TABLE pm_note(
 
 drop table if exists pm_notice ;
 CREATE TABLE pm_notice(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     TITLE VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '通知内容' ,
     CONTENT TEXT   CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '通知内容' ,
     PROPERTY_ID INT    COMMENT '物业id' ,
@@ -252,7 +252,7 @@ CREATE TABLE pm_notice(
 -- 健康宣教
 drop table if exists he_board ;
 CREATE TABLE he_board(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_CODE VARCHAR(64)    COMMENT '板块编码' ,
     BOARD_NAME VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '板块名称' ,
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
@@ -266,7 +266,7 @@ CREATE TABLE he_board(
 
 drop table if exists he_article ;
 CREATE TABLE he_article(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_ID INT(11)    COMMENT '板块编码' ,
     TITLE VARCHAR(128)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '文章标题' ,
     CONTENT TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容' ,
@@ -281,7 +281,7 @@ CREATE TABLE he_article(
 
 drop table if exists he_video ;
 CREATE TABLE he_video(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     BOARD_ID INT(11)    COMMENT '板块编码' ,
     TITLE VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '视频标题' ,
     VIDEO_URL VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '视频地址' ,
@@ -299,7 +299,7 @@ CREATE TABLE he_video(
 -- 首页模块 front page
 drop table if exists fp_loop_image ;
 CREATE TABLE fp_loop_image(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     title VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '广告标题' ,
     image_url VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '轮播图片url' ,
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,

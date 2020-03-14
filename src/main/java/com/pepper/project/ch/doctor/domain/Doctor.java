@@ -16,7 +16,7 @@ public class Doctor extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
-    private Integer id;
+    private Long id;
 
     /** 医生名称 */
     private String doctorName;
@@ -52,11 +52,11 @@ public class Doctor extends BaseEntity{
 
     private Hospital hospital;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

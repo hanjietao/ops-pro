@@ -16,7 +16,7 @@ public class ActivityApplyPmExcel {
 
     /** 唯一键索引id */
     @Excel(name = "活动报名序号", cellType = Excel.ColumnType.NUMERIC)
-    private Integer id;
+    private Long id;
 
     /** 报名活动 */
     private Integer activityId;
@@ -55,11 +55,11 @@ public class ActivityApplyPmExcel {
         return serialVersionUID;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
