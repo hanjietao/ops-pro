@@ -70,7 +70,7 @@
         $("#imageUrl").attr('src', val);
         $("#imageinput").fileinput({
             'theme': 'fas',
-            'uploadUrl': 'upload',
+            'uploadUrl': prefix + '/upload',
             overwriteInitial: false,
             initialPreviewAsData: true,
             allowedFileExtensions: ['jpg','jpeg','png'],

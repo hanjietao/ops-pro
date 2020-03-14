@@ -5,6 +5,7 @@ import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.config.OpsConfig;
+import com.pepper.framework.config.ServerConfig;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
@@ -38,6 +39,9 @@ public class LoopImageController extends BaseController {
 
     @Autowired
     private IAreaService areaService;
+
+    @Autowired
+    private ServerConfig serverConfig;
 
     @RequiresPermissions("fp:loop:view")
     @GetMapping()
@@ -128,7 +132,7 @@ public class LoopImageController extends BaseController {
         {
             if (!file.isEmpty())
             {
-                String healthVideoUrl = FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
+                String healthVideoUrl = serverConfig.getUrl() + FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
                 return success(healthVideoUrl);
             }
             return error();
@@ -150,7 +154,7 @@ public class LoopImageController extends BaseController {
         {
             if (!file.isEmpty())
             {
-                String healthVideoUrl = FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
+                String healthVideoUrl = serverConfig.getUrl() + FileUploadUtils.upload(OpsConfig.getHealthVideoPath(uploadModule), file);
                 return success(healthVideoUrl);
             }
             return error();
