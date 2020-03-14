@@ -61,15 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
  	<select id="selectAppointmentList" parameterType="Appointment" resultMap="AppointmentResult">
-<!--		<include refid="selectAppointmentVo"/>-->
-		select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.user_id,a.hospital_id,
-		a.medical_project_id,a.appointment_time,a.appointment_start_time,a.appointment_end_time,a.appointment_name,
-		a.appointment_phone,a.status,a.appointment_reason,a.cancel_reason,
-		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
-		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
-		from ch_appointment a
-		left join ch_hospital h on a.hospital_id = h.id
-		left join ch_medical_project mp on a.medical_project_id = mp.id
+		<include refid="selectAppointmentVo"/>
 		<where>
 			<if test="userId != null">
 				AND a.user_id = #{userId}
