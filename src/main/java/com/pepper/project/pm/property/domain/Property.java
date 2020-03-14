@@ -156,7 +156,7 @@ public class Property extends BaseEntity{
 
     @Override
     public String toString() {
-        return "ActivityPm{" +
+        return "PmActivity{" +
                 "id=" + id +
                 ", propertyCode='" + propertyCode + '\'' +
                 ", propertyName='" + propertyName + '\'' +

@@ -9,10 +9,10 @@ import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
-import com.pepper.project.pm.activity.domain.ActivityApplyPm;
-import com.pepper.project.pm.activity.domain.ActivityApplyPmExcel;
-import com.pepper.project.pm.activity.service.IActivityApplyPmService;
-import com.pepper.project.pm.activity.service.IActivityPmService;
+import com.pepper.project.pm.activity.domain.PmActivityApply;
+import com.pepper.project.pm.activity.domain.PmActivityApplyExcel;
+import com.pepper.project.pm.activity.service.IPmActivityApplyService;
+import com.pepper.project.pm.activity.service.IPmActivityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +26,17 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pm/activity/apply")
-public class ActivityApplyPmController extends BaseController {
+public class PmActivityApplyController extends BaseController {
 
-    Logger logger = LoggerFactory.getLogger(ActivityApplyPmController.class);
+    Logger logger = LoggerFactory.getLogger(PmActivityApplyController.class);
 
     private String prefix = "pm/activity/apply";
 
     @Autowired
-    private IActivityApplyPmService activityApplyService;
+    private IPmActivityApplyService activityApplyService;
 
     @Autowired
-    private IActivityPmService activityService;
+    private IPmActivityService activityService;
 
     @Autowired
     private IAreaService areaService;
@@ -51,13 +51,13 @@ public class ActivityApplyPmController extends BaseController {
     @RequiresPermissions("pm:activity:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(ActivityApplyPm activityApplyPm)
+    public TableDataInfo list(PmActivityApply pmActivityApply)
     {
         startPage();
         if(getMerchantId()!=0){
-            activityApplyPm.setPropertyId(getMerchantId());
+            pmActivityApply.setPropertyId(getMerchantId());
         }
-        List<ActivityApplyPm> list = activityApplyService.selectActivityApplyList(activityApplyPm);
+        List<PmActivityApply> list = activityApplyService.selectActivityApplyList(pmActivityApply);
         return getDataTable(list);
     }
 
@@ -79,13 +79,13 @@ public class ActivityApplyPmController extends BaseController {
     @RequiresPermissions("pm:activity:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(ActivityApplyPm activityApplyPm)
+    public AjaxResult addSave(PmActivityApply pmActivityApply)
     {
-        if(activityService.selectActivityById(activityApplyPm.getActivityId()) == null){
-            logger.error("not find activity by the activity id={}", activityApplyPm.getActivityId());
+        if(activityService.selectActivityById(pmActivityApply.getActivityId()) == null){
+            logger.error("not find activity by the activity id={}", pmActivityApply.getActivityId());
             throw new BusinessException("当前选择的报名的活动已下架！");
         }
-        return toAjax(activityApplyService.insertActivityApply(activityApplyPm));
+        return toAjax(activityApplyService.insertActivityApply(pmActivityApply));
     }
 
     /**
@@ -107,9 +107,9 @@ public class ActivityApplyPmController extends BaseController {
     @Log(title = "活动报名", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(ActivityApplyPm activityApplyPm)
+    public AjaxResult editSave(PmActivityApply pmActivityApply)
     {
-        return toAjax(activityApplyService.updateActivityApply(activityApplyPm));
+        return toAjax(activityApplyService.updateActivityApply(pmActivityApply));
     }
 
     /**
@@ -128,24 +128,24 @@ public class ActivityApplyPmController extends BaseController {
     @RequiresPermissions("pm:activity:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(ActivityApplyPm activityApplyPm)
+    public AjaxResult export(PmActivityApply pmActivityApply)
     {
         if(getMerchantId()!=0){
-            activityApplyPm.setPropertyId(getMerchantId());
+            pmActivityApply.setPropertyId(getMerchantId());
         }
-        List<ActivityApplyPm> list = activityApplyService.selectActivityApplyList(activityApplyPm);
-        List<ActivityApplyPmExcel> excelList = new ArrayList<>();
-        for (ActivityApplyPm apply: list) {
-            ActivityApplyPmExcel excel = new ActivityApplyPmExcel();
+        List<PmActivityApply> list = activityApplyService.selectActivityApplyList(pmActivityApply);
+        List<PmActivityApplyExcel> excelList = new ArrayList<>();
+        for (PmActivityApply apply: list) {
+            PmActivityApplyExcel excel = new PmActivityApplyExcel();
             excel.setId(apply.getId());
-            excel.setActivityTitle(apply.getActivityPm().getTitle());
+            excel.setActivityTitle(apply.getPmActivity().getTitle());
             excel.setNikeName(apply.getClientUser().getNikeName());
             excel.setStatus(apply.getStatus());
             excel.setUserMobile(apply.getClientUser().getUserMobile());
             excel.setCreateTime(apply.getCreateTime());
             excelList.add(excel);
         }
-        ExcelUtil<ActivityApplyPmExcel> util = new ExcelUtil<ActivityApplyPmExcel>(ActivityApplyPmExcel.class);
-        return util.exportExcel(excelList, "活动报名列表"+"_"+ activityApplyPm.getId());
+        ExcelUtil<PmActivityApplyExcel> util = new ExcelUtil<PmActivityApplyExcel>(PmActivityApplyExcel.class);
+        return util.exportExcel(excelList, "活动报名列表"+"_"+ pmActivityApply.getId());
     }
 }

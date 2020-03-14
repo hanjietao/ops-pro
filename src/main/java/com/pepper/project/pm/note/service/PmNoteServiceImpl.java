@@ -3,18 +3,18 @@ package com.pepper.project.pm.note.service;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.project.csc.area.mapper.AreaMapper;
-import com.pepper.project.pm.note.domain.NotePm;
-import com.pepper.project.pm.note.mapper.NotePmMapper;
+import com.pepper.project.pm.note.domain.PmNote;
+import com.pepper.project.pm.note.mapper.PmNoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class NotePmServiceImpl implements INotePmService {
+public class PmNoteServiceImpl implements IPmNoteService {
 
     @Autowired
-    private NotePmMapper noteDao;
+    private PmNoteMapper noteDao;
 
     @Autowired
     private AreaMapper areaDao;
@@ -26,9 +26,9 @@ public class NotePmServiceImpl implements INotePmService {
      *  @Date: 2020/2/6 0:23
      */
     @Override
-    public List<NotePm> selectNoteList(NotePm guide) {
+    public List<PmNote> selectNoteList(PmNote pmNote) {
 
-        List<NotePm> list = noteDao.selectNoteList(guide);
+        List<PmNote> list = noteDao.selectNoteList(pmNote);
 //        for (Note hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
@@ -37,10 +37,10 @@ public class NotePmServiceImpl implements INotePmService {
     }
 
     @Override
-    public int insertNote(NotePm note) {
-        note.setCreateBy(ShiroUtils.getLoginName());
-        note.setUpdateBy(ShiroUtils.getLoginName());
-        return noteDao.insertNote(note);
+    public int insertNote(PmNote pmNote) {
+        pmNote.setCreateBy(ShiroUtils.getLoginName());
+        pmNote.setUpdateBy(ShiroUtils.getLoginName());
+        return noteDao.insertNote(pmNote);
     }
 
     @Override
@@ -49,14 +49,14 @@ public class NotePmServiceImpl implements INotePmService {
     }
 
     @Override
-    public NotePm selectNoteById(Integer id) {
+    public PmNote selectNoteById(Integer id) {
         return noteDao.selectNoteById(id);
     }
 
     @Override
-    public int updateNote(NotePm note) {
-        note.setUpdateBy(ShiroUtils.getLoginName());
-        return noteDao.updateNote(note);
+    public int updateNote(PmNote pmNote) {
+        pmNote.setUpdateBy(ShiroUtils.getLoginName());
+        return noteDao.updateNote(pmNote);
     }
 
 

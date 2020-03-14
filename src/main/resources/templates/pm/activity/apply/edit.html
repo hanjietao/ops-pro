@@ -5,7 +5,7 @@
 </head>
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-		<form class="form-horizontal m" id="form-activityPm-apply-edit" th:object="${activityApplyPm}">
+		<form class="form-horizontal m" id="form-pmActivity-apply-edit" th:object="${pmActivityApply}">
 			<input name="dictCode"  type="hidden"  th:field="*{id}" />
 			<div class="form-group">
 				<label class="col-sm-3 control-label is-required">用户id：</label>
@@ -40,7 +40,7 @@
 	<script type="text/javascript">
 		var prefix = ctx + "pm/activity/apply";
 
-		$("#form-activityPm-apply-edit").validate({
+		$("#form-pmActivity-apply-edit").validate({
 			rules:{
 				dictSort:{
 					digits:true
@@ -51,7 +51,7 @@
 
 		function submitHandler() {
 	        if ($.validate.form()) {
-	        	$.operate.save(prefix + "/edit", $('#form-activityPm-apply-edit').serialize());
+	        	$.operate.save(prefix + "/edit", $('#form-pmActivity-apply-edit').serialize());
 	        }
 	    }
 	</script>

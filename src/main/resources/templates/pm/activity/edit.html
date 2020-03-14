@@ -8,7 +8,7 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-activityPm-edit" th:object="${activityPm}">
+        <form class="form-horizontal m" id="form-pmActivity-edit" th:object="${pmActivity}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
             <div class="form-group">
                 <label class="col-sm-2 control-label is-required">物业id：</label>
@@ -89,7 +89,7 @@
 	        });
 	    }
 
-		$("#form-activityPm-edit").validate({
+		$("#form-pmActivity-edit").validate({
 			focusCleanup: true
 		});
 
@@ -97,7 +97,7 @@
             if ($.validate.form()) {
                 var sHTML = $('.summernote').summernote('code');
                 $("#content").val(sHTML);
-                $.operate.save(prefix + "/edit", $('#form-activityPm-edit').serialize());
+                $.operate.save(prefix + "/edit", $('#form-pmActivity-edit').serialize());
             }
 	    }
 	</script>

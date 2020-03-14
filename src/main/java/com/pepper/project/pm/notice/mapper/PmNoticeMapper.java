@@ -7,9 +7,9 @@ import java.util.List;
 public interface PmNoticeMapper {
 
     PmNotice selectPmNoticeById(Integer id);
-    List<PmNotice> selectPmNoticeList(PmNotice note);
+    List<PmNotice> selectPmNoticeList(PmNotice pmNotice);
 
-    public int insertPmNotice(PmNotice note);
+    int insertPmNotice(PmNotice pmNotice);
 
     int deletePmNoticeByIds(String[] ids);
 

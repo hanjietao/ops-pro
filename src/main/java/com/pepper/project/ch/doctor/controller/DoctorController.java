@@ -76,7 +76,9 @@ public class DoctorController extends BaseController {
             return  error("非医院业务系统用户 无法添加医院医生");
         }
         doctor.setHospitalId(getMerchantId());
-        return toAjax(doctorService.insertDoctor(doctor));
+        doctorService.insertDoctor(doctor);
+        doctor.setDoctorCode(doctor.getId().toString());
+        return toAjax(doctorService.updateDoctor(doctor));
     }
 
     /**

@@ -29,7 +29,7 @@ public class ActivityApplyServiceImpl implements IActivityApplyService {
     public List<ActivityApply> selectActivityApplyList(ActivityApply activityApply) {
 
         List<ActivityApply> list = activityApplyDao.selectActivityApplyList(activityApply);
-//        for (ActivityPm hos:list) {
+//        for (PmActivity hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
 //        }

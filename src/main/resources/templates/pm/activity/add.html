@@ -8,7 +8,7 @@
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-	<form class="form-horizontal m" id="form-activityPm-add">
+	<form class="form-horizontal m" id="form-pmActivity-add">
 <!--		<div class="form-group">-->
 <!--			<label class="col-sm-2 control-label is-required">物业id：</label>-->
 <!--			<div class="col-sm-10">-->
@@ -91,7 +91,7 @@
 		if ($.validate.form()) {
 			var sHTML = $('.summernote').summernote('code');
 			$("#content").val(sHTML);
-			$.operate.save(prefix + "/add", $('#form-activityPm-add').serialize());
+			$.operate.save(prefix + "/add", $('#form-pmActivity-add').serialize());
 		}
 	}
 </script>

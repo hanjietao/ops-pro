@@ -127,7 +127,7 @@ CREATE TABLE ch_medical_project(
 drop table if exists ch_doctor ;
 CREATE TABLE ch_doctor(
     ID BIGINT(20) NOT NULL AUTO_INCREMENT  COMMENT '医生ID' ,
-    DOCTOR_CODE INT NOT NULL   COMMENT '医生ID' ,
+    DOCTOR_CODE INT DEFAULT NULL   COMMENT '医生ID' ,
     DOCTOR_NAME VARCHAR(64)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '医生名称' ,
     MAJOR_FIELD VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '专业方向介绍' ,
     DOCTOR_TYPE INT COMMENT '医生类型1-主治医生，2-助理医生，3-实习医生' ,

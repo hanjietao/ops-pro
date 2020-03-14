@@ -8,10 +8,10 @@ import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.pm.note.domain.PmNote;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
-import com.pepper.project.pm.note.domain.NotePm;
-import com.pepper.project.pm.note.service.INotePmService;
+import com.pepper.project.pm.note.service.IPmNoteService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +23,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pm/note")
-public class NotePmController extends BaseController {
+public class PmNoteController extends BaseController {
 
     private String prefix = "pm/note";
 
     @Autowired
-    private INotePmService noteService;
+    private IPmNoteService noteService;
 
     @Autowired
     private IAreaService areaService;
@@ -48,11 +48,11 @@ public class NotePmController extends BaseController {
     @RequiresPermissions("pm:note:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(NotePm note)
+    public TableDataInfo list(PmNote note)
     {
         startPage();
         note.setPropertyId(getMerchantId());
-        List<NotePm> list = noteService.selectNoteList(note);
+        List<PmNote> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }
 
@@ -74,7 +74,7 @@ public class NotePmController extends BaseController {
     @RequiresPermissions("pm:note:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(NotePm note)
+    public AjaxResult addSave(PmNote note)
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
@@ -103,7 +103,7 @@ public class NotePmController extends BaseController {
     @Log(title = "物业留言", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(NotePm note)
+    public AjaxResult editSave(PmNote note)
     {
         // 如果为空，则说明是在做回复操作，不是驳回
         if(StringUtils.isEmpty(note.getReplyStatus())){
@@ -130,9 +130,9 @@ public class NotePmController extends BaseController {
     public AjaxResult addNote(@RequestParam(required = true) Long propertyId,
                               @RequestParam(required = true) String content)
     {
-        NotePm notePm = new NotePm();
-        notePm.setPropertyId(propertyId);
-        notePm.setContent(content);
-        return AjaxResult.success(noteService.insertNote(notePm));
+        PmNote pmNote = new PmNote();
+        pmNote.setPropertyId(propertyId);
+        pmNote.setContent(content);
+        return AjaxResult.success(noteService.insertNote(pmNote));
     }
 }

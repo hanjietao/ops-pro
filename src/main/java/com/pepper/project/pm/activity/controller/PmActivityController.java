@@ -6,11 +6,9 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
-import com.pepper.project.cm.activity.domain.Activity;
-import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
-import com.pepper.project.pm.activity.domain.ActivityPm;
-import com.pepper.project.pm.activity.service.IActivityPmService;
+import com.pepper.project.pm.activity.domain.PmActivity;
+import com.pepper.project.pm.activity.service.IPmActivityService;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
 import io.swagger.annotations.ApiOperation;
@@ -25,12 +23,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pm/activity")
-public class ActivityPmController extends BaseController {
+public class PmActivityController extends BaseController {
 
     private String prefix = "pm/activity";
 
     @Autowired
-    private IActivityPmService activityService;
+    private IPmActivityService activityService;
 
     @Autowired
     private IAreaService areaService;
@@ -49,11 +47,11 @@ public class ActivityPmController extends BaseController {
     @RequiresPermissions("pm:activity:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(ActivityPm activityPm)
+    public TableDataInfo list(PmActivity pmActivity)
     {
         startPage();
-        activityPm.setPropertyId(getMerchantId());
-        List<ActivityPm> list = activityService.selectActivityList(activityPm);
+        pmActivity.setPropertyId(getMerchantId());
+        List<PmActivity> list = activityService.selectActivityList(pmActivity);
         return getDataTable(list);
     }
 
@@ -75,14 +73,14 @@ public class ActivityPmController extends BaseController {
     @RequiresPermissions("pm:activity:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(ActivityPm activityPm)
+    public AjaxResult addSave(PmActivity pmActivity)
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
             return  error("非物业业务系统无法添加物业活动");
         }
-        activityPm.setPropertyId(getMerchantId());
-        return toAjax(activityService.insertActivity(activityPm));
+        pmActivity.setPropertyId(getMerchantId());
+        return toAjax(activityService.insertActivity(pmActivity));
     }
 
     /**
@@ -93,7 +91,7 @@ public class ActivityPmController extends BaseController {
     {
 //        List<Area> areas = areaService.selectAreaList(new Area());
 //        mmap.put("areas",areas);
-        mmap.put("activityPm", activityService.selectActivityById(id));
+        mmap.put("pmActivity", activityService.selectActivityById(id));
         return prefix + "/edit";
     }
 
@@ -104,9 +102,9 @@ public class ActivityPmController extends BaseController {
     @Log(title = "活动", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(ActivityPm activityPm)
+    public AjaxResult editSave(PmActivity pmActivity)
     {
-        return toAjax(activityService.updateActivity(activityPm));
+        return toAjax(activityService.updateActivity(pmActivity));
     }
 
     /**
@@ -130,13 +128,13 @@ public class ActivityPmController extends BaseController {
     public String detail(@PathVariable("id") Integer id, ModelMap mmap)
     {
         String merchantFlag = getSysUser().getMerchantFlag();
-        ActivityPm activityPm = new ActivityPm();
+        PmActivity pmActivity = new PmActivity();
         if(SysUserType.admin.getType().equals(merchantFlag)){
             // 查询所有的活动
-            mmap.put("activityList", activityService.selectActivityList(activityPm));//dictTypeService.selectDictTypeAll());
+            mmap.put("activityList", activityService.selectActivityList(pmActivity));//dictTypeService.selectDictTypeAll());
         }else if(SysUserType.padmin.getType().equals(merchantFlag)){
-            activityPm.setPropertyId(getMerchantId());
-            mmap.put("activityList", activityService.selectActivityList(activityPm));
+            pmActivity.setPropertyId(getMerchantId());
+            mmap.put("activityList", activityService.selectActivityList(pmActivity));
         }else{
             return "页面打开失败，用户类型错误!";
         }
@@ -150,9 +148,9 @@ public class ActivityPmController extends BaseController {
     @ResponseBody
     public TableDataInfo getList(Long propertyId)
     {
-        ActivityPm activityPm = new ActivityPm();
-        activityPm.setPropertyId(propertyId);
-        List<ActivityPm> list = activityService.selectActivityList(activityPm);
+        PmActivity pmActivity = new PmActivity();
+        pmActivity.setPropertyId(propertyId);
+        List<PmActivity> list = activityService.selectActivityList(pmActivity);
         return getDataTable(list);
     }
 

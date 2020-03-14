@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pepper.project.pm.activity.mapper.ActivityApplyPmMapper">
+<mapper namespace="com.pepper.project.pm.activity.mapper.PmActivityApplyMapper">
 
-	<resultMap type="ActivityApplyPm" id="ActivityApplyResult">
+	<resultMap type="PmActivityApply" id="ActivityApplyResult">
 		<id     property="id"         		column="id"         />
 		<result property="activityId"         column="activity_id"        />
 		<result property="userId"         column="user_id"        />
@@ -14,11 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
-		<association property="activityPm"    column="id" javaType="ActivityPm" resultMap="ActivityResult" />
+		<association property="pmActivity"    column="id" javaType="PmActivity" resultMap="ActivityResult" />
 		<association property="clientUser"    column="userId" javaType="ClientUser" resultMap="ClientUserResult" />
 	</resultMap>
 
-	<resultMap type="ActivityPm" id="ActivityResult">
+	<resultMap type="PmActivity" id="ActivityResult">
 		<id     property="id"         		column="id"         />
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where aa.id = #{id}
 	</select>
 
- 	<select id="selectActivityApplyList" parameterType="ActivityApplyPm" resultMap="ActivityApplyResult">
+ 	<select id="selectActivityApplyList" parameterType="PmActivityApply" resultMap="ActivityApplyResult">
 		<include refid="selectActivityApplyVo"/>
 		<where>
 			<if test="activityId != null and activityId != ''">
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertActivityApply" parameterType="ActivityApplyPm">
+	<insert id="insertActivityApply" parameterType="PmActivityApply">
 		insert into pm_activity_apply (
 		<if test="activityId != null and activityId != '' ">activity_id, </if>
 		<if test="userId != null and userId != '' ">user_id,</if>
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 
-	<update id="updateActivityApply" parameterType="ActivityApplyPm">
+	<update id="updateActivityApply" parameterType="PmActivityApply">
 		update pm_activity_apply
 		<set>
 			<if test="activityId != null and activityId != ''">activity_id = #{activityId}, </if>

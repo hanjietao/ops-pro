@@ -12,7 +12,7 @@ import java.util.Date;
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class ActivityApplyPm extends BaseEntity{
+public class PmActivityApply extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class ActivityApplyPm extends BaseEntity{
     private String updateBy;
 
     /** 活动 */
-    private ActivityPm activityPm;
+    private PmActivity pmActivity;
 
     /** 客户端用户表 */
     private ClientUser clientUser;
@@ -137,16 +137,16 @@ public class ActivityApplyPm extends BaseEntity{
         this.updateBy = updateBy;
     }
 
-    public ActivityPm getActivityPm() {
-        if (activityPm == null)
+    public PmActivity getPmActivity() {
+        if (pmActivity == null)
         {
-            activityPm = new ActivityPm();
+            pmActivity = new PmActivity();
         }
-        return activityPm;
+        return pmActivity;
     }
 
-    public void setActivityPm(ActivityPm activityPm) {
-        this.activityPm = activityPm;
+    public void setPmActivity(PmActivity pmActivity) {
+        this.pmActivity = pmActivity;
     }
 
     public ClientUser getClientUser() {
@@ -171,7 +171,7 @@ public class ActivityApplyPm extends BaseEntity{
 
     @Override
     public String toString() {
-        return "ActivityApplyPm{" +
+        return "PmActivityApply{" +
                 "id=" + id +
                 ", activityId='" + activityId + '\'' +
                 ", userId='" + userId + '\'' +
@@ -181,7 +181,7 @@ public class ActivityApplyPm extends BaseEntity{
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
-                ", activityPm='" + getActivityPm() + '\'' +
+                ", pmActivity='" + getPmActivity() + '\'' +
                 ", clientUser='" + getClientUser() + '\'' +
                 ", propertyId='" + propertyId + '\'' +
                 '}';

@@ -8,13 +8,13 @@
 	<div class="container-div">
 		<div class="row">
 			<div class="col-sm-12 search-collapse">
-				<form id="activityPm-apply-form">
+				<form id="pmActivity-apply-form">
 					<div class="select-list">
 						<ul>
 						    <li>
 								活动标题：<select id="activityId" name="activityId" class="form-control">
 									<option value="">所有</option>
-					                <option th:each="activityPm : ${activityList}" th:text="${activityPm['title']}" th:value="${activityPm['id']}" th:field="*{activity.id}"></option>
+					                <option th:each="pmActivity : ${activityList}" th:text="${pmActivity['title']}" th:value="${pmActivity['id']}" th:field="*{activity.id}"></option>
 								</select>
 							</li>
 							<li>
@@ -79,7 +79,7 @@
 						title : '序号'
 					},
 					{
-						field: 'activityPm.title',
+						field: 'pmActivity.title',
 						title: '活动标题'
 					},
 					{

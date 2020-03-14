@@ -167,7 +167,7 @@ public class Community extends BaseEntity{
 
     @Override
     public String toString() {
-        return "ActivityPm{" +
+        return "PmActivity{" +
                 "id=" + id +
                 ", communityCode='" + communityCode + '\'' +
                 ", communityName='" + communityName + '\'' +

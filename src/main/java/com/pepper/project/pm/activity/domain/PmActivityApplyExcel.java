@@ -10,7 +10,7 @@ import java.util.Date;
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class ActivityApplyPmExcel {
+public class PmActivityApplyExcel {
 
     private static final long serialVersionUID = 1L;
 

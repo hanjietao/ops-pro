@@ -1,4 +1,4 @@
-package com.pepper.project.pm.activity.domain;
+package com.pepper.project.pm.guide.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
 import com.pepper.project.pm.property.domain.Property;
@@ -6,25 +6,26 @@ import com.pepper.project.pm.property.domain.Property;
 import java.util.Date;
 
 /**
- *  @Description: 物业管理-物业活动 pm_activity
+ *  @Description: 社区服务服务中心-办事指南 cm_business_guide
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class ActivityPm extends BaseEntity{
+public class PmGuide extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
     private Long id;
 
-    private Long propertyId;
-
-    /** title */
+    /** 标题 */
     private String title;
 
-    /** content */
+    /** 指南内容 */
     private String content;
+
+    /** 所属物业 */
+    private Long propertyId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -55,14 +56,6 @@ public class ActivityPm extends BaseEntity{
         this.id = id;
     }
 
-    public Long getPropertyId() {
-        return propertyId;
-    }
-
-    public void setPropertyId(Long propertyId) {
-        this.propertyId = propertyId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -77,6 +70,14 @@ public class ActivityPm extends BaseEntity{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getStatus() {
@@ -128,10 +129,29 @@ public class ActivityPm extends BaseEntity{
     }
 
     public Property getProperty() {
+        if(property==null){
+            property = new Property();
+        }
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    @Override
+    public String toString() {
+        return "Guide{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", propertyId=" + propertyId +
+                ", status='" + status + '\'' +
+                ", createTime=" + createTime +
+                ", createBy='" + createBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", property='" + getProperty() + '\'' +
+                '}';
     }
 }

@@ -7,11 +7,10 @@ import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
 import com.pepper.project.csc.area.service.IAreaService;
-import com.pepper.project.pm.notice.domain.PmNotice;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.service.IPropertyService;
-import com.pepper.project.pm.guide.domain.GuidePm;
-import com.pepper.project.pm.guide.service.IGuidePmService;
+import com.pepper.project.pm.guide.domain.PmGuide;
+import com.pepper.project.pm.guide.service.IPmGuideService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/pm/guide")
-public class GuidePmController extends BaseController {
+public class PmGuideController extends BaseController {
 
     private String prefix = "pm/guide";
 
     @Autowired
-    private IGuidePmService guideService;
+    private IPmGuideService guideService;
 
     @Autowired
     private IAreaService areaService;
@@ -48,11 +47,11 @@ public class GuidePmController extends BaseController {
     @RequiresPermissions("pm:guide:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(GuidePm guide)
+    public TableDataInfo list(PmGuide guide)
     {
         startPage();
         guide.setPropertyId(getMerchantId());
-        List<GuidePm> list = guideService.selectGuideList(guide);
+        List<PmGuide> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }
 
@@ -74,7 +73,7 @@ public class GuidePmController extends BaseController {
     @RequiresPermissions("pm:guide:add")
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(GuidePm guide)
+    public AjaxResult addSave(PmGuide guide)
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
@@ -103,7 +102,7 @@ public class GuidePmController extends BaseController {
     @Log(title = "办事指南", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(GuidePm guide)
+    public AjaxResult editSave(PmGuide guide)
     {
         return toAjax(guideService.updateGuide(guide));
     }
@@ -126,9 +125,9 @@ public class GuidePmController extends BaseController {
     @ResponseBody
     public TableDataInfo getList(Long propertyId)
     {
-        GuidePm guidePm = new GuidePm();
-        guidePm.setPropertyId(propertyId);
-        List<GuidePm> list = guideService.selectGuideList(guidePm);
+        PmGuide pmGuide = new PmGuide();
+        pmGuide.setPropertyId(propertyId);
+        List<PmGuide> list = guideService.selectGuideList(pmGuide);
         return getDataTable(list);
     }
 

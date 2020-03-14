@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pepper.project.pm.activity.mapper.ActivityPmMapper">
+<mapper namespace="com.pepper.project.pm.activity.mapper.PmActivityMapper">
 
-	<resultMap type="ActivityPm" id="ActivityResult">
+	<resultMap type="PmActivity" id="ActivityResult">
 		<id     property="id"         		column="id"         />
 		<id     property="propertyId"         		column="property_id"         />
 		<result property="title"         column="title"        />
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where a.id = #{id}
 	</select>
 
- 	<select id="selectActivityList" parameterType="ActivityPm" resultMap="ActivityResult">
+ 	<select id="selectActivityList" parameterType="PmActivity" resultMap="ActivityResult">
 		<include refid="selectActivityVo"/>
 		<where>
 			<if test="title != null and title != ''">
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertActivity" parameterType="ActivityPm">
+	<insert id="insertActivity" parameterType="PmActivity">
 		insert into pm_activity (
 		<if test="propertyId != null and propertyId != '' ">property_id, </if>
 		<if test="title != null and title != '' ">title, </if>
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 
-	<update id="updateActivity" parameterType="ActivityPm">
+	<update id="updateActivity" parameterType="PmActivity">
 		update pm_activity
 		<set>
 			<if test="propertyId != null and propertyId != ''">property_id = #{propertyId}, </if>

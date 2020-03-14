@@ -26,9 +26,9 @@ public class PmNoticeServiceImpl implements IPmNoticeService {
      *  @Date: 2020/2/6 0:23
      */
     @Override
-    public List<PmNotice> selectPmNoticeList(PmNotice guide) {
+    public List<PmNotice> selectPmNoticeList(PmNotice pmNotice) {
 
-        List<PmNotice> list = pmNoticeDao.selectPmNoticeList(guide);
+        List<PmNotice> list = pmNoticeDao.selectPmNoticeList(pmNotice);
 //        for (Note hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
@@ -37,10 +37,10 @@ public class PmNoticeServiceImpl implements IPmNoticeService {
     }
 
     @Override
-    public int insertPmNotice(PmNotice note) {
-        note.setCreateBy(ShiroUtils.getLoginName());
-        note.setUpdateBy(ShiroUtils.getLoginName());
-        return pmNoticeDao.insertPmNotice(note);
+    public int insertPmNotice(PmNotice pmNotice) {
+        pmNotice.setCreateBy(ShiroUtils.getLoginName());
+        pmNotice.setUpdateBy(ShiroUtils.getLoginName());
+        return pmNoticeDao.insertPmNotice(pmNotice);
     }
 
     @Override

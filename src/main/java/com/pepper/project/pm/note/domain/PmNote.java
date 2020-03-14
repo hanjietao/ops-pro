@@ -1,31 +1,32 @@
-package com.pepper.project.pm.guide.domain;
+package com.pepper.project.pm.note.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
+import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.pm.property.domain.Property;
 
 import java.util.Date;
 
 /**
- *  @Description: 社区服务服务中心-办事指南 cm_business_guide
+ *  @Description: 社区服务服务中心-用户留言 cm_note
  *  @author: HanJieTao
  *  @mail: hjtxyr@163.com
  *  @Date: 2020/2/6 16:10
  */
-public class GuidePm extends BaseEntity{
+public class PmNote extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
     private Long id;
 
-    /** 标题 */
-    private String title;
-
-    /** 指南内容 */
+    /** 留言内容 */
     private String content;
 
     /** 所属物业 */
     private Long propertyId;
+
+    /** 用户id */
+    private Long userId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -44,6 +45,15 @@ public class GuidePm extends BaseEntity{
 
     private Property property;
 
+    /** 客户端用户 */
+    private ClientUser clientUser;
+
+    /** 是否回复 */
+    private String replyStatus;
+
+    /** 回复内容 */
+    private String replyContent;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -54,14 +64,6 @@ public class GuidePm extends BaseEntity{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -78,6 +80,14 @@ public class GuidePm extends BaseEntity{
 
     public void setPropertyId(Long propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getStatus() {
@@ -129,7 +139,7 @@ public class GuidePm extends BaseEntity{
     }
 
     public Property getProperty() {
-        if(property==null){
+        if(property == null){
             property = new Property();
         }
         return property;
@@ -139,19 +149,49 @@ public class GuidePm extends BaseEntity{
         this.property = property;
     }
 
+    public ClientUser getClientUser() {
+        if(clientUser == null){
+            clientUser = new ClientUser();
+        }
+        return clientUser;
+    }
+
+    public void setClientUser(ClientUser clientUser) {
+        this.clientUser = clientUser;
+    }
+
+    public String getReplyStatus() {
+        return replyStatus;
+    }
+
+    public void setReplyStatus(String replyStatus) {
+        this.replyStatus = replyStatus;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
     @Override
     public String toString() {
-        return "Guide{" +
+        return "PmNote{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", propertyId=" + propertyId +
+                ", userId=" + userId +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +
                 ", updateBy='" + updateBy + '\'' +
-                ", property='" + getProperty() + '\'' +
+                ", property=" + getProperty() +
+                ", clientUser=" + getClientUser() +
+                ", replyStatus=" + replyStatus +
+                ", replyContent=" + replyContent +
                 '}';
     }
 }

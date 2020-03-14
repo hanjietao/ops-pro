@@ -3,26 +3,26 @@ package com.pepper.project.pm.guide.service;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.project.csc.area.mapper.AreaMapper;
-import com.pepper.project.pm.guide.domain.GuidePm;
-import com.pepper.project.pm.guide.mapper.GuidePmMapper;
+import com.pepper.project.pm.guide.domain.PmGuide;
+import com.pepper.project.pm.guide.mapper.PmGuideMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GuidePmServiceImpl implements IGuidePmService {
+public class PmGuideServiceImpl implements IPmGuideService {
 
     @Autowired
-    private GuidePmMapper guideDao;
+    private PmGuideMapper guideDao;
 
     @Autowired
     private AreaMapper areaDao;
 
     @Override
-    public List<GuidePm> selectGuideList(GuidePm guide) {
+    public List<PmGuide> selectGuideList(PmGuide guide) {
 
-        List<GuidePm> list = guideDao.selectGuideList(guide);
+        List<PmGuide> list = guideDao.selectGuideList(guide);
 //        for (Guide hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
@@ -31,7 +31,7 @@ public class GuidePmServiceImpl implements IGuidePmService {
     }
 
     @Override
-    public int insertGuide(GuidePm guide) {
+    public int insertGuide(PmGuide guide) {
         guide.setCreateBy(ShiroUtils.getLoginName());
         guide.setUpdateBy(ShiroUtils.getLoginName());
         return guideDao.insertGuide(guide);
@@ -43,12 +43,12 @@ public class GuidePmServiceImpl implements IGuidePmService {
     }
 
     @Override
-    public GuidePm selectGuideById(Integer id) {
+    public PmGuide selectGuideById(Integer id) {
         return guideDao.selectGuideById(id);
     }
 
     @Override
-    public int updateGuide(GuidePm area) {
+    public int updateGuide(PmGuide area) {
         area.setUpdateBy(ShiroUtils.getLoginName());
         return guideDao.updateGuide(area);
     }

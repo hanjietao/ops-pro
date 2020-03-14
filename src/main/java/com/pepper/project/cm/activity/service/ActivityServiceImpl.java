@@ -31,7 +31,7 @@ public class ActivityServiceImpl implements IActivityService {
     public List<Activity> selectActivityList(Activity activity) {
 
         List<Activity> list = activityDao.selectActivityList(activity);
-//        for (ActivityPm hos:list) {
+//        for (PmActivity hos:list) {
 //            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
 //            hos.setAreaName(area.getAreaName());
 //        }

@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertDoctor" parameterType="Doctor">
+	<insert id="insertDoctor" parameterType="Doctor" useGeneratedKeys="true" keyProperty="id">
 		insert into ch_doctor (
 		<if test="doctorName != null and doctorName != '' ">doctor_name, </if>
 		<if test="doctorCode != null and doctorCode != '' ">doctor_code, </if>

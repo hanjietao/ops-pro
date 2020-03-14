@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pepper.project.pm.guide.mapper.GuidePmMapper">
+<mapper namespace="com.pepper.project.pm.guide.mapper.PmGuideMapper">
 
-	<resultMap type="GuidePm" id="GuideResult">
+	<resultMap type="PmGuide" id="GuideResult">
 		<id     property="id"         		column="id"         />
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<insert id="insertGuide" parameterType="GuidePm">
+	<insert id="insertGuide" parameterType="PmGuide">
 		insert into pm_business_guide (
 		<if test="title != null and title != '' ">title, </if>
 		<if test="content != null and content != '' ">content, </if>
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 
-	<update id="updateGuide" parameterType="GuidePm">
+	<update id="updateGuide" parameterType="PmGuide">
 		update pm_business_guide
 		<set>
 			<if test="title != null and title != ''">title = #{title}, </if>
