@@ -5,6 +5,10 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.project.ch.appointment.domain.Appointment;
 import com.pepper.project.ch.appointment.service.IAppointmentService;
+import com.pepper.project.cm.note.domain.Note;
+import com.pepper.project.cm.note.service.INoteService;
+import com.pepper.project.pm.note.domain.PmNote;
+import com.pepper.project.pm.note.service.IPmNoteService;
 import com.pepper.project.sm.point.service.IPointService;
 import com.pepper.project.sm.user.service.IClientUserService;
 import com.pepper.project.system.user.domain.User;
@@ -36,6 +40,10 @@ public class UserInfoController extends BaseController {
     @Autowired
     private IAppointmentService appointmentService;
     @Autowired
+    private INoteService noteService;
+    @Autowired
+    private IPmNoteService pmNoteService;
+    @Autowired
     private IUserService userService;
     @Autowired
     private IClientUserService clientUserService;
@@ -60,9 +68,19 @@ public class UserInfoController extends BaseController {
             List<Appointment> list = appointmentService.selectAppointmentList(appointment);
             //Integer msgCount = messageService.selectCountByUserId();
 
+            Note note = new Note();
+            note.setUserId(user.getMerchantId());
+            List<Note> notes = noteService.selectNoteList(note);
+
+            PmNote pmNote = new PmNote();
+            pmNote.setUserId(user.getMerchantId());
+            List<PmNote> pmNotes = pmNoteService.selectNoteList(pmNote);
+
             Map<String,Object> map = new HashMap<>();
             map.put("appointments",list);
             map.put("msgCount",12);
+            map.put("notes",notes);
+            map.put("pmNotes",pmNotes);
 
             return map;
 

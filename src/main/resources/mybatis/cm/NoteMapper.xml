@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectNoteVo"/>
 		<where>
             <if test="userId != null and userId != ''">
-                AND bg.userId = #{communityId}
+                AND bg.user_id = #{userId}
             </if>
 			<if test="communityId != null and communityId != ''">
 				AND bg.community_id like concat('%', #{communityId}, '%')
