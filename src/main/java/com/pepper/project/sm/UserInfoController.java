@@ -3,6 +3,7 @@ package com.pepper.project.sm;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
+import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.project.ch.appointment.domain.Appointment;
 import com.pepper.project.ch.appointment.service.IAppointmentService;
 import com.pepper.project.cm.note.domain.Note;
@@ -55,7 +56,7 @@ public class UserInfoController extends BaseController {
     @PostMapping("/userInfo")
     @ResponseBody
     //http://localhost/userinfo?orderByColumn=createTime&isAsc=desc&pageNum=1&pageSize=5
-    public Object getUserInfo(@RequestParam(value = "orderByColumn", required = true)String orderByColumn,
+    public AjaxResult getUserInfo(@RequestParam(value = "orderByColumn", required = true)String orderByColumn,
                               @RequestParam(value = "isAsc", required = true)String isAsc,
                               @RequestParam(value = "pageNum", required = true)Integer pageNum,
                               @RequestParam(value = "pageSize", required = true)Integer pageSize)
@@ -82,7 +83,7 @@ public class UserInfoController extends BaseController {
             map.put("notes",notes);
             map.put("pmNotes",pmNotes);
 
-            return map;
+            return AjaxResult.success(map);
 
         }catch (Exception e){
             logger.error(org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(e));

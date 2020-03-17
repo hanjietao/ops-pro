@@ -3,6 +3,7 @@ package com.pepper.project.system.user.controller;
 import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.UserConstants;
 import com.pepper.common.utils.StringUtils;
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -41,7 +42,7 @@ public class ClientUserRegisterController extends BaseController {
     @Log(title = "注册客户端用户", businessType = BusinessType.INSERT)
     @PostMapping("/register")
     @ResponseBody
-    public AjaxResult ajaxRegister(HttpServletRequest request, @Validated User user)
+    public AjaxResult ajaxRegister(@Validated User user)
     {
 
         if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName())))
@@ -60,8 +61,7 @@ public class ClientUserRegisterController extends BaseController {
 //        if(user.getRoleId() == null || user.getRoleId() == 0){
 //            return error("角色不可以不选！");
 //        }
-        HttpSession session = request.getSession();
-        String validateStr = (String) session.getAttribute(GenConstants.SMS_CODE_ATTR);
+        String validateStr = (String) ShiroUtils.getSession().getAttribute(GenConstants.SMS_CODE_ATTR);
         if(StringUtils.isEmpty(validateStr)){
             return error("请先发送短信验证码！");
         }

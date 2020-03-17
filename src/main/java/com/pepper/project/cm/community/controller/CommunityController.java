@@ -137,6 +137,7 @@ public class CommunityController extends BaseController {
         if (id != 0L)
         {
             return communityService.selectCommunityById(id);
+            //AjaxResult.success(communityService.selectCommunityById(id));
         }
         else
         {

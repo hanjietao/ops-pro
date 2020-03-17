@@ -3,6 +3,7 @@ package com.pepper.project.system.user.controller;
 import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.SMSCodeEnum;
 import com.pepper.common.utils.StringUtils;
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
@@ -16,6 +17,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +35,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ClientUserLoginController extends BaseController
 {
+    Logger logger = LoggerFactory.getLogger(ClientUserLoginController.class);
     @Autowired
     private IClientUserService clientUserService;
 
@@ -78,10 +82,10 @@ public class ClientUserLoginController extends BaseController
     @ApiOperation("客户端用户登陆 手机号：18978786511 , 通过短信验证码登陆")
     @PostMapping("/client/sms/login")
     @ResponseBody
-    public AjaxResult ajaxClientSmsLogin(HttpServletRequest request, String mobilePhone, String smsCode, Boolean rememberMe)
+    public AjaxResult ajaxClientSmsLogin(String mobilePhone, String smsCode, Boolean rememberMe)
     {
-        HttpSession session = request.getSession();
-        String validateStr = (String) session.getAttribute(GenConstants.SMS_CODE_ATTR);
+        logger.info("client ajax post login,mobilePhone={},smsCode={}",mobilePhone,smsCode);
+        String validateStr = (String) ShiroUtils.getSession().getAttribute(GenConstants.SMS_CODE_ATTR);
         if(StringUtils.isEmpty(validateStr)){
             return error("请先发送短信验证码！");
         }

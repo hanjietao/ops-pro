@@ -3,11 +3,14 @@ package com.pepper.framework.shiro.web.filter.captcha;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.web.filter.AccessControlFilter;
 import com.google.code.kaptcha.Constants;
 import com.pepper.common.constant.ShiroConstants;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.security.ShiroUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class CaptchaValidateFilter extends AccessControlFilter
 {
+    Logger logger = LoggerFactory.getLogger(CaptchaValidateFilter.class);
     /**
      * 是否开启验证码
      */
@@ -53,6 +57,7 @@ public class CaptchaValidateFilter extends AccessControlFilter
             throws Exception
     {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        logger.info("content-type  "+httpServletRequest.getHeader("Content-Type"));
         // 验证码禁用 或不是表单提交 允许访问
         if (captchaEnabled == false || !"post".equals(httpServletRequest.getMethod().toLowerCase()))
         {

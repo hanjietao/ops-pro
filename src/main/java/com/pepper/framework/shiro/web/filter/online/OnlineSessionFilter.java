@@ -1,12 +1,18 @@
 package com.pepper.framework.shiro.web.filter.online;
 
 import java.io.IOException;
+import java.io.InputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSONObject;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.pepper.common.constant.ShiroConstants;
@@ -22,6 +28,7 @@ import com.pepper.project.system.user.domain.User;
  */
 public class OnlineSessionFilter extends AccessControlFilter
 {
+    Logger logger = LoggerFactory.getLogger(OnlineSessionFilter.class);
     /**
      * 强制退出后重定向的地址
      */
@@ -38,6 +45,25 @@ public class OnlineSessionFilter extends AccessControlFilter
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
             throws Exception
     {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+
+        logger.info("content-type  "+httpServletRequest.getHeader("Content-Type"));
+        logger.info("ParameterMap  "+httpServletRequest.getParameterMap().toString());
+        logger.info("RequestURL  "+httpServletRequest.getRequestURL());
+        logger.info("QueryString  "+httpServletRequest.getQueryString());
+        logger.info("RequestURI  "+httpServletRequest.getRequestURI());
+        logger.info("RequestHeader [LOGIN_TYPE] "+httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE));
+
+//        InputStream is = request.getInputStream();
+//        StringBuilder sb = new StringBuilder();
+//        byte[] b = new byte[4096];
+//        for (int n; (n = is.read(b)) != -1;) {
+//            sb.append(new String(b, 0, n));
+//        }
+//        logger.info("RequestBody  ",sb.toString());
+//        JSONObject jsonObject = JSONObject.parseObject(sb.toString());
+
+
         Subject subject = getSubject(request, response);
         if (subject == null || subject.getSession() == null)
         {
