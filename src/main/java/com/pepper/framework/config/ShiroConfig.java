@@ -262,7 +262,6 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/client/sms/login", "anon"); // 短信登陆
 
         /** 业务请求 */
-        // 获取轮播图列表
         filterChainDefinitionMap.put("/cm/community/detail","anon");
         filterChainDefinitionMap.put("/cm/activity/getDetail","anon");
         filterChainDefinitionMap.put("/cm/activity/getList","anon");
