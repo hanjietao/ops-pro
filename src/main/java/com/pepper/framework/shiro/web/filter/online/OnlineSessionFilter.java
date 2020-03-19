@@ -54,14 +54,14 @@ public class OnlineSessionFilter extends AccessControlFilter
         logger.info("RequestURI  "+httpServletRequest.getRequestURI());
         logger.info("RequestHeader [LOGIN_TYPE] "+httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE));
 
-//        InputStream is = request.getInputStream();
-//        StringBuilder sb = new StringBuilder();
-//        byte[] b = new byte[4096];
-//        for (int n; (n = is.read(b)) != -1;) {
-//            sb.append(new String(b, 0, n));
-//        }
-//        logger.info("RequestBody  ",sb.toString());
-//        JSONObject jsonObject = JSONObject.parseObject(sb.toString());
+        InputStream is = request.getInputStream();
+        StringBuilder sb = new StringBuilder();
+        byte[] b = new byte[4096];
+        for (int n; (n = is.read(b)) != -1;) {
+            sb.append(new String(b, 0, n));
+        }
+        logger.info("RequestBody  ",sb.toString());
+        //JSONObject jsonObject = JSONObject.parseObject(sb.toString());
 
 
         Subject subject = getSubject(request, response);

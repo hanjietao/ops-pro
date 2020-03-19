@@ -351,7 +351,7 @@ CREATE TABLE `sm_client_user` (
   `age` int(11) DEFAULT NULL COMMENT '年龄',
   `birthday` varchar(128) DEFAULT NULL COMMENT '生日 yyyy-MM-dd',
   PRIMARY KEY (`USER_ID`)
-) AUTO_INCREMENT = 10000000 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户会员表 system memeber';
+) AUTO_INCREMENT = 20200000 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户会员表 system memeber';
 
 
 -- sys_user update
@@ -381,7 +381,7 @@ CREATE TABLE `sys_user`  (
   `merchant_Id` bigint(20) DEFAULT NULL,
   `pwd_md5` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '20200301, 修改前端传明文密码的方式，使用md5传输，并保存md5到数据库，已实现兼容shiro并实现多方式登录',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 600000000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 80000000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'admin', '00', 'admin@163.com', '15888888888', '1', '/profile/avatar/2020/03/02/41abbd69b58a66d7c2f68cb804b2649b.png', 'cbc030ef6fc74743fda36e2f76d6908b', '111111', '0', '0', '127.0.0.1', '2020-03-14 14:57:55', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-14 14:57:55', '管理员', 0, 0, 'fcea920f7412b5da7be0cf42b8c93759');
 INSERT INTO `sys_user` VALUES (2, 105, 'hant', 'hant', '00', 'hant@qq.com', '15666666666', '1', '', '19486052ecdfd0df9aa0b6f306cd962c', '546af6', '0', '0', '127.0.0.1', '2020-03-03 10:34:45', 'admin', '2018-03-16 11:33:00', 'admin', '2020-03-03 10:34:45', '测试员', 0, 0, 'db846859bcf906caf61ba74e22953a80');

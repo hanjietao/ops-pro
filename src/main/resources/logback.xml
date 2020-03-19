@@ -17,33 +17,34 @@
     <springProfile name="debug">
         <!-- 系统日志输出 -->
         <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.debug}/sys-info.log</file>
+            <file>${log.path.debug}/ops-info.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.debug}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.debug}/ops-info.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
             <encoder>
                 <pattern>${log.pattern}</pattern>
             </encoder>
-            <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                <!-- 过滤的级别 -->
-                <level>INFO</level>
-                <!-- 匹配时的操作：接收（记录） -->
-                <onMatch>ACCEPT</onMatch>
-                <!-- 不匹配时的操作：拒绝（不记录） -->
-                <onMismatch>DENY</onMismatch>
-            </filter>
+<!--            <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--                &lt;!&ndash; 过滤的级别 &ndash;&gt;-->
+<!--                <level>INFO</level>-->
+<!--                <level>ERROR</level>-->
+<!--                &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;-->
+<!--                <onMatch>ACCEPT</onMatch>-->
+<!--                &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;-->
+<!--                <onMismatch>DENY</onMismatch>-->
+<!--            </filter>-->
         </appender>
 
         <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.debug}/sys-error.log</file>
+            <file>${log.path.debug}/ops-error.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.debug}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.debug}/ops-error.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -61,11 +62,11 @@
         </appender>
 
         <!-- 用户访问日志输出  -->
-        <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.debug}/sys-user.log</file>
+        <appender name="ops-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${log.path.debug}/ops-user.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 按天回滚 daily -->
-                <fileNamePattern>${log.path.debug}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.debug}/ops-user.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -79,33 +80,33 @@
     <springProfile name="test">
         <!-- 系统日志输出 -->
         <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.test}/sys-info.log</file>
+            <file>${log.path.test}/ops-info.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.test}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.test}/ops-info.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
             <encoder>
                 <pattern>${log.pattern}</pattern>
             </encoder>
-            <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                <!-- 过滤的级别 -->
-                <level>INFO</level>
-                <!-- 匹配时的操作：接收（记录） -->
-                <onMatch>ACCEPT</onMatch>
-                <!-- 不匹配时的操作：拒绝（不记录） -->
-                <onMismatch>DENY</onMismatch>
-            </filter>
+<!--            <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--                &lt;!&ndash; 过滤的级别 &ndash;&gt;-->
+<!--                <level>INFO</level>-->
+<!--                &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;-->
+<!--                <onMatch>ACCEPT</onMatch>-->
+<!--                &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;-->
+<!--                <onMismatch>DENY</onMismatch>-->
+<!--            </filter>-->
         </appender>
 
         <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.test}/sys-error.log</file>
+            <file>${log.path.test}/ops-error.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.test}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.test}/ops-error.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -123,11 +124,11 @@
         </appender>
 
         <!-- 用户访问日志输出  -->
-        <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.test}/sys-user.log</file>
+        <appender name="ops-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${log.path.test}/ops-user.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 按天回滚 daily -->
-                <fileNamePattern>${log.path.test}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.test}/ops-user.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -141,33 +142,33 @@
     <springProfile name="prod">
         <!-- 系统日志输出 -->
         <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.prod}/sys-info.log</file>
+            <file>${log.path.prod}/ops-info.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.prod}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.prod}/ops-info.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
             <encoder>
                 <pattern>${log.pattern}</pattern>
             </encoder>
-            <filter class="ch.qos.logback.classic.filter.LevelFilter">
-                <!-- 过滤的级别 -->
-                <level>INFO</level>
-                <!-- 匹配时的操作：接收（记录） -->
-                <onMatch>ACCEPT</onMatch>
-                <!-- 不匹配时的操作：拒绝（不记录） -->
-                <onMismatch>DENY</onMismatch>
-            </filter>
+<!--            <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--                &lt;!&ndash; 过滤的级别 &ndash;&gt;-->
+<!--                <level>INFO</level>-->
+<!--                &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;-->
+<!--                <onMatch>ACCEPT</onMatch>-->
+<!--                &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;-->
+<!--                <onMismatch>DENY</onMismatch>-->
+<!--            </filter>-->
         </appender>
 
         <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.prod}/sys-error.log</file>
+            <file>${log.path.prod}/ops-error.log</file>
             <!-- 循环政策：基于时间创建日志文件 -->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 日志文件名格式 -->
-                <fileNamePattern>${log.path.prod}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.prod}/ops-error.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -185,11 +186,11 @@
         </appender>
 
         <!-- 用户访问日志输出  -->
-        <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${log.path.prod}/sys-user.log</file>
+        <appender name="ops-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${log.path.prod}/ops-user.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- 按天回滚 daily -->
-                <fileNamePattern>${log.path.prod}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>${log.path.prod}/ops-user.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- 日志最大的历史 60天 -->
                 <maxHistory>60</maxHistory>
             </rollingPolicy>
@@ -217,7 +218,7 @@
     </root>
 
 	<!--系统用户操作日志-->
-    <logger name="sys-user" level="info">
-        <appender-ref ref="sys-user"/>
+    <logger name="ops-user" level="info">
+        <appender-ref ref="ops-user"/>
     </logger>
 </configuration>

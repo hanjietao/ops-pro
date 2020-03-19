@@ -13,6 +13,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +27,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/cm/community")
 public class CommunityController extends BaseController {
+
+    Logger logger = LoggerFactory.getLogger(CommunityController.class);
 
     private String prefix = "cm/community";
 
@@ -118,6 +122,7 @@ public class CommunityController extends BaseController {
     @ResponseBody
     public TableDataInfo getList(Integer areaId)
     {
+        logger.info("areaId: {}", areaId);
         startPage();
         Community community = new Community();
         if(areaId != null && areaId != 0){
@@ -125,6 +130,7 @@ public class CommunityController extends BaseController {
         }
 
         List<Community> list = communityService.selectCommunityList(community);
+        logger.info("cm getList result: {}", getDataTable(list).toString());
         return getDataTable(list);
     }
 
