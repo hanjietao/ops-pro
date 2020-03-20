@@ -22,7 +22,7 @@ server:
   port: 8000
   servlet:
     # 应用的访问路径
-    context-path: /
+    context-path: /hospital
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -53,7 +53,7 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://49.4.124.220:3306/pepper_ops?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://49.4.124.220:3306/pepper_ops_prod?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: myops
         password: 1234qwer
       # 从库数据源

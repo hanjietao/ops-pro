@@ -47,12 +47,11 @@ public class OnlineSessionFilter extends AccessControlFilter
     {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        logger.info("content-type  "+httpServletRequest.getHeader("Content-Type"));
-        logger.info("ParameterMap  "+httpServletRequest.getParameterMap().toString());
-        logger.info("RequestURL  "+httpServletRequest.getRequestURL());
-        logger.info("QueryString  "+httpServletRequest.getQueryString());
-        logger.info("RequestURI  "+httpServletRequest.getRequestURI());
-        logger.info("RequestHeader [LOGIN_TYPE] "+httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE));
+        logger.info("content-type=  "+httpServletRequest.getHeader("Content-Type"));
+        logger.info("RequestURL=  "+httpServletRequest.getRequestURL());
+        logger.info("QueryString=  "+httpServletRequest.getQueryString());
+        logger.info("RequestURI=  "+httpServletRequest.getRequestURI());
+        logger.info("RequestHeader[LOGIN_TYPE]=  "+httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE));
 
         InputStream is = request.getInputStream();
         StringBuilder sb = new StringBuilder();
