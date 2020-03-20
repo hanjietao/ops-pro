@@ -15,7 +15,7 @@ pepper:
   addressEnabled: true
   #loginType client
   clientLoginType: p-client
-
+  ehcache: C:\home\hospital\test\ehcache
 
 # 开发环境配置
 server:
