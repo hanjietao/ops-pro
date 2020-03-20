@@ -15,7 +15,7 @@ public class LoopImage extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
     /** 唯一键索引id */
-    private Integer id;
+    private Long id;
 
     /** 区域码Code */
     private String title;
@@ -45,11 +45,11 @@ public class LoopImage extends BaseEntity{
         return serialVersionUID;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

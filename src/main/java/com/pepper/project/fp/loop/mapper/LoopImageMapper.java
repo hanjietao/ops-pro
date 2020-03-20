@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LoopImageMapper {
 
-    LoopImage selectLoopImageById(Integer id);
+    LoopImage selectLoopImageById(Long id);
     List<LoopImage> selectLoopImageList(LoopImage loopImage);
 
     public int insertLoopImage(LoopImage loopImage);

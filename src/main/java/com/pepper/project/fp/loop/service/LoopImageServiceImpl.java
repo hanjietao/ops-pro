@@ -46,7 +46,7 @@ public class LoopImageServiceImpl implements ILoopImageService {
     }
 
     @Override
-    public LoopImage selectLoopImageById(Integer id) {
+    public LoopImage selectLoopImageById(Long id) {
         return loopImageDao.selectLoopImageById(id);
     }
 

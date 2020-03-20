@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from fp_loop_image
     </sql>
 
-	<select id="selectLoopImageById" parameterType="Integer" resultMap="LoopImageResult">
+	<select id="selectLoopImageById" parameterType="Long" resultMap="LoopImageResult">
 		<include refid="selectLoopImageVo"/>
 		where id = #{id}
 	</select>

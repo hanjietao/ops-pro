@@ -11,7 +11,7 @@ public interface ILoopImageService {
 
     int deleteLoopImageByIds(String ids);
 
-    LoopImage selectLoopImageById(Integer id);
+    LoopImage selectLoopImageById(Long id);
 
     int updateLoopImage(LoopImage loopImage);
 

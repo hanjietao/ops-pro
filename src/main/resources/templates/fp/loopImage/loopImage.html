@@ -99,10 +99,9 @@
 				{
 					title: '轮播图',
 					field: 'imageUrl',
-					formatter: function(value, row, index) {
-						// 图片预览（注意：如存储在本地直接获取数据库路径，如有配置context-path需要使用ctx+路径）
-						// 如：/profile/upload/2019/08/08/3b7a839aced67397bac694d77611ce72.png
-						return $.table.imageView(value);
+					formatter:function (value,row,index)
+					{
+						return '<img src='+value+' width="120" height="80" class="img-rounded" >';
 					}
 				},
 				{
@@ -149,6 +148,24 @@
 		};
 		$.table.init(options);
 	});
+
+	// picture observer in the table
+	/*imageView1 = function (value, height, width, target) {
+		if ($.common.isEmpty(width)) {
+			width = 'auto';
+		}
+		if ($.common.isEmpty(height)) {
+			height = 'auto';
+		}
+		// blank or self
+		var _target = $.common.isEmpty(target) ? 'self' : target;
+		if ($.common.isNotEmpty(value)) {
+			return $.common.sprintf("<a href='%s' target='_blank'><img class='img-xs' data-height='%s' data-width='%s' data-target='%s' src='%s'/></a>", value, height, width, _target, value);
+		} else {
+			return $.common.nullToStr(value);
+		}
+	}*/
+
 </script>
 </body>
 </html>

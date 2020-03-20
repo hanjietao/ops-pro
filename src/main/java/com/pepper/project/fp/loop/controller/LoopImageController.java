@@ -1,7 +1,7 @@
 package com.pepper.project.fp.loop.controller;
 
+import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.file.FileUploadUtils;
-import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.config.OpsConfig;
@@ -13,10 +13,11 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import com.pepper.project.fp.loop.domain.LoopImage;
 import com.pepper.project.fp.loop.service.ILoopImageService;
-import com.pepper.project.system.user.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,7 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/fp/loopImage")
 public class LoopImageController extends BaseController {
-
+    Logger logger = LoggerFactory.getLogger(LoopImageController.class);
 
 
     private String prefix = "fp/loopImage";
@@ -87,8 +88,9 @@ public class LoopImageController extends BaseController {
      * 修改轮播图
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
+        logger.info("user info,sysUserId={}",getSysUser().getUserId());
         List<Area> areas = areaService.selectAreaList(new Area());
         mmap.put("areas",areas);
         mmap.put("loopImage", loopImageService.selectLoopImageById(id));
@@ -114,8 +116,15 @@ public class LoopImageController extends BaseController {
     @Log(title = "轮播图", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
+    public AjaxResult remove(@RequestParam(required = true) String ids)
     {
+        logger.info("user info,sysUserId={},ids={}",getSysUser().getUserId(),ids);
+        if(!StringUtils.isEmpty(ids)){
+            for (String id:ids.split(",")) {
+                logger.info("user info,sysUserId={},ids={}",getSysUser().getUserId(),
+                        loopImageService.selectLoopImageById(Long.valueOf(id)).toString());
+            }
+        }
         return toAjax(loopImageService.deleteLoopImageByIds(ids));
     }
 
