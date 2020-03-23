@@ -10,7 +10,7 @@ pepper:
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/pepper/uploadPath，Linux配置 /home/pepper/uploadPath）
   #profile: C:/projects/community_hospital/pepper/uploadPath
-  profile: /home/hospital/test/uploadPath
+  profile: /home/hosptest/test/uploadPath
   # 获取ip地址开关
   addressEnabled: true
   #loginType client
@@ -55,7 +55,7 @@ spring:
       master:
         url: jdbc:mysql://49.4.124.220:3306/pepper_ops?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: myops
-        password: 1234qwer
+        password: 1234Qwer!@#
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭

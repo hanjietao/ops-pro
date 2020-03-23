@@ -17,6 +17,8 @@ import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +31,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/ch/appointment")
 public class AppointmentController extends BaseController {
+
+    Logger logger = LoggerFactory.getLogger(AppointmentController.class);
 
     private String prefix = "ch/appointment";
 
@@ -76,6 +80,7 @@ public class AppointmentController extends BaseController {
 
     /**
      * 新增保存预约
+     *
      */
     @Log(title = "预约检查", businessType = BusinessType.INSERT)
     @RequiresPermissions("ch:appointment:add")

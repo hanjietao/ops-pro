@@ -2,8 +2,8 @@
 <configuration>
     <!-- 日志存放路径 -->
 	<property name="log.path.debug" value="/home/hospital/logs" />
-	<property name="log.path.test" value="/home/hospital/test/logs" />
-	<property name="log.path.prod" value="/home/hospital/prod/logs" />
+	<property name="log.path.test" value="/home/hosptest/test/logs" />
+	<property name="log.path.prod" value="/home/hosp/prod/logs" />
     <!-- 日志输出格式 -->
 	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
 
