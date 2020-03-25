@@ -51,20 +51,17 @@ public class Appointment extends BaseEntity{
     /** 取消原因 */
     private String cancelReason;
 
+    /** 操作信息 */
+    private String operateInfo;
+
     /** 区域状态（0正常 1关闭） */
     private String status;
 
-    /** 创建时间 */
-    private Date createTime;
+    /** 积分抵扣标志 */
+    private String pointUseFlag;
 
-    /** 创建人 */
-    private String createBy;
-
-    /** 更新时间 */
-    private Date updateTime;
-
-    /** 更新人 */
-    private String updateBy;
+    /** 抵用积分的数量 */
+    private Long pointNum;
 
     /** 医院 */
     private Hospital hospital;
@@ -160,6 +157,14 @@ public class Appointment extends BaseEntity{
         this.cancelReason = cancelReason;
     }
 
+    public String getOperateInfo() {
+        return operateInfo;
+    }
+
+    public void setOperateInfo(String operateInfo) {
+        this.operateInfo = operateInfo;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -168,44 +173,20 @@ public class Appointment extends BaseEntity{
         this.status = status;
     }
 
-    @Override
-    public Date getCreateTime() {
-        return createTime;
+    public String getPointUseFlag() {
+        return pointUseFlag;
     }
 
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setPointUseFlag(String pointUseFlag) {
+        this.pointUseFlag = pointUseFlag;
     }
 
-    @Override
-    public String getCreateBy() {
-        return createBy;
+    public Long getPointNum() {
+        return pointNum;
     }
 
-    @Override
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    @Override
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setPointNum(Long pointNum) {
+        this.pointNum = pointNum;
     }
 
     public Hospital getHospital() {
@@ -232,6 +213,8 @@ public class Appointment extends BaseEntity{
         this.medicalProject = medicalProject;
     }
 
+
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -245,14 +228,13 @@ public class Appointment extends BaseEntity{
                 ", appointmentName='" + appointmentName + '\'' +
                 ", appointmentPhone='" + appointmentPhone + '\'' +
                 ", status='" + status + '\'' +
+                ", pointUseFlag='" + pointUseFlag + '\'' +
+                ", pointNum='" + pointNum + '\'' +
                 ", appointmentReason='" + appointmentReason + '\'' +
                 ", cancelReason='" + cancelReason + '\'' +
-                ", createTime=" + createTime +
-                ", createBy='" + createBy + '\'' +
-                ", updateTime=" + updateTime +
-                ", updateBy='" + updateBy + '\'' +
                 ", hospital='" + getHospital() + '\'' +
                 ", medicalProject='" + getMedicalProject() + '\'' +
+                ", operateInfo='" + operateInfo + '\'' +
                 '}';
     }
 }

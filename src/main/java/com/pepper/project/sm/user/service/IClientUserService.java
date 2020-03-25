@@ -14,6 +14,7 @@ public interface IClientUserService {
 
     ClientUser selectClientUserById(Long userId);
 
-    int updateClientUser(ClientUser activity);
+    int updateClientUser(ClientUser clientUser);
 
+    int updateClientUserPoint(ClientUser clientUser);
 }

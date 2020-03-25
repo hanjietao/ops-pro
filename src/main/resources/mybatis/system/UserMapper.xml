@@ -155,6 +155,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where u.user_id = #{userId}
 	</select>
 
+	<select id="selectUserByMerchantId" parameterType="Long" resultMap="UserResult">
+		<include refid="selectUserVo"/>
+		where u.merchant_id = #{merchantId}
+	</select>
+
 	<delete id="deleteUserById" parameterType="Long">
  		delete from sys_user where user_id = #{userId}
  	</delete>

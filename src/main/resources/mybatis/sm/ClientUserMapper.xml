@@ -82,9 +82,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="userMobile != null and userMobile != ''">#{userMobile}, </if>
         <if test="gender != null and gender != ''">#{gender}, </if>
         <if test="password != null and password != '' ">#{password}, </if>
-		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="age != null and age != '' ">#{age}, </if>
 		<if test="birthday != null and birthday != '' ">#{birthday}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
         sysdate(),
         sysdate(),
 		sysdate(),
@@ -116,5 +116,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+	<update id="updateClientUserCurrPoint" parameterType="ClientUser">
+		update sm_client_user set
+		user_current_points = user_current_points - #{pointNum},
+		user_used_points = user_used_points + #{pointNum}
+		where user_id = #{userId} and user_current_points >= #{pointNum}
+	</update>
+
 
 </mapper>

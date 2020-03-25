@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AppointmentMapper {
 
-    Appointment selectAppointmentById(Integer id);
+    Appointment selectAppointmentById(Long id);
     List<Appointment> selectAppointmentList(Appointment appointment);
     List<Appointment> selectUserInfoAppointmentList(Appointment appointment);
 

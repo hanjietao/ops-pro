@@ -527,6 +527,13 @@ public class UserServiceImpl implements IUserService
         return userMapper.updateUser(user);
     }
 
+    @Override
+    public User selectUserByMerchantId(Long merchantId)
+    {
+        return userMapper.selectUserByMerchantId(merchantId);
+    }
+
+
     public static void main(String[] args) {
         PasswordService passwordService1 = new PasswordService();
         System.out.println(passwordService1.encryptPassword("hant", "db846859bcf906caf61ba74e22953a80", "546af6"));

@@ -34,6 +34,27 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">项目收费：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" disabled type="text" name="fees" th:field="*{medicalProject.fees}" id="fees">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">积分抵扣：</label>
+                <div class="col-sm-10">
+                    <select name="pointUseFlag" class="form-control" disabled>
+                        <option value="Y" th:field="*{medicalProject.pointUseFlag}">可用</option>
+                        <option value="N" th:field="*{medicalProject.pointUseFlag}">不可用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">需要积分：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" disabled type="text" name="pointNum" th:field="*{medicalProject.pointNum}" id="pointNum">
+                </div>
+            </div>
             <!--		<div class="form-group">-->
             <!--			<label class="col-sm-2 control-label is-required">预约日期：</label>-->
             <!--			<div class="col-sm-10 input-group date">-->
@@ -76,10 +97,23 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label is-required">预约状态：</label>
                 <div class="col-sm-10">
-                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('medical_appoint_status')}">
                         <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
                         <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">是否全额积分抵扣：</label>
+                <div class="col-sm-10" id="pointUseFlag">
+                    <label class="radio-box"> <input type="radio" name="pointUseFlag" value="N" /> 否 </label>
+                    <label class="radio-box"> <input type="radio" name="pointUseFlag" value="Y" /> 是 </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">操作原因：</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="operateInfo" id="operateInfo" th:field="*{operateInfo}" required>
                 </div>
             </div>
 		</form>
@@ -90,6 +124,24 @@
         var prefix = ctx + "ch/appointment";
 
 	    $(function() {
+	        debugger
+            var pointUseFlag = '[[${appointment.medicalProject.pointUseFlag}]]';
+	        if(pointUseFlag == 'N'){
+                $("#pointUseFlag").parents(".form-group").hide();
+                $("#pointNum").parents(".form-group").hide();
+            }else{
+                var status = $('input[name="status"]:checked').val();
+                statusVisible(status);
+                $('input').on('ifChecked', function(event) {
+                    debugger
+                    if($(event.target).context.name == 'status'){
+                        var status = $(event.target).val();
+                        statusVisible(status);
+                    }
+
+                });
+            }
+
 		    $('.summernote').summernote({
 		    	placeholder: '请输入公告内容',
 		    	height : 192,
@@ -104,6 +156,15 @@
 			var content = $("#noticeContent").val();
 		    $('#editor').summernote('code', content);
 	    });
+
+        function statusVisible(status) {
+            if (status == "2") {
+                $("#pointUseFlag").parents(".form-group").show();
+                //$("#pointNum").val('');
+            } else {
+                $("#pointUseFlag").parents(".form-group").hide();
+            }
+        }
 
 	    // 上传文件
 	    function sendFile(file, obj) {
@@ -158,6 +219,13 @@
 
 		function submitHandler() {
 	        if ($.validate.form()) {
+	            debugger
+	            var status = $('input[name="status"]:checked').val();
+                var pointUseFlag = $('input[name="pointUseFlag"]:checked').val();
+	            if(status == '2' && (pointUseFlag == undefined || pointUseFlag == '')){
+                    $.modal.alertWarning("请选择是否【是否全额积分抵扣】！");
+	                return
+                }
 	        	var sHTML = $('.summernote').summernote('code');
 				$("#noticeContent").val(sHTML);
 				$.operate.save(prefix + "/edit", $('#form-notice-edit').serialize());

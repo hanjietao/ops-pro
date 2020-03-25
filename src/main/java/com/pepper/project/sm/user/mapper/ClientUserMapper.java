@@ -14,4 +14,6 @@ public interface ClientUserMapper {
     public int insertClientUser(ClientUser clientUser);
 
     public List<ClientUser> selectClientUserList(ClientUser clientUser);
+
+    int updateClientUserCurrPoint(ClientUser clientUser);
 }

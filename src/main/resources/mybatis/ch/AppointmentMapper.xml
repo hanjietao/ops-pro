@@ -15,8 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="appointmentName"       column="appointment_name"         />
 		<result property="appointmentPhone"       column="appointment_phone"         />
 		<result property="status"           column="status"         />
+		<result property="pointUseFlag"           column="point_use_flag"         />
+		<result property="pointNum"           column="point_num"         />
 		<result property="appointmentReason"       column="appointment_reason"            />
 		<result property="cancelReason"       column="cancel_reason"            />
+		<result property="operateInfo"       column="operate_info"            />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
@@ -40,22 +43,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="name"         column="name"        />
 		<result property="serviceContent"         column="service_content"        />
 		<result property="price"          column="price"         />
+		<result property="fees"          column="fees"         />
 		<result property="deleteFlag"          column="delete_flag"         />
 		<result property="status"          column="status"         />
+		<result property="pointUseFlag"          column="point_use_flag1"         />
+		<result property="pointNum"          column="point_num1"         />
+	</resultMap>
+
+	<resultMap id="clientUserResult" type="ClientUser">
+		<id     property="userId"         column="user_id"         />
+		<result property="nikeName"         column="nike_name"        />
+		<result property="userMobile"         column="user_mobile"        />
+		<result property="gender"          column="gender"         />
 	</resultMap>
 
 	<sql id="selectAppointmentVo">
     	select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.user_id,a.hospital_id,
 		a.medical_project_id,a.appointment_time,a.appointment_start_time,a.appointment_end_time,a.appointment_name,
-		a.appointment_phone,a.status,a.appointment_reason,a.cancel_reason,
+		a.appointment_phone,a.status,a.point_use_flag,a.point_num,a.appointment_reason,a.cancel_reason,a.operate_info,
 		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
-		mp.id,mp.name,mp.service_content,mp.price,mp.delete_flag,mp.status
+		mp.id,mp.name,mp.service_content,mp.price,mp.fees,mp.delete_flag,mp.status,mp.point_use_flag as point_use_flag1,mp.point_num as point_num1,
+		cu.user_id,cu.nike_name,cu.user_mobile,cu.gender
 		from ch_appointment a
 		left join ch_hospital h on a.hospital_id = h.id
 		left join ch_medical_project mp on a.medical_project_id = mp.id
+		left join sm_client_user cu on a.user_id = cu.user_id
     </sql>
 
-	<select id="selectAppointmentById" parameterType="Integer" resultMap="AppointmentResult">
+	<select id="selectAppointmentById" parameterType="Long" resultMap="AppointmentResult">
 		<include refid="selectAppointmentVo"/>
 		where a.id = #{id}
 	</select>
@@ -80,6 +95,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
+			</if>
+			<if test="pointUseFlag != null and pointUseFlag != ''">
+				AND a.point_use_flag = #{pointUseFlag}
 			</if>
 			<if test="id != null and id != 0">
 				AND id = #{id}
@@ -107,7 +125,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="appointmentPhone != null and appointmentPhone != '' ">appointment_phone, </if>
 		<if test="appointmentReason != null and appointmentReason != '' ">appointment_reason, </if>
 		<if test="cancelReason != null and cancelReason != '' ">cancel_reason, </if>
+		<if test="operateInfo != null and operateInfo != '' ">operate_info, </if>
 		<if test="status != null and status != '' ">status, </if>
+		<if test="pointUseFlag != null and pointUseFlag != '' ">point_use_flag, </if>
+		<if test="pointNum != null and pointNum != '' ">point_num, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		create_time,
@@ -123,7 +144,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="appointmentPhone != null and appointmentPhone != ''">#{appointmentPhone}, </if>
 		<if test="appointmentReason != null and appointmentReason != ''">#{appointmentReason}, </if>
 		<if test="cancelReason != null and cancelReason != ''">#{cancelReason}, </if>
+		<if test="operateInfo != null and operateInfo != ''">#{operateInfo}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="pointUseFlag != null and pointUseFlag != '' ">#{pointUseFlag}, </if>
+		<if test="pointNum != null and pointNum != '' ">#{pointNum}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),
@@ -144,7 +168,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="appointmentPhone != null">appointment_phone = #{appointmentPhone}, </if>
 			<if test="appointmentReason != null">appointment_reason = #{appointmentReason}, </if>
 			<if test="cancelReason != null">cancel_reason = #{cancelReason}, </if>
+			<if test="operateInfo != null">operate_info = #{operateInfo}, </if>
 			<if test="status != null">status = #{status}, </if>
+			<if test="pointUseFlag != null">point_use_flag = #{pointUseFlag}, </if>
+			<if test="pointNum != null">point_num = #{pointNum}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>

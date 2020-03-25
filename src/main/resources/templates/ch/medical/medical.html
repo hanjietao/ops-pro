@@ -24,6 +24,13 @@
 							</select>
 							</li>
 							<li>
+								是否可用积分抵扣：<select name="pointUseFlag" class="form-control">
+								<option value="">所有</option>
+								<option value="Y">可用</option>
+								<option value="N">不可用</option>
+							</select>
+							</li>
+							<li>
 								状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}" class="form-control">
 								<option value="">所有</option>
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -91,6 +98,22 @@
 		            field: 'fees',
 		            title: '收费标准'
 		        },
+				{
+					field: 'pointUseFlag',
+					title: '是否可用积分抵扣',
+					formatter: function(value, item, index) {
+						if (value == 'Y') {
+							return '<span class="label label-primary">可用</span>';
+						}
+						else if (value == 'N') {
+							return '<span class="label label-warning">不可用</span>';
+						}
+					}
+				},
+				{
+					field: 'pointNum',
+					title: '积分数量'
+				},
 				{
 		            field: 'status',
 		            title: '状态',

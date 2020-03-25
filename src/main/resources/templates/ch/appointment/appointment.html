@@ -28,7 +28,7 @@
 								预约人手机号：<input type="text" name="appointmentPhone"/>
 							</li>
 							<li>
-								预约状态：<select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+								预约状态：<select name="status" th:with="type=${@dict.getType('medical_appoint_status')}">
 								<option value="">所有</option>
 								<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
 							</select>
@@ -74,7 +74,7 @@
 		var detailFlag = [[${@permission.hasPermi('ch:appointment:detail')}]];
 		var changeStatusFlag = [[${@permission.hasPermi('ch:appointment:changeStatus')}]];
         var types = [[${@dict.getType('sys_notice_type')}]];
-        var datas = [[${@dict.getType('sys_notice_status')}]];
+        var datas = [[${@dict.getType('medical_appoint_status')}]];
         var prefix = ctx + "ch/appointment";
 
         $(function() {
@@ -139,6 +139,10 @@
 					title: '取消原因'
 				},
 				{
+					field: 'operateInfo',
+					title: '操作信息'
+				},
+				{
 					field : 'createBy',
 					title : '创建者'
 				},
@@ -156,7 +160,9 @@
 						if(row.status == '0'){
 							actions.push('<a class="btn btn-primary btn-xs ' + changeStatusFlag + '" href="javascript:void(0)" onclick="cancel(\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i> 取消预约</a> ');
 						}
-						actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+						if(row.status != '2'){
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>处理预约</a> ');
+						}
                         //actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						actions.push('<a class="btn btn-warning btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.id + '\')"><i class="fa fa-search"></i>详细</a> ');
                         return actions.join('');

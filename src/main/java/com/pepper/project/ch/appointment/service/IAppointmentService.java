@@ -11,7 +11,7 @@ public interface IAppointmentService {
 
     int deleteAppointmentByIds(String ids);
 
-    Appointment selectAppointmentById(Integer id);
+    Appointment selectAppointmentById(Long id);
 
     int updateAppointment(Appointment appointment);
 

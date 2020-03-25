@@ -50,7 +50,7 @@
 <!--		</div>-->
 		<div class="form-group">
 			<label class="col-sm-3 control-label">执行状态：</label>
-			<div class="form-control-static" th:class="${appointment.status == '0' ? 'label label-primary' : 'label label-danger'}" th:text="${appointment.status == '0' ? '正常' : '暂停'}">
+			<div class="form-control-static" th:class="${appointment.status == '0' ? 'label label-primary' : 'label label-danger'}" th:text="${appointment.status == '0' ? '正常' : ${appointment.status == '1' :'取消预约':'已完成'}">
 			</div>
 		</div>
 	</form>

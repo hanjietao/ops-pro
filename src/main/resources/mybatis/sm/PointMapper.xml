@@ -80,7 +80,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="operateType != null and operateType != '' ">#{operateType}, </if>
         <if test="operateTypeInfo != null and operateTypeInfo != '' ">#{operateTypeInfo}, </if>
         <if test="operateProjectId != null and operateProjectId != '' ">#{operateProjectId}, </if>
-        <if test="operateType != null and operateType != '' ">#{operateType}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>

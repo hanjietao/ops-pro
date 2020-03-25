@@ -15,12 +15,19 @@ import com.pepper.project.ch.medical.domain.MedicalProject;
 import com.pepper.project.ch.medical.service.IMedicalProjectService;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
+import com.pepper.project.sm.point.domain.Point;
+import com.pepper.project.sm.point.service.IPointService;
+import com.pepper.project.sm.user.domain.ClientUser;
+import com.pepper.project.sm.user.service.IClientUserService;
+import com.pepper.project.system.user.domain.User;
+import com.pepper.project.system.user.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +54,15 @@ public class AppointmentController extends BaseController {
 
     @Autowired
     private IAreaService areaService;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private IClientUserService clientUserService;
+
+    @Autowired
+    private IPointService pointService;
 
     @RequiresPermissions("ch:appointment:view")
     @GetMapping()
@@ -109,7 +125,7 @@ public class AppointmentController extends BaseController {
 
     @RequiresPermissions("ch:appointment:detail")
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Integer id, ModelMap mmap)
+    public String detail(@PathVariable("id") Long id, ModelMap mmap)
     {
         mmap.put("name", "appointment");
         mmap.put("appointment", appointmentService.selectAppointmentById(id));
@@ -137,7 +153,7 @@ public class AppointmentController extends BaseController {
      * 修改预约检查
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         //mmap.put("areas",areaService.selectAreaListByHosId(id));
         MedicalProject medicalProject = new MedicalProject();
@@ -155,8 +171,10 @@ public class AppointmentController extends BaseController {
     @Log(title = "预约检查", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
+    @Transactional
     public AjaxResult editSave(String appointmentStartTimeStr,String appointmentEndTimeStr, Appointment appointment)
     {
+        // 可以让后台修改 用户的预约时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date startTime = null;
         Date endTime = null;
@@ -170,7 +188,41 @@ public class AppointmentController extends BaseController {
                 !SysUserType.hadmin.getType().equals(getSysUser().getMerchantFlag())){
             return  error("非医院业务系统用户 无法添加医院预约");
         }
-        appointment.setHospitalId(getMerchantId());
+
+        // 扣减用户积分
+        if("2".equals(appointment.getStatus())){//已完成
+            Appointment appointment1 = appointmentService.selectAppointmentById(appointment.getId());
+            ClientUser clientUser = clientUserService.selectClientUserById(appointment1.getUserId());
+            User user = userService.selectUserByMerchantId(appointment1.getUserId());
+            if("Y".equals(appointment1.getMedicalProject().getPointUseFlag())
+                    && clientUser.getUserCurrentPoints() < appointment1.getMedicalProject().getPointNum()){
+                return  error("该用户积分不够，目前用户积分："+clientUser.getUserCurrentPoints()+
+                        "，项目积分抵扣所需积分："+appointment1.getMedicalProject().getPointUseFlag()+"，可以找朋友赠送积分或者选择现金支付");
+            }
+            // TODO 扣减用户积分
+            // 1. 扣除用户积分，记录积分扣除明细（记录扣减具体信息：医疗项目使用积分抵扣，医疗项目id）
+            Point point = new Point();
+            point.setUserId(appointment1.getUserId());
+            point.setSysUserId(user.getUserId());
+            point.setPoints(appointment1.getMedicalProject().getPointNum());
+            point.setAddOrDeduct("0");
+            point.setOperateProjectId(appointment1.getMedicalProject().getId().toString());
+            point.setOperateType("5");
+            point.setOperateTypeInfo(appointment1.getMedicalProject().getName()+"使用");
+            int insertCount = pointService.insertPoint(point);
+
+            clientUser.setPointNum(appointment1.getMedicalProject().getPointNum());
+            int updateCount = clientUserService.updateClientUserPoint(clientUser);
+            if(updateCount != 1){
+                throw new RuntimeException("积分使用失败，请刷新重试");
+            }
+            appointment.setPointNum(appointment1.getMedicalProject().getPointNum());
+            logger.info(""+updateCount);
+        }else{
+            logger.info("现金交易：appointmentId= {}, operatorId= {}",appointment.getId(),getSysUser().getUserId());
+        }
+
+        //appointment.setHospitalId(getMerchantId());
         appointment.setAppointmentStartTime(startTime);
         appointment.setAppointmentEndTime(endTime);
         return toAjax(appointmentService.updateAppointment(appointment));
@@ -228,7 +280,7 @@ public class AppointmentController extends BaseController {
     @Log(title = "取消医院预约检查", businessType = BusinessType.UPDATE)
     @PostMapping("/cancel")
     @ResponseBody
-    public AjaxResult cancelAppointment(@RequestParam(required = true) Integer id,
+    public AjaxResult cancelAppointment(@RequestParam(required = true) Long id,
                                         @RequestParam(required = false) String cancelReason)
     {
 

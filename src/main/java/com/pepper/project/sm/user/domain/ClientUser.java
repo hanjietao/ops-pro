@@ -45,6 +45,9 @@ public class ClientUser extends BaseEntity {
 
     private String birthday;
 
+    /**辅助字段*/
+    private Long pointNum;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -169,6 +172,14 @@ public class ClientUser extends BaseEntity {
         this.birthday = birthday;
     }
 
+    public Long getPointNum() {
+        return pointNum;
+    }
+
+    public void setPointNum(Long pointNum) {
+        this.pointNum = pointNum;
+    }
+
     @Override
     public String toString() {
         return "ClientUser{" +
@@ -187,6 +198,7 @@ public class ClientUser extends BaseEntity {
                 ", status='" + status + '\'' +
                 ", age='" + age + '\'' +
                 ", birthday='" + birthday + '\'' +
+                ", pointNum='" + pointNum + '\'' +
                 '}';
     }
 }

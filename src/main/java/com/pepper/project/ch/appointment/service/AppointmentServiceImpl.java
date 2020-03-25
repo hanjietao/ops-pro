@@ -46,7 +46,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public Appointment selectAppointmentById(Integer id) {
+    public Appointment selectAppointmentById(Long id) {
         return appointmentDao.selectAppointmentById(id);
     }
 

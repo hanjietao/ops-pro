@@ -354,6 +354,38 @@ CREATE TABLE `sm_client_user` (
 ) AUTO_INCREMENT = 20200000 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户会员表 system memeber';
 
 
+drop table if exists sm_user_point_detail ;
+CREATE TABLE sm_user_point_detail(
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
+    USER_ID BIGINT(20) NOT NULL COMMENT '用户id',
+    SYS_USER_ID BIGINT(20) NOT NULL COMMENT '用户系统id',
+    POINTS BIGINT(20) default 0  COMMENT '积分数' ,
+    ADD_OR_DEDUCT char(1) COMMENT '增加还是减少,0-减，1-加' ,
+    OPERATE_TYPE char(1) COMMENT '操作类型：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
+    OPERATE_TYPE_INFO varchar(256) COMMENT '操作类型描述：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
+    OPERATE_PROJECT_ID BIGINT(20) DEFAULT NULL COMMENT '操作项目id',
+    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    PRIMARY KEY(ID)
+) COMMENT = '用户积分明细表 ';
+
+-- 系统表创建  短信验证码保存表
+drop table if exists sms_code ;
+CREATE TABLE sms_code(
+    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+    MOBILE_PHONE varchar(32) DEFAULT NULL COMMENT '手机号',
+    code VARCHAR(30)   COMMENT '验证码' ,
+    code_type VARCHAR(20) COMMENT '验证码类型，R-客户端注册，L-客户端用户手机登陆。。。' ,
+    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    SEND_TIME DATETIME COMMENT '发送时间',
+    PRIMARY KEY(ID)
+)AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';
+
+
+
 -- sys_user update
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
@@ -872,6 +904,18 @@ INSERT INTO `sys_dict_data` VALUES (48, 5, '购物赠送', '4', 'point_operate_t
 INSERT INTO `sys_dict_data` VALUES (49, 6, '消费抵用', '5', 'point_operate_type', NULL, 'warning', 'Y', '0', 'admin', '2020-03-13 11:26:33', '', NULL, NULL);
 
 
+-- TODO 20200324 new data
+INSERT INTO sys_dict_type(`dict_id`, `dict_name`, `dict_type`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (17, '医疗项目预约状态', 'medical_appoint_status', '0', 'admin', '2020-03-23 19:13:12', '', NULL, '医疗项目预约状态:medical_appoint_status\r\n1- 关闭，取消预约\r\n0-正常，待处理\r\n2-已完成');
+alter table ch_appointment add column operate_info varchar(256) default null comment '商户操作，备注信息';
+
+-- 医疗项目支持积分抵扣
+alter table ch_medical_project add column point_use_flag varchar(8) default 'N' comment '医疗项目是否可用积分抵扣（全额）：Y-可以，N-不可以';
+alter table ch_medical_project add column point_num bigint(20) default 0 comment '可用积分抵扣，需要积分数量';
+
+alter table ch_appointment add column point_use_flag varchar(8) default 'N' comment '预约完成是否用积分抵扣';
+alter table ch_appointment add column point_num bigint(20) default 0 comment '抵用积分数';
+
+
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);
 -- alter table pm_property modify column id bigint(20);
@@ -918,36 +962,4 @@ INSERT INTO `sys_dict_data` VALUES (49, 6, '消费抵用', '5', 'point_operate_t
 
 
 
-
-drop table if exists sm_user_point_detail ;
-CREATE TABLE sm_user_point_detail(
-    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
-    USER_ID BIGINT(20) NOT NULL COMMENT '用户id',
-    SYS_USER_ID BIGINT(20) NOT NULL COMMENT '用户系统id',
-    POINTS BIGINT(20) default 0  COMMENT '积分数' ,
-    ADD_OR_DEDUCT char(1) COMMENT '增加还是减少,0-减，1-加' ,
-    OPERATE_TYPE char(1) COMMENT '操作类型：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
-    OPERATE_TYPE_INFO varchar(256) COMMENT '操作类型描述：0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-消费使用' ,
-    OPERATE_PROJECT_ID BIGINT(20) DEFAULT NULL COMMENT '操作项目id',
-    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 0-正常，1-关闭' ,
-    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
-    CREATE_TIME DATETIME    COMMENT '创建时间' ,
-    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
-    UPDATE_TIME DATETIME    COMMENT '更新时间',
-    PRIMARY KEY(ID)
-) COMMENT = '用户积分明细表 ';
-
-
-
--- 系统表创建  短信验证码保存表
-drop table if exists sms_code ;
-CREATE TABLE sms_code(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
-    MOBILE_PHONE varchar(32) DEFAULT NULL COMMENT '手机号',
-    code VARCHAR(30)   COMMENT '验证码' ,
-    code_type VARCHAR(20) COMMENT '验证码类型，R-客户端注册，L-客户端用户手机登陆。。。' ,
-    STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 状态 状态 0-正常，1-关闭' ,
-    SEND_TIME DATETIME COMMENT '发送时间',
-    PRIMARY KEY(ID)
-)AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';
 

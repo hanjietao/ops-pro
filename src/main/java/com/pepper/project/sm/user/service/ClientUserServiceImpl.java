@@ -44,4 +44,9 @@ public class ClientUserServiceImpl implements IClientUserService {
         clientUser.setUpdateBy(ShiroUtils.getLoginName());
         return clientUserDao.updateClientUser(clientUser);
     }
+
+    @Override
+    public int updateClientUserPoint(ClientUser clientUser) {
+        return clientUserDao.updateClientUserCurrPoint(clientUser);
+    }
 }

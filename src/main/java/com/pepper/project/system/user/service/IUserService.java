@@ -183,4 +183,5 @@ public interface IUserService
     public int changeStatus(User user);
 
 
+    User selectUserByMerchantId(Long merchantId);
 }

@@ -121,4 +121,6 @@ public interface UserMapper
      * @return 结果
      */
     public User checkEmailUnique(String email);
+
+    User selectUserByMerchantId(Long merchantId);
 }

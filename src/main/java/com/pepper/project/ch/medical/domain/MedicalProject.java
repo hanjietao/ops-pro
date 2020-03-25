@@ -30,6 +30,12 @@ public class MedicalProject extends BaseEntity{
     /** 收费标准 */
     private String fees;
 
+    /** 可用积分抵扣（全额）Y-可，N-不可 */
+    private String pointUseFlag;
+
+    /** 需要积分数量抵扣 */
+    private Long pointNum;
+
     private String deleteFlag;
 
     private Long hospitalId;
@@ -92,6 +98,22 @@ public class MedicalProject extends BaseEntity{
 
     public void setFees(String fees) {
         this.fees = fees;
+    }
+
+    public String getPointUseFlag() {
+        return pointUseFlag;
+    }
+
+    public void setPointUseFlag(String pointUseFlag) {
+        this.pointUseFlag = pointUseFlag;
+    }
+
+    public Long getPointNum() {
+        return pointNum;
+    }
+
+    public void setPointNum(Long pointNum) {
+        this.pointNum = pointNum;
     }
 
     public String getDeleteFlag() {
@@ -185,6 +207,8 @@ public class MedicalProject extends BaseEntity{
                 ", serviceContent='" + serviceContent + '\'' +
                 ", price='" + price + '\'' +
                 ", fees='" + fees + '\'' +
+                ", pointUseFlag='" + pointUseFlag + '\'' +
+                ", pointNum='" + pointNum + '\'' +
                 ", deleteFlag='" + deleteFlag + '\'' +
                 ", hospitalId='" + hospitalId + '\'' +
                 ", status='" + status + '\'' +

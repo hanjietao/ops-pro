@@ -34,6 +34,7 @@ public class Point extends BaseEntity {
     @Excel(name = "增减，0-减，1-增")
     private String addOrDeduct;
 
+    /** 0-系统赠送，1-个人中心签到，2-观看宣教视频，3-观看宣教文章，4-购物赠送，5-医疗项目消费使用 */
     private String operateType;
 
     @Excel(name = "操作类型")
