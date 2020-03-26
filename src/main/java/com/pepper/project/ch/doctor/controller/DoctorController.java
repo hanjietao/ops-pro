@@ -47,7 +47,9 @@ public class DoctorController extends BaseController {
     public TableDataInfo list(Doctor doctor)
     {
         startPage();
-        doctor.setHospitalId(getMerchantId());
+        if(getMerchantId() != 0){
+            doctor.setHospitalId(getMerchantId());
+        }
         List<Doctor> list = doctorService.selectDoctorList(doctor);
         return getDataTable(list);
     }

@@ -78,7 +78,9 @@ public class AppointmentController extends BaseController {
     public TableDataInfo list(Appointment appointment, ModelMap mmp)
     {
         startPage();
-        appointment.setHospitalId(getMerchantId());
+        if(getMerchantId() != 0){
+            appointment.setHospitalId(getMerchantId());
+        }
         List<Appointment> list = appointmentService.selectAppointmentList(appointment);
         return getDataTable(list);
     }

@@ -370,19 +370,22 @@ CREATE TABLE sm_user_point_detail(
     UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
     UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
-) COMMENT = '用户积分明细表 ';
+)AUTO_INCREMENT = 100 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COMMENT = '用户积分明细表 ';
 
 -- 系统表创建  短信验证码保存表
-drop table if exists sms_code ;
-CREATE TABLE sms_code(
-    ID INT  AUTO_INCREMENT  COMMENT 'ID' ,
+drop table if exists csc_sms_code ;
+CREATE TABLE csc_sms_code(
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
     MOBILE_PHONE varchar(32) DEFAULT NULL COMMENT '手机号',
     code VARCHAR(30)   COMMENT '验证码' ,
     code_type VARCHAR(20) COMMENT '验证码类型，R-客户端注册，L-客户端用户手机登陆。。。' ,
     STATUS CHAR(1) DEFAULT '0'  COMMENT '状态 状态 状态 0-正常，1-关闭' ,
-    SEND_TIME DATETIME COMMENT '发送时间',
+    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
     PRIMARY KEY(ID)
-)AUTO_INCREMENT = 1000 COMMENT = '短信验证码 ';
+)AUTO_INCREMENT = 1000 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COMMENT = '短信验证码 ';
 
 
 
@@ -914,6 +917,39 @@ alter table ch_medical_project add column point_num bigint(20) default 0 comment
 
 alter table ch_appointment add column point_use_flag varchar(8) default 'N' comment '预约完成是否用积分抵扣';
 alter table ch_appointment add column point_num bigint(20) default 0 comment '抵用积分数';
+
+
+drop table if exists sm_friends ;
+CREATE TABLE sm_friends(
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
+    USER_ID BIGINT(20) COMMENT '用户uid' ,
+    FRIEND_USER_ID BIGINT(20) COMMENT '好友uid',
+    STATUS CHAR(1)    COMMENT '状态 0-正常已经好友，1-申请  ,2-被申请（等待同意），3-拒绝，4-删除' ,
+    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    UNIQUE INDEX `uniq_idx`(`USER_ID`, `FRIEND_USER_ID`) USING BTREE,
+    PRIMARY KEY(ID)
+)AUTO_INCREMENT = 100 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT = '好友表 ';
+
+drop table if exists csc_message;
+CREATE TABLE csc_message(
+    ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
+    USER_ID BIGINT(20) COMMENT '用户uid',
+    SYS_USER_ID BIGINT(20) COMMENT '系统用户uid',
+    MSG_TYPE VARCHAR(8) COMMENT '消息类型',
+    MSG_CONTENT VARCHAR(2048) COMMENT '消息内容',
+    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
+    CREATE_TIME DATETIME    COMMENT '创建时间' ,
+    UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
+    UPDATE_TIME DATETIME    COMMENT '更新时间',
+    UNIQUE INDEX `uniq_idx`(`USER_ID`, `FRIEND_USER_ID`) USING BTREE,
+    PRIMARY KEY(ID)
+)AUTO_INCREMENT = 100 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT = '系统消息 ';
+
+
 
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失

@@ -4,6 +4,12 @@ import com.pepper.framework.web.domain.BaseEntity;
 
 import java.util.Date;
 
+/**
+ *  @Description: csc_sms_code
+ *  @author: HanJieTao
+ *  @mail: hjtxyr@163.com
+ *  @Date: 2020/3/26 14:48
+ */
 public class SmsCode extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -21,9 +27,6 @@ public class SmsCode extends BaseEntity
 
     /** 区域状态（0正常 1关闭） */
     private String status;
-
-    /** 更新时间 */
-    private Date sendTime;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -61,19 +64,22 @@ public class SmsCode extends BaseEntity
         this.status = status;
     }
 
-    public Date getSendTime() {
-        return sendTime;
-    }
-
-    public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
-    }
-
     public String getMobilePhone() {
         return mobilePhone;
     }
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    @Override
+    public String toString() {
+        return "SmsCode{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", codeType='" + codeType + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

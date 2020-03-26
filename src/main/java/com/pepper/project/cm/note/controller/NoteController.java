@@ -51,7 +51,9 @@ public class NoteController extends BaseController {
     public TableDataInfo list(Note note)
     {
         startPage();
-        note.setCommunityId(getMerchantId());
+        if(getMerchantId()!=0){
+            note.setCommunityId(getMerchantId());
+        }
         List<Note> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }

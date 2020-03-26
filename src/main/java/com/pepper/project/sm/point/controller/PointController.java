@@ -102,10 +102,20 @@ public class PointController extends BaseController {
     @Log(title = "用户积分", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(Point note)
+    public AjaxResult editSave(Point point)
     {
-        return toAjax(pointService.updatePoint(note));
+        return toAjax(pointService.updatePoint(point));
     }
+
+    @RequiresPermissions("sm:point:sendPoint")
+    @Log(title = "用户积分", businessType = BusinessType.UPDATE)
+    @PostMapping("/sendPoint")
+    @ResponseBody
+    public AjaxResult sendPoint(Point point)
+    {
+        return toAjax(pointService.updatePoint(point));
+    }
+
 
     /**
      * 删除用户积分

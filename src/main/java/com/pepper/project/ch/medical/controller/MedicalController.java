@@ -50,7 +50,9 @@ public class MedicalController extends BaseController {
     public TableDataInfo list(MedicalProject medicalProject)
     {
         startPage();
-        medicalProject.setHospitalId(getMerchantId());
+        if(getMerchantId()!=0){
+            medicalProject.setHospitalId(getMerchantId());
+        }
         List<MedicalProject> list = medicalProjectService.selectMedicalProjectList(medicalProject);
         return getDataTable(list);
     }

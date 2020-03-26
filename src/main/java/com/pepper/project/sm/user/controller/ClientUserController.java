@@ -10,6 +10,7 @@ import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.sm.point.service.IPointService;
 import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.sm.user.service.IClientUserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,4 +115,21 @@ public class ClientUserController extends BaseController {
         return "sm/point/point";
     }
 
+    /**
+     *  @Description: mobilePhone获取用户列表
+     *  @author: HanJieTao
+     *  @mail: hjtxyr@163.com
+     *  @Date: 2020/3/26 11:00
+     */
+    @ApiOperation("mobilePhone获取用户列表[logon]")
+    @PostMapping("/getListByMobilePhone")
+    @ResponseBody
+    public TableDataInfo getListByMobilePhone(String mobilePhone)
+    {
+        startPage();
+        ClientUser clientUser = new ClientUser();
+        clientUser.setUserMobile(mobilePhone);
+        List<ClientUser> list = clientUserService.selectClientUserList(clientUser);
+        return getDataTable(list);
+    }
 }

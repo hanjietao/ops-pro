@@ -53,7 +53,9 @@ public class PmNoticeController extends BaseController {
     public TableDataInfo list(PmNotice notice)
     {
         startPage();
-        notice.setPropertyId(getMerchantId());
+        if(getMerchantId()!=0){
+            notice.setPropertyId(getMerchantId());
+        }
         List<PmNotice> list = pmNoticeService.selectPmNoticeList(notice);
         return getDataTable(list);
     }

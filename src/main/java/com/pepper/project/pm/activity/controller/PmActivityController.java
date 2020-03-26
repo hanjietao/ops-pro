@@ -50,7 +50,9 @@ public class PmActivityController extends BaseController {
     public TableDataInfo list(PmActivity pmActivity)
     {
         startPage();
-        pmActivity.setPropertyId(getMerchantId());
+        if(getMerchantId()!=0){
+            pmActivity.setPropertyId(getMerchantId());
+        }
         List<PmActivity> list = activityService.selectActivityList(pmActivity);
         return getDataTable(list);
     }

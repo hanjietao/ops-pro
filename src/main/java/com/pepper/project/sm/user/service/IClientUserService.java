@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IClientUserService {
 
-    List<ClientUser> selectClientUserList(ClientUser activity);
+    List<ClientUser> selectClientUserList(ClientUser clientUser);
     int insertClientUser(ClientUser clientUser);
 
     int deleteClientUserByIds(String ids);

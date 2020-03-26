@@ -51,7 +51,9 @@ public class PmNoteController extends BaseController {
     public TableDataInfo list(PmNote note)
     {
         startPage();
-        note.setPropertyId(getMerchantId());
+        if(getMerchantId()!=0){
+            note.setPropertyId(getMerchantId());
+        }
         List<PmNote> list = noteService.selectNoteList(note);
         return getDataTable(list);
     }

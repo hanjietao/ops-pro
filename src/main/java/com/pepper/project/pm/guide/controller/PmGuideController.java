@@ -50,7 +50,9 @@ public class PmGuideController extends BaseController {
     public TableDataInfo list(PmGuide guide)
     {
         startPage();
-        guide.setPropertyId(getMerchantId());
+        if(getMerchantId()!=0){
+            guide.setPropertyId(getMerchantId());
+        }
         List<PmGuide> list = guideService.selectGuideList(guide);
         return getDataTable(list);
     }
