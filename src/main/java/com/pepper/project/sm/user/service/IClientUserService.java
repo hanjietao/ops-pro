@@ -16,5 +16,6 @@ public interface IClientUserService {
 
     int updateClientUser(ClientUser clientUser);
 
-    int updateClientUserPoint(ClientUser clientUser);
+    int addClientUserPoint(ClientUser clientUser);
+    int deductClientUserPoint(ClientUser clientUser);
 }

@@ -46,7 +46,12 @@ public class ClientUserServiceImpl implements IClientUserService {
     }
 
     @Override
-    public int updateClientUserPoint(ClientUser clientUser) {
-        return clientUserDao.updateClientUserCurrPoint(clientUser);
+    public int deductClientUserPoint(ClientUser clientUser) {
+        return clientUserDao.deductClientUserCurrPoint(clientUser);
+    }
+
+    @Override
+    public int addClientUserPoint(ClientUser clientUser) {
+        return clientUserDao.addClientUserCurrPoint(clientUser);
     }
 }

@@ -214,7 +214,7 @@ public class AppointmentController extends BaseController {
             int insertCount = pointService.insertPoint(point);
 
             clientUser.setPointNum(appointment1.getMedicalProject().getPointNum());
-            int updateCount = clientUserService.updateClientUserPoint(clientUser);
+            int updateCount = clientUserService.deductClientUserPoint(clientUser);
             if(updateCount != 1){
                 throw new RuntimeException("积分使用失败，请刷新重试");
             }

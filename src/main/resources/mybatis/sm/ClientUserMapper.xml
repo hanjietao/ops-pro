@@ -117,11 +117,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-	<update id="updateClientUserCurrPoint" parameterType="ClientUser">
+	<update id="deductClientUserCurrPoint" parameterType="ClientUser">
 		update sm_client_user set
 		user_current_points = user_current_points - #{pointNum},
 		user_used_points = user_used_points + #{pointNum}
 		where user_id = #{userId} and user_current_points >= #{pointNum}
+	</update>
+
+	<update id="addClientUserCurrPoint" parameterType="ClientUser">
+		update sm_client_user set
+		user_acc_points = user_acc_points + #{pointNum},
+		user_current_points = user_current_points + #{pointNum}
+		where user_id = #{userId}
 	</update>
 
 

@@ -37,15 +37,15 @@
 			</div>
 
 	       <div class="btn-group-sm" id="toolbar" role="group">
-	            <a class="btn btn-success" onclick="add()" shiro:hasPermission="cm:activity:add">
-	                <i class="fa fa-plus"></i> 新增
-	            </a>
+<!--	            <a class="btn btn-success" onclick="add()" shiro:hasPermission="cm:activity:add">-->
+<!--	                <i class="fa fa-plus"></i> 新增-->
+<!--	            </a>-->
 <!--	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="cm:activity:edit">-->
 <!--		            <i class="fa fa-edit"></i> 修改-->
 <!--		        </a>-->
-				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:activity:remove">
-		            <i class="fa fa-remove"></i> 删除
-		        </a>
+<!--				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="cm:activity:remove">-->
+<!--		            <i class="fa fa-remove"></i> 删除-->
+<!--		        </a>-->
 		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="cm:activity:export">
 		            <i class="fa fa-download"></i> 导出
 		        </a>
@@ -63,6 +63,7 @@
 		var removeFlag = [[${@permission.hasPermi('system:dict:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var pointDatas = [[${@dict.getType('point_add_or_deduct')}]];
+		var pointOptTypeDatas = [[${@dict.getType('point_operate_type')}]];
 		var prefix = ctx + "sm/point";
 
 		$(function() {
@@ -108,8 +109,15 @@
 						}
 					},
 					{
+						field: 'operateType',
+						title: '操作类型',
+						formatter: function(value, row, index) {
+							return $.table.selectDictLabel(pointOptTypeDatas, value);
+						}
+					},
+					{
 						field: 'operateTypeInfo',
-						title: '操作类型'
+						title: '操作类型信息'
 					},
 					// {
 					// 	field: 'operateProjectId',

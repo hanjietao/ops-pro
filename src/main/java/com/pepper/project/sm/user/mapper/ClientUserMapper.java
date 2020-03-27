@@ -15,5 +15,6 @@ public interface ClientUserMapper {
 
     public List<ClientUser> selectClientUserList(ClientUser clientUser);
 
-    int updateClientUserCurrPoint(ClientUser clientUser);
+    int deductClientUserCurrPoint(ClientUser clientUser);
+    int addClientUserCurrPoint(ClientUser clientUser);
 }
