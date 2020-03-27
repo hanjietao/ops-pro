@@ -79,7 +79,7 @@ public class PmActivityController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非物业业务系统无法添加物业活动");
+            return AjaxResult.error("非物业业务系统无法添加物业活动");
         }
         pmActivity.setPropertyId(getMerchantId());
         return toAjax(activityService.insertActivity(pmActivity));
@@ -118,7 +118,7 @@ public class PmActivityController extends BaseController {
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return error("删除，不支持操作");
+        return AjaxResult.error("删除，不支持操作");
         //return toAjax(activityService.deleteActivityByIds(ids));
     }
 

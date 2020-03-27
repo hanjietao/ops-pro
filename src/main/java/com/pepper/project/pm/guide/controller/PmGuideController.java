@@ -79,7 +79,7 @@ public class PmGuideController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非物业业务系统用户 无法添加物业指南");
+            return AjaxResult.error("非物业业务系统用户 无法添加物业指南");
         }
         guide.setPropertyId(getMerchantId());
         return toAjax(guideService.insertGuide(guide));

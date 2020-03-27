@@ -25,8 +25,8 @@ public class SmsCodeServiceImpl implements ISmsCodeService {
 
     @Override
     public int insertSmsCode(SmsCode smsCode) {
-        smsCode.setCreateBy(ShiroUtils.getLoginName());
-        smsCode.setUpdateBy(ShiroUtils.getLoginName());
+        //smsCode.setCreateBy(ShiroUtils.getLoginName());
+        //smsCode.setUpdateBy(ShiroUtils.getLoginName());
         return smsCodeDao.insertSmsCode(smsCode);
     }
 

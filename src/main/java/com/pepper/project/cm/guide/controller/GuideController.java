@@ -80,7 +80,7 @@ public class GuideController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非社区业务系统用户 无法添加社区指南");
+            return  AjaxResult.error("非社区业务系统用户 无法添加社区指南");
         }
         guide.setCommunityId(getMerchantId());
         return toAjax(guideService.insertGuide(guide));

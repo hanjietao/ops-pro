@@ -80,7 +80,7 @@ public class PmNoteController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非物业业务系统用户 无法添加物业留言");
+            return AjaxResult.error("非物业业务系统用户 无法添加物业留言");
         }
         note.setPropertyId(getMerchantId());
         return toAjax(noteService.insertNote(note));

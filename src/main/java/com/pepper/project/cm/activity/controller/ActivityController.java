@@ -83,7 +83,7 @@ public class ActivityController extends BaseController {
     {
         if(getMerchantId()==null || getMerchantId() == 0 ||
                 !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
-            return  error("非社区业务系统用户 无法添加社区活动");
+            return AjaxResult.error("非社区业务系统用户 无法添加社区活动");
         }
         activity.setCommunityId(getMerchantId());
         return toAjax(activityService.insertActivity(activity));
@@ -122,7 +122,7 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return error("删除，不支持操作");
+        return AjaxResult.error("删除，不支持操作");
         //return toAjax(activityService.deleteActivityByIds(ids));
     }
 

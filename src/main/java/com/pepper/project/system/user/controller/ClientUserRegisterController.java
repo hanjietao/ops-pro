@@ -47,11 +47,11 @@ public class ClientUserRegisterController extends BaseController {
 
         if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(user.getLoginName())))
         {
-            return error("注册用户'" + user.getLoginName() + "'失败，登录账号已存在");
+            return AjaxResult.error("注册用户'" + user.getLoginName() + "'失败，登录账号已存在");
         }
         else if (UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
         {
-            return error("注册用户'" + user.getLoginName() + "'失败，手机号码已存在");
+            return AjaxResult.error("注册用户'" + user.getLoginName() + "'失败，手机号码已存在");
         }
         // 客户端注册，不需要邮箱，后面可以新增绑定邮箱
 //        else if (UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(user)))
@@ -73,15 +73,15 @@ public class ClientUserRegisterController extends BaseController {
         String codeType = validateStrArr[3];
         long time = System.currentTimeMillis();
         if(time - Long.valueOf(timeStr) > 3 * 60 * 1000){
-            return error("验证码已过期，时效3分钟！请重新发送短信验证码！");
+            return AjaxResult.error("验证码已过期，时效3分钟！请重新发送短信验证码！");
         }
 
         if(!mobile.equals(user.getPhonenumber())){
-            return error("短信验证码与手机号不一致，请重新发送短信验证码！");
+            return AjaxResult.error("短信验证码与手机号不一致，请重新发送短信验证码！");
         }
 
         if(!smsCode.equals(user.getSmsCode())){
-            return error("验证码错误！请校对验证码！");
+            return AjaxResult.error("验证码错误！请校对验证码！");
         }
 
         // 设置系统用户类型为  客户端用户
