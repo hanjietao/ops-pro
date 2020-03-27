@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public Article selectArticleById(Integer id) {
+    public Article selectArticleById(Long id) {
         return articleDao.selectArticleById(id);
     }
 

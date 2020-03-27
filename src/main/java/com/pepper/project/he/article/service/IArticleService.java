@@ -11,7 +11,7 @@ public interface IArticleService {
 
     int deleteArticleByIds(String ids);
 
-    Article selectArticleById(Integer id);
+    Article selectArticleById(Long id);
 
     int updateArticle(Article article);
 

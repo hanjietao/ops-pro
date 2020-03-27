@@ -124,9 +124,9 @@ public class PointController extends BaseController {
         ClientUser clientUser = clientUserService.selectClientUserById(point.getUserId());
         clientUser.setPointNum(point.getPoints());
         if(getMerchantId() == 0){
-            point.setOperateProjectId("admin");
+            point.setOperateProjectId(ShiroUtils.getSysUser().getUserId());
         }else{
-            point.setOperateProjectId(getMerchantId().toString());
+            point.setOperateProjectId(getMerchantId());
         }
 
         clientUserService.addClientUserPoint(clientUser);
@@ -175,7 +175,7 @@ public class PointController extends BaseController {
     @Log(title = "新增用户积分", businessType = BusinessType.INSERT)
     @PostMapping("/addPointAfter")
     public AjaxResult addAfter(@RequestParam(required = true) String operateType,
-                               @RequestParam(required = true) String projectId)
+                               @RequestParam(required = true) Long projectId)
     {
         try {
             User user = getSysUser();
@@ -199,12 +199,12 @@ public class PointController extends BaseController {
             Integer awardPoints = 0;
             if("2".equals(operateType)){
                 //video
-                Video video = videoService.selectVideoById(Integer.valueOf(projectId));
+                Video video = videoService.selectVideoById(projectId);
                 sendPoint = video.getSendPoint();
                 awardPoints = video.getAwardPoints();
             }else if("3".equals(operateType)){
                 //article
-                Article article = articleService.selectArticleById(Integer.valueOf(projectId));
+                Article article = articleService.selectArticleById(projectId);
                 sendPoint = article.getSendPoint();
                 awardPoints = article.getAwardPoints();
             }else{

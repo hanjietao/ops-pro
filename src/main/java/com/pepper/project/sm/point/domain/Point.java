@@ -40,7 +40,7 @@ public class Point extends BaseEntity {
     @Excel(name = "操作类型")
     private String operateTypeInfo;
 
-    private String operateProjectId;
+    private Long operateProjectId;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
@@ -114,11 +114,11 @@ public class Point extends BaseEntity {
         this.operateTypeInfo = operateTypeInfo;
     }
 
-    public String getOperateProjectId() {
+    public Long getOperateProjectId() {
         return operateProjectId;
     }
 
-    public void setOperateProjectId(String operateProjectId) {
+    public void setOperateProjectId(Long operateProjectId) {
         this.operateProjectId = operateProjectId;
     }
 

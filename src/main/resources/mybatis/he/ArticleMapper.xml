@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join he_board b on a.board_id = b.id
     </sql>
 
-	<select id="selectArticleById" parameterType="Integer" resultMap="ArticleResult">
+	<select id="selectArticleById" parameterType="Long" resultMap="ArticleResult">
 		<include refid="selectArticleVo"/>
 		where a.id = #{id}
 	</select>

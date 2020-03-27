@@ -276,7 +276,7 @@ CREATE TABLE he_board(
 DROP TABLE IF EXISTS `he_article`;
 CREATE TABLE `he_article`  (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `BOARD_ID` int(11) DEFAULT NULL COMMENT '板块编码',
+  `BOARD_ID` bigint(20) DEFAULT NULL COMMENT '板块编码',
   `TITLE` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '文章标题',
   `CONTENT` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容',
   `WATCH_COUNT` int(11) DEFAULT NULL COMMENT '观看数',
@@ -295,7 +295,7 @@ CREATE TABLE `he_article`  (
 drop table if exists he_video ;
 CREATE TABLE he_video(
     ID BIGINT(20)  AUTO_INCREMENT  COMMENT 'ID' ,
-    BOARD_ID INT(11)    COMMENT '板块编码' ,
+    BOARD_ID BIGINT(20)    COMMENT '板块编码' ,
     TITLE VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '视频标题' ,
     VIDEO_URL VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '视频地址' ,
     WATCH_COUNT INT COMMENT '观看数',
@@ -948,6 +948,12 @@ CREATE TABLE csc_message(
     PRIMARY KEY(ID)
 )AUTO_INCREMENT = 100 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT = '系统消息 ';
 
+
+
+
+INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (55, 6, '充值送积分', '6', 'point_operate_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:55:03', '', NULL, NULL);
+INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (56, 1, '充值赠送积分', '6', 'point_operate_send_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:57:52', '', NULL, NULL);
+INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (57, 2, '系统赠送', '0', 'point_operate_send_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:58:23', '', NULL, NULL);
 
 
 

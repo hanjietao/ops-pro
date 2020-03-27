@@ -81,7 +81,7 @@ public class ArticleController extends BaseController {
      * 修改宣教文章
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Board> boards = boardService.selectBoardList(new Board());
         mmap.put("boards",boards);
@@ -131,7 +131,7 @@ public class ArticleController extends BaseController {
     @ApiOperation("获取宣教文章详细")
     @PostMapping("/getDetail")
     @ResponseBody
-    public Object getDetail(Integer id)
+    public Object getDetail(Long id)
     {
         if (id != 0L)
         {

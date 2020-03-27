@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from he_board
     </sql>
 
-	<select id="selectBoardById" parameterType="Integer" resultMap="BoardResult">
+	<select id="selectBoardById" parameterType="Long" resultMap="BoardResult">
 		<include refid="selectBoardVo"/>
 		where id = #{id}
 	</select>

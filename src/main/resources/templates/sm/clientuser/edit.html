@@ -47,7 +47,13 @@
 
 
 		$("#form-clientuser-edit").validate({
-			focusCleanup: true
+            onkeyup: false,
+            rules: {
+                points:{
+                    digits:true
+                },
+            },
+            focusCleanup: true
 		});
 
 		function submitHandler() {

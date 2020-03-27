@@ -47,7 +47,7 @@ public class VideoServiceImpl implements IVideoService {
     }
 
     @Override
-    public Video selectVideoById(Integer id) {
+    public Video selectVideoById(Long id) {
         return videoDao.selectVideoById(id);
     }
 

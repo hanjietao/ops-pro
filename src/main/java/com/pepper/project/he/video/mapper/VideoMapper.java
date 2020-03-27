@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VideoMapper {
 
-    Video selectVideoById(Integer id);
+    Video selectVideoById(Long id);
     List<Video> selectVideoList(Video video);
 
     /**

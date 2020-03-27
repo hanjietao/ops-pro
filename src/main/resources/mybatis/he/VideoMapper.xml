@@ -34,7 +34,7 @@
         left join he_board b on v.board_id = b.id
     </sql>
 
-	<select id="selectVideoById" parameterType="Integer" resultMap="VideoResult">
+	<select id="selectVideoById" parameterType="Long" resultMap="VideoResult">
 		<include refid="selectVideoVo"/>
 		where v.id = #{id}
 	</select>

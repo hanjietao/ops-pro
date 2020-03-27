@@ -11,7 +11,7 @@ public interface IVideoService {
 
     int deleteVideoByIds(String ids);
 
-    Video selectVideoById(Integer id);
+    Video selectVideoById(Long id);
 
     int updateVideo(Video video);
 

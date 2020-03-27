@@ -101,7 +101,7 @@ public class VideoController extends BaseController {
      * 修改宣教板块
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         List<Board> boards = boardService.selectBoardList(new Board());
         mmap.put("boards",boards);
@@ -196,7 +196,7 @@ public class VideoController extends BaseController {
     @ApiOperation("获取宣教视频详细")
     @PostMapping("/getDetail")
     @ResponseBody
-    public Object getDetail(Integer id)
+    public Object getDetail(Long id)
     {
         if (id != 0L)
         {

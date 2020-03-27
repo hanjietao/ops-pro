@@ -208,7 +208,7 @@ public class AppointmentController extends BaseController {
             point.setSysUserId(user.getUserId());
             point.setPoints(appointment1.getMedicalProject().getPointNum());
             point.setAddOrDeduct("0");
-            point.setOperateProjectId(appointment1.getMedicalProject().getId().toString());
+            point.setOperateProjectId(appointment1.getMedicalProject().getId());
             point.setOperateType("5");
             point.setOperateTypeInfo(appointment1.getMedicalProject().getName()+"使用");
             int insertCount = pointService.insertPoint(point);
