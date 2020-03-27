@@ -4,8 +4,7 @@ import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.SMSCodeEnum;
 import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.security.ShiroUtils;
-import com.pepper.framework.aspectj.lang.annotation.Log;
-import com.pepper.framework.aspectj.lang.enums.BusinessType;
+import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.project.sm.user.domain.ClientUser;
@@ -21,11 +20,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 登录验证  客户端
@@ -79,7 +78,7 @@ public class ClientUserLoginController extends BaseController
         }
     }
 
-    @ApiOperation("客户端用户登陆 手机号：18978786511 , 通过短信验证码登陆")
+    @ApiOperation("客户端用户登陆 手机号：18978786511 , 通过短信验证码登陆 auto register and login")
     @PostMapping("/client/sms/login")
     @ResponseBody
     public AjaxResult ajaxClientSmsLogin(String mobilePhone, String smsCode, Boolean rememberMe)
@@ -113,7 +112,45 @@ public class ClientUserLoginController extends BaseController
             return error("验证码错误！请校对验证码！");
         }
 
-        User user = userService.selectUserByPhoneNumber(mobilePhone);
+        // 注册用户
+        User user1 = new User();
+        user1.setPhonenumber(mobilePhone);
+        List<User> list = userService.selectUserList(user1);
+        User user;
+        if(list.size() == 0){
+            user = new User();
+            user.setMerchantFlag(SysUserType.client.getType());
+            user.setUserName(mobilePhone);
+            user.setLoginName(mobilePhone);
+            user.setPhonenumber(mobilePhone);
+
+            user.setPassword(DigestUtils.md5DigestAsHex(mobilePhone.getBytes()));
+
+            // 用户名密码不用记录到 sm_client_user中
+            ClientUser clientUser1 = new ClientUser();
+
+            // 性别未知
+            clientUser1.setGender("2");
+            clientUser1.setUserMobile(user.getPhonenumber());
+
+            // 这个是在岗位管理里面新增的给客户端用户得岗位类型，这个配置不能删除
+            user.setPostIds(new Long[]{5L});
+
+            // 客户端用户登陆权限，这个是在权限管理里面配置新增得角色，也是不能删除得配置
+            user.setRoleId(107L);
+            user.setRoleIds(new Long[]{107L});
+            user.setDeptId(112L); // 配置部门 客户端用户
+
+            // 注册客户端用户，需要将sm_client_user表得id记录到sys_user表的merchantId
+            userService.insertUserClient(user,clientUser1);
+        }else{
+            user = list.get(0);
+            if(!SysUserType.client.getType().equals(user.getMerchantFlag())){
+                return error("手机号被后台占用，无法注册！");
+            }
+        }
+
+        user = userService.selectUserByPhoneNumber(mobilePhone);
 
         String username = user.getLoginName();
         String password = user.getPwdMd5();
