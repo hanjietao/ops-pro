@@ -1,5 +1,6 @@
 package com.pepper.project.sm.user.controller;
 
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -31,7 +32,7 @@ public class ClientUserController extends BaseController {
     @Autowired
     private IPointService pointService;
 
-    @RequiresPermissions("sm:client:view")
+    @RequiresPermissions("sm:clientuser:view")
     @GetMapping()
     public String online()
     {
@@ -44,6 +45,7 @@ public class ClientUserController extends BaseController {
     public TableDataInfo list(ClientUser clientUser)
     {
         startPage();
+        //ShiroUtils.getSysUser().getMerchantFlag().equals(SysUserType.admin.getType())
         List<ClientUser> list = clientUserService.selectClientUserList(clientUser);
         return getDataTable(list);
     }

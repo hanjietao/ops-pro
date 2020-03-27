@@ -1,6 +1,7 @@
 package com.pepper.project.sm.point.controller;
 
 import com.pepper.common.constant.GenConstants;
+import com.pepper.common.constant.SysMsgTypeConstant;
 import com.pepper.common.utils.poi.ExcelUtil;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
@@ -8,6 +9,8 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.csc.message.domain.SysMessage;
+import com.pepper.project.csc.message.service.ISysMessageService;
 import com.pepper.project.he.article.domain.Article;
 import com.pepper.project.he.article.service.IArticleService;
 import com.pepper.project.he.video.domain.Video;
@@ -48,6 +51,8 @@ public class PointController extends BaseController {
     private IVideoService videoService;
     @Autowired
     private IArticleService articleService;
+
+
 
     @RequiresPermissions("sm:point:view")
     @GetMapping()
@@ -114,25 +119,8 @@ public class PointController extends BaseController {
     @ResponseBody
     public AjaxResult sendPoint(Point point)
     {
-        point.setAddOrDeduct("1");// 增加
-        User sysUser = userService.selectUserByMerchantId(point.getUserId());
-        if(sysUser == null){
-            logger.error("异常，该用户不存在系统用户，sys_user表merchant_id字段没有该用户user_id= {}",point.getUserId());
-        }
-        point.setSysUserId(sysUser.getUserId());
-        point.setStatus("0");
-        ClientUser clientUser = clientUserService.selectClientUserById(point.getUserId());
-        clientUser.setPointNum(point.getPoints());
-        if(getMerchantId() == 0){
-            point.setOperateProjectId(ShiroUtils.getSysUser().getUserId());
-        }else{
-            point.setOperateProjectId(getMerchantId());
-        }
-
-        clientUserService.addClientUserPoint(clientUser);
-        return toAjax(pointService.insertPoint(point));
+        return pointService.sendPoint(point,getMerchantId());
     }
-
 
     /**
      * 删除用户积分
@@ -156,6 +144,19 @@ public class PointController extends BaseController {
         List<Point> list = pointService.selectPointList(point);
         ExcelUtil<Point> util = new ExcelUtil<>(Point.class);
         return util.exportExcel(list, "客户积分列表"+"_"+System.currentTimeMillis());
+    }
+
+
+    @ApiOperation("用户积分明细查询")
+    @PostMapping("/userPointList")
+    @ResponseBody
+    public TableDataInfo userPointList()
+    {
+        startPage();
+        Point point = new Point();
+        point.setUserId(getMerchantId());
+        List<Point> list = pointService.selectPointList(point);
+        return getDataTable(list);
     }
 
     @ApiOperation("新增用户积分")

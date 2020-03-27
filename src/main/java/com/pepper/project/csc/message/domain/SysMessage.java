@@ -21,6 +21,7 @@ public class SysMessage extends BaseEntity
 
     /**SysMsgTypeConstant 0-system,1-merchant*/
     private String msgType;
+    private String msgTitle;
     private String msgContent;
 
     /** 区域状态（0正常 1关闭） */
@@ -62,6 +63,14 @@ public class SysMessage extends BaseEntity
         this.msgType = msgType;
     }
 
+    public String getMsgTitle() {
+        return msgTitle;
+    }
+
+    public void setMsgTitle(String msgTitle) {
+        this.msgTitle = msgTitle;
+    }
+
     public String getMsgContent() {
         return msgContent;
     }
@@ -85,6 +94,7 @@ public class SysMessage extends BaseEntity
                 ", sysUserId=" + sysUserId +
                 ", userId=" + userId +
                 ", msgType='" + msgType + '\'' +
+                ", msgTitle='" + msgTitle + '\'' +
                 ", msgContent='" + msgContent + '\'' +
                 ", status='" + status + '\'' +
                 '}';

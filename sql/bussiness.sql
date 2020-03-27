@@ -939,6 +939,7 @@ CREATE TABLE csc_message(
     USER_ID BIGINT(20) COMMENT '用户uid',
     SYS_USER_ID BIGINT(20) COMMENT '系统用户uid',
     MSG_TYPE VARCHAR(8) COMMENT '消息类型',
+    MSG_TITLE VARCHAR(2048) COMMENT '消息内容',
     MSG_CONTENT VARCHAR(2048) COMMENT '消息内容',
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,

@@ -8,9 +8,11 @@ import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.project.csc.sms.domain.SmsCode;
+import com.pepper.project.csc.sms.service.ISmsCodeService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,10 @@ import java.util.regex.Pattern;
 public class AuthCodeController extends BaseController
 {
     Logger logger = LoggerFactory.getLogger(AuthCodeController.class);
+
+    @Autowired
+    private ISmsCodeService smsCodeService;
+
     /**
      * 验证码生成
      */
@@ -57,13 +63,14 @@ public class AuthCodeController extends BaseController
         long time = System.currentTimeMillis();
         String validateStr = mobilePhone+"_"+code+"_"+time+"_"+codeType; // 手机号_验证码_时间戳
         // 保存验证码到数据库
-        // 发送验证码  调用三方接口
 
+        // 发送验证码  调用三方接口
         SmsCode smsCode = new SmsCode();
         smsCode.setCode(code);
         smsCode.setCodeType(codeType);
         smsCode.setMobilePhone(mobilePhone);
-        // Dao.insert(smsCode);
+        smsCode.setStatus("0");
+        smsCodeService.insertSmsCode(smsCode);
 
         // 将验证码存在session
         ShiroUtils.getSession().setAttribute(GenConstants.SMS_CODE_ATTR, validateStr);

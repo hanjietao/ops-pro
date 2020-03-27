@@ -72,6 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="age != null and age != '' ">age, </if>
 		<if test="birthday != null and birthday != '' ">birthday, </if>
 		<if test="status != null and status != '' ">status, </if>
+		user_current_points,
+		user_acc_points,
+		user_used_points,
 		register_time,
 		last_login_time,
 		create_time,
@@ -85,6 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="age != null and age != '' ">#{age}, </if>
 		<if test="birthday != null and birthday != '' ">#{birthday}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
+		0,
+		0,
+		0,
         sysdate(),
         sysdate(),
 		sysdate(),

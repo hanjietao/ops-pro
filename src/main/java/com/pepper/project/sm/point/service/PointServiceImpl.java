@@ -1,18 +1,30 @@
 package com.pepper.project.sm.point.service;
 
+import com.pepper.common.constant.SysMsgTypeConstant;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
+import com.pepper.framework.web.domain.AjaxResult;
+import com.pepper.project.csc.message.domain.SysMessage;
+import com.pepper.project.csc.message.service.ISysMessageService;
 import com.pepper.project.sm.point.domain.Point;
 import com.pepper.project.sm.point.mapper.PointMapper;
+import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.sm.user.service.IClientUserService;
+import com.pepper.project.system.user.domain.User;
 import com.pepper.project.system.user.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class PointServiceImpl implements IPointService {
+
+    Logger logger = LoggerFactory.getLogger(PointServiceImpl.class);
+
     @Autowired
     private PointMapper pointDao;
 
@@ -21,6 +33,9 @@ public class PointServiceImpl implements IPointService {
 
     @Autowired
     private IClientUserService clientUserService;
+
+    @Autowired
+    private ISysMessageService sysMessageService;
 
     /**
      *  @Description: 列表查询
@@ -40,6 +55,48 @@ public class PointServiceImpl implements IPointService {
         point.setCreateBy(ShiroUtils.getLoginName());
         point.setUpdateBy(ShiroUtils.getLoginName());
         return pointDao.insertPoint(point);
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult sendPoint(Point point,Long merchantId) {
+        point.setAddOrDeduct("1");// 增加
+        User sysUser = userService.selectUserByMerchantId(point.getUserId());
+        if(sysUser == null){
+            logger.error("异常，该用户不存在系统用户，sys_user表merchant_id字段没有该用户user_id= {}",point.getUserId());
+        }
+        point.setSysUserId(sysUser.getUserId());
+        point.setStatus("0");
+        ClientUser clientUser = clientUserService.selectClientUserById(point.getUserId());
+        clientUser.setPointNum(point.getPoints());
+
+        SysMessage sysMessage = new SysMessage();
+        /**SysMsgTypeConstant 0-system,1-merchant*/
+        if(merchantId == 0){
+            sysMessage.setMsgType(SysMsgTypeConstant.system);
+            point.setOperateProjectId(ShiroUtils.getSysUser().getUserId());
+        }else{
+            sysMessage.setMsgType(SysMsgTypeConstant.merchant);
+            point.setOperateProjectId(merchantId);
+        }
+
+        sysMessage.setUserId(point.getUserId());
+        sysMessage.setSysUserId(clientUser.getUserId());
+
+        if("6".equals(point.getOperateType())){
+            sysMessage.setMsgTitle("充值赠送积分");
+            sysMessage.setMsgContent("您充值了会员卡，系统赠送了"+point.getPoints()+"积分，谢谢！");
+        }else{
+            sysMessage.setMsgTitle("系统赠送积分");
+            sysMessage.setMsgContent("系统赠送了"+point.getPoints()+"积分，谢谢！");
+        }
+        sysMessageService.insertSysMessage(sysMessage);
+
+        clientUserService.addClientUserPoint(clientUser);
+        point.setCreateBy(ShiroUtils.getLoginName());
+        point.setUpdateBy(ShiroUtils.getLoginName());
+        pointDao.insertPoint(point);
+        return AjaxResult.success("操作成功！");
     }
 
     @Override
