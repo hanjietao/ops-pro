@@ -6,6 +6,7 @@ import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.framework.web.service.DictService;
 import com.pepper.project.sm.friends.domain.Friends;
 import com.pepper.project.sm.friends.service.IFriendsService;
 import com.pepper.project.sm.point.service.IPointService;
@@ -30,8 +31,6 @@ public class FriendsController extends BaseController {
 
     @Autowired
     private IFriendsService friendsService;
-
-
 
     @Autowired
     private IPointService pointService;
@@ -114,8 +113,7 @@ public class FriendsController extends BaseController {
      */
     @RequiresPermissions("sm:friends:list")
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Long userId, ModelMap mmap)
-    {
+    public String detail(@PathVariable("id") Long userId, ModelMap mmap) {
         mmap.put("clientUser", friendsService.selectFriendsById(userId));
         return "sm/point/point";
     }
@@ -124,8 +122,7 @@ public class FriendsController extends BaseController {
     @Log(title = "申请成为好友", businessType = BusinessType.INSERT)
     @PostMapping("/applyFriends")
     @ResponseBody
-    public AjaxResult applyFriends(@RequestParam(required = true) Long friendUserId)
-    {
+    public AjaxResult applyFriends(@RequestParam(required = true) Long friendUserId) {
         Long userId = ShiroUtils.getSysUser().getClientUser().getUserId();
         logger.info("FriendsController::applyFriends, request: userId={} , friendUserId={}",
                 userId,friendUserId);
@@ -136,8 +133,7 @@ public class FriendsController extends BaseController {
     @Log(title = "同意好友", businessType = BusinessType.INSERT)
     @PostMapping("/agreeApply")
     @ResponseBody
-    public AjaxResult agreeApply(@RequestParam(required = true) Long id)
-    {
+    public AjaxResult agreeApply(@RequestParam(required = true) Long id) {
         Long userId = ShiroUtils.getSysUser().getClientUser().getUserId();
         logger.info("FriendsController::agreeApply, request: id={}", id);
         return friendsService.agreeApply(id, userId);
@@ -149,11 +145,10 @@ public class FriendsController extends BaseController {
      *  @mail: hjtxyr@163.com
      *  @Date: 2020/3/26 11:00
      */
-    @ApiOperation("通过mobilePhone获取好友列表[logon]")
+    @ApiOperation("获取好友列表[logon]")
     @PostMapping("/getFriendsList")
     @ResponseBody
-    public TableDataInfo getFriendsList()
-    {
+    public TableDataInfo getFriendsList() {
         startPage();
         Friends friends = new Friends();
         friends.setUserId(ShiroUtils.getSysUser().getClientUser().getUserId());

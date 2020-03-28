@@ -13,7 +13,7 @@ public interface IFriendsService {
 
     int deleteFriendsByIds(String ids);
 
-    Friends selectFriendsById(Long userId);
+    Friends selectFriendsById(Long id);
 
     int updateFriends(Friends friends);
 

@@ -1,6 +1,7 @@
 package com.pepper.project.sm.point.controller;
 
 import com.pepper.common.constant.GenConstants;
+import com.pepper.common.constant.PointOperateAddOrDeductConstant;
 import com.pepper.common.constant.SysMsgTypeConstant;
 import com.pepper.common.utils.poi.ExcelUtil;
 import com.pepper.common.utils.security.ShiroUtils;
@@ -15,6 +16,8 @@ import com.pepper.project.he.article.domain.Article;
 import com.pepper.project.he.article.service.IArticleService;
 import com.pepper.project.he.video.domain.Video;
 import com.pepper.project.he.video.service.IVideoService;
+import com.pepper.project.sm.friends.domain.Friends;
+import com.pepper.project.sm.friends.service.IFriendsService;
 import com.pepper.project.sm.point.domain.Point;
 import com.pepper.project.sm.point.service.IPointService;
 import com.pepper.project.sm.user.domain.ClientUser;
@@ -52,7 +55,11 @@ public class PointController extends BaseController {
     @Autowired
     private IArticleService articleService;
 
+    @Autowired
+    private IFriendsService friendsService;
 
+    @Autowired
+    private ISysMessageService sysMessageService;
 
     @RequiresPermissions("sm:point:view")
     @GetMapping()
@@ -146,6 +153,73 @@ public class PointController extends BaseController {
         return util.exportExcel(list, "客户积分列表"+"_"+System.currentTimeMillis());
     }
 
+    @ApiOperation("赠送好友积分")
+    @Log(title = "同意好友", businessType = BusinessType.INSERT)
+    @PostMapping("/sendPointToFrd")
+    @ResponseBody
+    public AjaxResult agreeApply(@RequestParam(required = true) Long id,Long points) {
+        Friends friends = friendsService.selectFriendsById(id);
+        if(friends == null){
+            return AjaxResult.error("该好友关系不存在，请稍后尝试！");
+        }
+        Long youUserId = ShiroUtils.getSysUser().getClientUser().getUserId();
+        Long friendUserId = friends.getFriendUserId();
+        User youSysUser = ShiroUtils.getSysUser();
+        User frdSysUser = userService.selectUserByMerchantId(friendUserId);
+
+        ClientUser friendUser = clientUserService.selectClientUserById(friendUserId);
+        ClientUser you = clientUserService.selectClientUserById(youUserId);
+        if(you.getUserCurrentPoints() < points){
+            return AjaxResult.error("抱歉！您的积分数为"+you.getUserCurrentPoints()+",不够赠送！");
+        }
+        Point point = new Point();
+        point.setUserId(youUserId);
+        point.setSysUserId(youSysUser.getUserId());
+        point.setAddOrDeduct(PointOperateAddOrDeductConstant.deduct);
+        point.setOperateType("7");
+        point.setOperateTypeInfo("赠送好友-");
+        point.setPoints(points);
+        point.setOperateProjectId(friendUserId);
+        pointService.insertPoint(point);
+        you.setPointNum(points);
+        clientUserService.deductClientUserPoint(you);
+
+        Point point1 = new Point();
+        point1.setUserId(friendUserId);
+        point1.setSysUserId(frdSysUser.getUserId());
+        point1.setAddOrDeduct(PointOperateAddOrDeductConstant.add);
+        point1.setOperateType("8");
+        point1.setOperateTypeInfo("好友赠送+");
+        point1.setPoints(points);
+        point1.setOperateProjectId(youUserId);
+        pointService.insertPoint(point1);
+        friendUser.setPointNum(points);
+        clientUserService.addClientUserPoint(friendUser);
+
+        // 发送站内信
+        // 给自己
+        SysMessage yMsg = new SysMessage();
+        yMsg.setUserId(youUserId);
+        yMsg.setSysUserId(youSysUser.getUserId());
+        yMsg.setMsgTitle("赠送好友积分");
+        yMsg.setMsgContent("你给你的好友"+friendUser.getNikeName()+","+points+"个积分，成功！");
+        yMsg.setMsgType(SysMsgTypeConstant.friend);
+        yMsg.setStatus("0");// 正常，未读
+        sysMessageService.insertSysMessage(yMsg);
+
+        // 给好友
+        SysMessage fMsg = new SysMessage();
+        fMsg.setUserId(friendUserId);
+        fMsg.setSysUserId(frdSysUser.getUserId());
+        fMsg.setMsgTitle("好友赠送积分");
+        fMsg.setMsgContent("你的好友"+you.getNikeName()+",给你赠送"+points+"个积分，请查收！");
+        fMsg.setMsgType(SysMsgTypeConstant.friend);
+        fMsg.setStatus("0");// 正常，未读
+        sysMessageService.insertSysMessage(fMsg);
+
+        logger.info("FriendsController::agreeApply, request: id={}", id);
+        return AjaxResult.success("赠送成功！");
+    }
 
     @ApiOperation("用户积分明细查询")
     @PostMapping("/userPointList")

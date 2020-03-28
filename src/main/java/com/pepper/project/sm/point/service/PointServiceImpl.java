@@ -1,15 +1,18 @@
 package com.pepper.project.sm.point.service;
 
 import com.pepper.common.constant.SysMsgTypeConstant;
+import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.common.utils.text.Convert;
 import com.pepper.framework.web.domain.AjaxResult;
+import com.pepper.framework.web.service.DictService;
 import com.pepper.project.csc.message.domain.SysMessage;
 import com.pepper.project.csc.message.service.ISysMessageService;
 import com.pepper.project.sm.point.domain.Point;
 import com.pepper.project.sm.point.mapper.PointMapper;
 import com.pepper.project.sm.user.domain.ClientUser;
 import com.pepper.project.sm.user.service.IClientUserService;
+import com.pepper.project.system.dict.domain.DictData;
 import com.pepper.project.system.user.domain.User;
 import com.pepper.project.system.user.service.IUserService;
 import org.slf4j.Logger;
@@ -36,6 +39,9 @@ public class PointServiceImpl implements IPointService {
 
     @Autowired
     private ISysMessageService sysMessageService;
+
+    @Autowired
+    private DictService dictService;
 
     /**
      *  @Description: 列表查询
@@ -90,7 +96,23 @@ public class PointServiceImpl implements IPointService {
             sysMessage.setMsgTitle("系统赠送积分");
             sysMessage.setMsgContent("系统赠送了"+point.getPoints()+"积分，谢谢！");
         }
+        sysMessage.setStatus("0");
         sysMessageService.insertSysMessage(sysMessage);
+
+        List<DictData> list = dictService.getType("point_operate_send_type");
+        list.stream().forEach(data ->{
+            if(data.getDictValue().equals(point.getOperateType())){
+                sysMessage.setMsgTitle(data.getDictLabel());
+                String content = data.getRemark();
+                //content.replaceFirst("\\{" + 0 + "\\}",  data.getDictLabel()+"");
+                content.replaceFirst("\\{" + 0 + "\\}",  point.getPoints()+"");
+                sysMessage.setMsgContent(content);
+            }
+        });
+
+        if(StringUtils.isEmpty(sysMessage.getMsgTitle())){
+            return AjaxResult.error("字典配置的备注字段，模板异常");
+        }
 
         clientUserService.addClientUserPoint(clientUser);
         point.setCreateBy(ShiroUtils.getLoginName());

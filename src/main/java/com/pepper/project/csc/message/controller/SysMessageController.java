@@ -27,6 +27,11 @@ public class SysMessageController extends BaseController{
         SysMessage sysMessage = new SysMessage();
         sysMessage.setUserId(getMerchantId());
         List<SysMessage> list = sysMessageService.selectSysMessageList(sysMessage);
+        new Thread(() -> {
+            list.stream().forEach(sMsg->{
+                sMsg.setStatus("1");// read already
+            });
+        });
         return getDataTable(list);
     }
 

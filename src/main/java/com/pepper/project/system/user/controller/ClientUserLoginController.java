@@ -129,9 +129,6 @@ public class ClientUserLoginController extends BaseController
 
             // 用户名密码不用记录到 sm_client_user中
             ClientUser clientUser1 = new ClientUser();
-            clientUser1.setUserAccPoints(0L);
-            clientUser1.setUserUsedPoints(0L);
-            clientUser1.setUserCurrentPoints(0L);
             clientUser1.setAvatarUrl("/profile/avatar/profile.jpg");
 
             // 性别未知

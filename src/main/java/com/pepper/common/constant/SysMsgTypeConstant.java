@@ -5,5 +5,6 @@ public class SysMsgTypeConstant {
 
     public static final String system = "0";
     public static final String merchant = "1";
+    public static final String friend = "2";
 
 }

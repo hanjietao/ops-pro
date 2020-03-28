@@ -89,6 +89,8 @@ public class FriendsServiceImpl implements IFriendsService {
             friends1 = list1.get(0);
             if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.waitagree.getType()))){
                 return AjaxResult.success("申请已经提交，等待对方同意，请勿重复申请！");
+            }else if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.success.getType()))){
+                return AjaxResult.success("你与对方已经是好友了，不用再次添加！");
             }else{
                 return AjaxResult.success("申请失败！");
             }
@@ -98,8 +100,8 @@ public class FriendsServiceImpl implements IFriendsService {
             frd.setUserId(friendUserId);
             frd.setStatus(FriendsStatusEnum.waitagree.getType().toString());
             friendsDao.insertFriends(frd);
-            friends.setFriendUserId(userId);
-            friends.setUserId(friendUserId);
+            friends.setFriendUserId(friendUserId);
+            friends.setUserId(userId);
             friends.setStatus(FriendsStatusEnum.apply.getType().toString());
             friendsDao.insertFriends(friends);
             return AjaxResult.success("申请已提交，等待对方同意！");
@@ -115,7 +117,7 @@ public class FriendsServiceImpl implements IFriendsService {
         if(friends == null){
             return AjaxResult.error("该条申请不存在！");
         }
-        if(friends.getUserId() != userId){
+        if(friends.getUserId().longValue() != userId.longValue()){ // 判断数据是否正常
             return AjaxResult.error("数据异常，请刷新重试！");
         }
         Friends friends1 = new Friends();

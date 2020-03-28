@@ -19,12 +19,12 @@ public class SysMessage extends BaseEntity
     private Long sysUserId;
     private Long userId;
 
-    /**SysMsgTypeConstant 0-system,1-merchant*/
+    /**SysMsgTypeConstant 0-system,1-merchant,2-friend*/
     private String msgType;
     private String msgTitle;
     private String msgContent;
 
-    /** 区域状态（0正常 1关闭） */
+    /** 区域状态（0正常 未读  1已读） */
     private String status;
 
     public static long getSerialVersionUID() {
