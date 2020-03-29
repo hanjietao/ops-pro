@@ -10,6 +10,8 @@ import com.pepper.project.ch.appointment.domain.Appointment;
 import com.pepper.project.ch.appointment.service.IAppointmentService;
 import com.pepper.project.cm.note.domain.Note;
 import com.pepper.project.cm.note.service.INoteService;
+import com.pepper.project.csc.message.domain.SysMessage;
+import com.pepper.project.csc.message.service.ISysMessageService;
 import com.pepper.project.pm.note.domain.PmNote;
 import com.pepper.project.pm.note.service.IPmNoteService;
 import com.pepper.project.sm.point.service.IPointService;
@@ -55,6 +57,9 @@ public class UserInfoController extends BaseController {
     private IPointService pointService;
 
     @Autowired
+    private ISysMessageService sysMessageService;
+
+    @Autowired
     private PasswordService passwordService;
 
     @ApiOperation("新增用户积分（需要登陆）orderByColumn=createTime&isAsc=desc&pageNum=1&pageSize=5")
@@ -85,7 +90,10 @@ public class UserInfoController extends BaseController {
 
             Map<String,Object> map = new HashMap<>();
             map.put("appointments",list);
-            map.put("msgCount",12);
+            SysMessage sysMessage = new SysMessage();
+            sysMessage.setUserId(user.getClientUser().getUserId());
+            sysMessage.setSysUserId(user.getUserId());
+            map.put("msgCount",sysMessageService.unReadCount(sysMessage));
             map.put("notes",notes);
             map.put("pmNotes",pmNotes);
 

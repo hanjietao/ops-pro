@@ -43,5 +43,10 @@ public class SysMessageServiceImpl implements ISysMessageService {
         return sysMessageDao.updateSysMessage(sysMessage);
     }
 
+    @Override
+    public int unReadCount(SysMessage sysMessage) {
+        return sysMessageDao.unReadCount(sysMessage);
+    }
+
 
 }

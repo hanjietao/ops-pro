@@ -46,6 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
+	<select id="unReadCount" parameterType="SysMessage" resultType="Integer">
+	    select count(1) from csc_message where status= '0' and user_id = #{userId}
+	</select>
+
 	<insert id="insertSysMessage" parameterType="SysMessage">
 		insert into csc_message (
 		<if test="sysUserId != null and sysUserId != '' ">sys_user_id, </if>

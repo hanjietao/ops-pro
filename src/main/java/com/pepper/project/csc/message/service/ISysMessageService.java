@@ -15,4 +15,5 @@ public interface ISysMessageService {
 
     int updateSysMessage(SysMessage sysMessage);
 
+    int unReadCount(SysMessage sysMessage);
 }

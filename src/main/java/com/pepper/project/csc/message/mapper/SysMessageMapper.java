@@ -20,4 +20,6 @@ public interface SysMessageMapper {
     int deleteSysMessageByIds(String[] ids);
 
     int updateSysMessage(SysMessage sysMessage);
+
+    int unReadCount(SysMessage sysMessage);
 }

@@ -30,8 +30,9 @@ public class SysMessageController extends BaseController{
         new Thread(() -> {
             list.stream().forEach(sMsg->{
                 sMsg.setStatus("1");// read already
+                sysMessageService.updateSysMessage(sMsg);
             });
-        });
+        }).start();
         return getDataTable(list);
     }
 
