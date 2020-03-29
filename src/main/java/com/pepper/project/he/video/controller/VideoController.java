@@ -1,6 +1,11 @@
 package com.pepper.project.he.video.controller;
 
+import com.pepper.common.constant.PointOperateAddOrDeductConstant;
+import com.pepper.common.constant.PointOperateTypeConstant;
+import com.pepper.common.constant.SendPointConstant;
+import com.pepper.common.constant.SysMsgTypeConstant;
 import com.pepper.common.utils.file.FileUploadUtils;
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.config.OpsConfig;
@@ -8,13 +13,20 @@ import com.pepper.framework.config.ServerConfig;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
+import com.pepper.project.csc.message.domain.SysMessage;
+import com.pepper.project.csc.message.service.ISysMessageService;
 import com.pepper.project.he.board.domain.Board;
 import com.pepper.project.he.board.service.IBoardService;
 import com.pepper.project.he.video.domain.Video;
 import com.pepper.project.he.video.service.IVideoService;
-import io.swagger.annotations.ApiImplicitParam;
+import com.pepper.project.sm.point.domain.Point;
+import com.pepper.project.sm.point.service.IPointService;
+import com.pepper.project.sm.user.domain.ClientUser;
+import com.pepper.project.sm.user.service.IClientUserService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +40,8 @@ import java.util.List;
 @RequestMapping("/he/video")
 public class VideoController extends BaseController {
 
+    Logger logger = LoggerFactory.getLogger(VideoController.class);
+
     private String prefix = "he/video";
 
     @Autowired
@@ -38,6 +52,15 @@ public class VideoController extends BaseController {
 
     @Autowired
     private ServerConfig serverConfig;
+
+    @Autowired
+    private IPointService pointService;
+
+    @Autowired
+    private IClientUserService clientUserService;
+
+    @Autowired
+    private ISysMessageService sysMessageService;
 
     /**
 
@@ -200,7 +223,49 @@ public class VideoController extends BaseController {
     {
         if (id != 0L)
         {
-            return videoService.selectVideoById(id);
+            Video video =  videoService.selectVideoById(id);
+            if(ShiroUtils.getSysUser() != null && video != null){
+                Long clientUserId = ShiroUtils.getSysUser().getClientUser().getUserId();
+                Long userId = ShiroUtils.getSysUser().getUserId();
+
+
+                Point point = new Point();
+                point.setUserId(clientUserId);
+
+                point.setOperateType(PointOperateTypeConstant.watchVideo);
+                point.setOperateProjectId(id);
+                List<Point> points = pointService.selectPointList(point);
+                if(points.size() > 0){
+                    logger.info("already watch this video,point send already, info: {}",
+                            points.toString());
+                }else{
+                    if(SendPointConstant.yes.equals(video.getSendPoint())){
+                        point.setSysUserId(ShiroUtils.getUserId());
+                        point.setOperateTypeInfo("观看宣教视频赠送积分");
+                        point.setPoints(video.getAwardPoints());
+                        point.setAddOrDeduct(PointOperateAddOrDeductConstant.add);
+                        pointService.insertPoint(point);
+                        ClientUser clientUser = clientUserService.selectClientUserById(clientUserId);
+                        clientUser.setPointNum(video.getAwardPoints());
+                        clientUserService.addClientUserPoint(clientUser);
+
+                        SysMessage sysMessage = new SysMessage();
+                        /**SysMsgTypeConstant 0-system,1-merchant*/
+                        sysMessage.setMsgType(SysMsgTypeConstant.system);
+                        point.setOperateProjectId(video.getId());
+                        sysMessage.setUserId(point.getUserId());
+                        sysMessage.setSysUserId(clientUser.getUserId());
+                        sysMessage.setMsgTitle("看宣教视频送积分");
+                        sysMessage.setMsgContent("您观看了"+video.getTitle()+"视频，获得"+video.getAwardPoints()+"个积分，谢谢！");
+                        sysMessage.setStatus("0");
+                        sysMessageService.insertSysMessage(sysMessage);
+                    }else{
+                        logger.info("this video no send point video: {}",
+                                video.toString());
+                    }
+                }
+            }
+            return video;
         }
         else
         {

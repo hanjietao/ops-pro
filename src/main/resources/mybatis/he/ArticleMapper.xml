@@ -42,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="selectArticleList" parameterType="Community" resultMap="ArticleResult">
 		<include refid="selectArticleVo"/>
 		<where>
+			delete_flag = '0'
 			<if test="title != null and title != ''">
 				AND a.title like concat('%', #{title}, '%')
 			</if>
@@ -104,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
     <delete id="deleteArticleByIds" parameterType="String">
-        delete from he_article where id in
+        update he_article set delete_flag = '1',update_time = sysdate() where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

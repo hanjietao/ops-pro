@@ -281,7 +281,7 @@ CREATE TABLE `he_article`  (
   `CONTENT` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容',
   `WATCH_COUNT` int(11) DEFAULT NULL COMMENT '观看数',
   `send_point` varchar(16) default null comment '是否奖励积分，Y-是，N-否',
-  `award_points` int(11) default 0 comment '奖励积分数量',
+  `award_points` bigint(20) default 0 comment '奖励积分数量',
   `img_urls` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url',
   `STATUS` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '状态 状态 状态 0-正常，1-关闭',
   `CREATE_BY` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
@@ -300,7 +300,7 @@ CREATE TABLE he_video(
     VIDEO_URL VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '视频地址' ,
     WATCH_COUNT INT COMMENT '观看数',
     SEND_POINT varchar(16) default null comment '是否奖励积分，Y-是，N-否',
-    AWARD_POINTS int(11) default 0 comment '奖励积分数量',
+    AWARD_POINTS bigint(20) default 0 comment '奖励积分数量',
     STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
@@ -955,6 +955,11 @@ CREATE TABLE csc_message(
 INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (55, 6, '充值送积分', '6', 'point_operate_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:55:03', '', NULL, NULL);
 INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (56, 1, '充值赠送积分', '6', 'point_operate_send_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:57:52', '', NULL, NULL);
 INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`, `is_default`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (57, 2, '系统赠送', '0', 'point_operate_send_type', NULL, 'primary', 'Y', '0', 'admin', '2020-03-26 12:58:23', '', NULL, NULL);
+
+
+-- 2020 0329
+alter table he_video add column delete_flag varchar(8) default 0 comment '删除标志1-已删除，0-未删除';
+alter table he_article add column delete_flag varchar(8) default 0 comment '删除标志1-已删除，0-未删除';
 
 
 

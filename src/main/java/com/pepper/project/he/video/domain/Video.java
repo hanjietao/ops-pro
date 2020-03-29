@@ -30,10 +30,12 @@ public class Video extends BaseEntity{
 
     private String sendPoint;
 
-    private Integer awardPoints;
+    private Long awardPoints;
 
     /** 区域状态（0正常 1关闭） */
     private String status;
+    /** 区域状态（0正常 1删除） */
+    private String deleteFlag;
 
     /** 创建时间 */
     private Date createTime;
@@ -102,11 +104,11 @@ public class Video extends BaseEntity{
         this.sendPoint = sendPoint;
     }
 
-    public Integer getAwardPoints() {
+    public Long getAwardPoints() {
         return awardPoints;
     }
 
-    public void setAwardPoints(Integer awardPoints) {
+    public void setAwardPoints(Long awardPoints) {
         this.awardPoints = awardPoints;
     }
 
@@ -118,44 +120,12 @@ public class Video extends BaseEntity{
         this.status = status;
     }
 
-    @Override
-    public Date getCreateTime() {
-        return createTime;
+    public String getDeleteFlag() {
+        return deleteFlag;
     }
 
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    @Override
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    @Override
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
     public Board getBoard() {
@@ -180,6 +150,7 @@ public class Video extends BaseEntity{
                 ", sendPoint=" + sendPoint +
                 ", awardPoints=" + awardPoints +
                 ", status='" + status + '\'' +
+                ", deleteFlag='" + deleteFlag + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +

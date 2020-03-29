@@ -283,8 +283,7 @@ public class AppointmentController extends BaseController {
     @PostMapping("/cancel")
     @ResponseBody
     public AjaxResult cancelAppointment(@RequestParam(required = true) Long id,
-                                        @RequestParam(required = false) String cancelReason)
-    {
+                                        @RequestParam(required = false) String cancelReason) {
 
         Appointment appointment = appointmentService.selectAppointmentById(id);
         if(appointment == null || getSysUser().getClientUser().getUserId().longValue() != appointment.getUserId().longValue()){
@@ -293,5 +292,17 @@ public class AppointmentController extends BaseController {
         appointment.setStatus("1");// 1关闭
         appointment.setCancelReason(cancelReason);
         return AjaxResult.success(appointmentService.updateAppointment(appointment));
+    }
+
+    @ApiOperation("我的预约列表")
+    @Log(title = "我的预约列表", businessType = BusinessType.EXPORT)
+    @PostMapping("/myAppList")
+    @ResponseBody
+    public TableDataInfo myAppList() {
+        startPage();
+        Appointment appointment = new Appointment();
+        appointment.setUserId(ShiroUtils.getSysUser().getClientUser().getUserId());
+        List<Appointment> list = appointmentService.selectAppointmentList(appointment);
+        return getDataTable(list);
     }
 }

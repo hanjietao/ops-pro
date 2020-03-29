@@ -271,7 +271,7 @@ public class PointController extends BaseController {
                 return success("success(2)");
             }
             String sendPoint = "N";
-            Integer awardPoints = 0;
+            Long awardPoints = 0L;
             if("2".equals(operateType)){
                 //video
                 Video video = videoService.selectVideoById(projectId);

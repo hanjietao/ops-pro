@@ -42,6 +42,7 @@
 	<select id="selectVideoList" parameterType="Community" resultMap="VideoResult">
 		<include refid="selectVideoVo"/>
 		<where>
+			delete_flag = '0'
 			<if test="title != null and title != ''">
 				AND v.title like concat('%', #{title}, '%')
 			</if>
@@ -101,7 +102,7 @@
 	</update>
 
 	<delete id="deleteVideoByIds" parameterType="String">
-		delete from he_video where id in
+		update he_video set delete_flag = '1',update_time = sysdate() where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

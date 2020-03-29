@@ -269,8 +269,6 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/pm/activity/getDetail","anon");
         filterChainDefinitionMap.put("/pm/activity/getList","anon");
         filterChainDefinitionMap.put("/csc/area/getList","anon");
-        filterChainDefinitionMap.put("/he/article/getDetail","anon");
-        filterChainDefinitionMap.put("/he/article/getList","anon");
         filterChainDefinitionMap.put("/he/board/getList","anon");
         filterChainDefinitionMap.put("/cm/community/getDetail","anon");
         filterChainDefinitionMap.put("/cm/community/getList","anon");
@@ -289,6 +287,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/pm/notice/getList","anon");
         filterChainDefinitionMap.put("/pm/property/getDetail","anon");
         filterChainDefinitionMap.put("/pm/property/getList","anon");
+        filterChainDefinitionMap.put("/he/article/getDetail","anon");
+        filterChainDefinitionMap.put("/he/article/getList","anon");
         filterChainDefinitionMap.put("/he/video/getDetail","anon");
         filterChainDefinitionMap.put("/he/video/getList","anon");
 
