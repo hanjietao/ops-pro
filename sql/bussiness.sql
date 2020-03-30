@@ -918,6 +918,8 @@ alter table ch_medical_project add column point_num bigint(20) default 0 comment
 alter table ch_appointment add column point_use_flag varchar(8) default 'N' comment '预约完成是否用积分抵扣';
 alter table ch_appointment add column point_num bigint(20) default 0 comment '抵用积分数';
 
+ alter table he_video add column delete_flag  varchar(8)  comment '删除标志0-正常，1-已删除';
+  alter table he_article add column delete_flag  varchar(8)  comment '删除标志0-正常，1-已删除';
 
 drop table if exists sm_friends ;
 CREATE TABLE sm_friends(
