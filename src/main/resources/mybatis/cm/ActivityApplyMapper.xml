@@ -19,24 +19,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="Activity" id="ActivityResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="act_id"         />
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
-		<result property="status"           column="status"         />
+		<result property="status"           column="act_status"         />
 	</resultMap>
 
 	<resultMap type="ClientUser" id="ClientUserResult">
-		<id     property="userId"         		column="user_id"         />
+		<id     property="userId"         	column="user_id"         />
 		<result property="userName"         column="user_name"        />
 		<result property="nikeName"         column="nike_name"        />
-		<result property="userMobile"           column="user_mobile"         />
-		<result property="status"           column="status"         />
+		<result property="userMobile"       column="user_mobile"         />
+		<result property="status"           column="cu_status"         />
 	</resultMap>
 
 	<sql id="selectActivityApplyVo">
        select aa.create_time, aa.create_by, aa.update_time, aa.update_by, aa.id,aa.activity_id,aa.user_id,aa.user_mobile,aa.status,
-       a.id,a.title,a.status,
-       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
+       a.id as act_id,a.title,a.status as act_status,
+       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status as cu_status
        from cm_activity_apply aa
        left join cm_activity a on aa.activity_id = a.id
        left join sm_client_user cu on aa.user_id = cu.user_id

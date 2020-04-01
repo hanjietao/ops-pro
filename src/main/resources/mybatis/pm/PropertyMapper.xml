@@ -6,30 +6,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="Property" id="PropertyResult">
 		<id     property="id"         		column="id"         />
-		<result property="propertyCode"         column="property_code"        />
-		<result property="propertyName"         column="property_name"        />
-		<result property="areaId"       column="area_id"         />
-		<result property="introduction"       column="introduction"         />
+		<result property="propertyCode"     column="property_code"        />
+		<result property="propertyName"     column="property_name"        />
+		<result property="areaId"       	column="area_id"         />
+		<result property="introduction"     column="introduction"         />
 		<result property="status"           column="status"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
 		<result property="updateBy"         column="update_by"                />
-		<association property="area"    column="id" javaType="Area" resultMap="AreaResult" />
+		<association property="area"    	column="id" javaType="Area" resultMap="AreaResult" />
 	</resultMap>
 
 	<resultMap type="Area" id="AreaResult">
-		<id     property="id"         column="id"         />
+		<id     property="id"         column="a_id"         />
 		<result property="areaCode"         column="area_code"        />
 		<result property="areaName"         column="area_name"        />
 		<result property="coordinate"          column="coordinate"         />
-		<result property="status"          column="status"         />
+		<result property="status"          column="a_status"         />
 	</resultMap>
 
 	<sql id="selectPropertyVo">
        select p.create_time, p.create_by, p.update_time, p.update_by, p.id,p.property_code, p.property_name,
        p.area_id, p.introduction,p.status,
-       a.id,a.area_code,a.area_name,a.coordinate,a.status
+       a.id as a_id,a.area_code,a.area_name,a.coordinate,a.status as a_status
        from pm_property p
        left join csc_area a on p.area_id = a.id
     </sql>

@@ -15,6 +15,8 @@ pepper:
   addressEnabled: true
   #loginType client
   clientLoginType: p-client
+  smsIntervalMiliSec: 60000
+  smsMobileDayMaxSendCount: 1000
 
 # 开发环境配置
 server:

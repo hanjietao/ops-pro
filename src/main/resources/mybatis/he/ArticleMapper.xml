@@ -21,15 +21,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="Board" id="BoardResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="b_id"         />
 		<result property="boardCode"         column="board_code"        />
 		<result property="boardName"         column="board_name"        />
-		<result property="status"           column="status"         />
+		<result property="status"           column="b_status"         />
 	</resultMap>
 
 	<sql id="selectArticleVo">
        select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.title, a.content, a.board_id,a.status,a.send_point,a.award_points,img_urls,
-       b.id,b.board_code,b.board_name,b.status
+       b.id as b_id,b.board_code,b.board_name,b.status as b_status
         from he_article a
         left join he_board b on a.board_id = b.id
     </sql>
@@ -101,6 +101,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateWatchCount" parameterType="Long">
+		update he_article
+		set watch_count = watch_count + 1
 		where id = #{id}
 	</update>
 

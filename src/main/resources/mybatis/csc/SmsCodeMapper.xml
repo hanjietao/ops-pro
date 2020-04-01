@@ -30,7 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectSmsCodeVo"/>
 		<where>
 			<if test="mobilePhone != null and mobilePhone != ''">
-				AND mobile_phone = #{userId}
+				AND mobile_phone = #{mobilePhone}
+			</if>
+			<if test="createTime != null">
+				AND create_time > #{createTime}
 			</if>
 			<if test="status != null and status != ''">
 				AND status = #{status}

@@ -13,12 +13,17 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -31,6 +36,12 @@ import java.util.regex.Pattern;
 public class AuthCodeController extends BaseController
 {
     Logger logger = LoggerFactory.getLogger(AuthCodeController.class);
+
+    @Value("${pepper.smsIntervalMiliSec}")
+    private int smsIntervalMiliSec;
+
+    @Value("${pepper.smsMobileDayMaxSendCount}")
+    private int smsMobileDayMaxSendCount;
 
     @Autowired
     private ISmsCodeService smsCodeService;
@@ -57,6 +68,24 @@ public class AuthCodeController extends BaseController
         }else {
             return error("非法的短信获取短信验证码的方式！");
         }
+        Long lastSendTime = (Long)ShiroUtils.getSession().getAttribute(GenConstants.SMS_CODE_SEND_TIME);
+        if(lastSendTime != null && lastSendTime > System.currentTimeMillis() - smsIntervalMiliSec){
+            return error("抱歉！您发送短信太频繁，请稍后重试！");
+        }
+        SmsCode smsCode1 = new SmsCode();
+        smsCode1.setMobilePhone(mobilePhone);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date zero = calendar.getTime();
+        smsCode1.setCreateTime(zero);
+        List<SmsCode> list = smsCodeService.selectSmsCodeList(smsCode1);
+        if(list.size() > smsMobileDayMaxSendCount){
+            return error("抱歉！今天您当前手机号已经发送短信超过上限，请明天再试!");
+        }
 
         String code = smsCode();
         logger.info("sms mobilePhone={}, code={}",mobilePhone,code);
@@ -74,6 +103,8 @@ public class AuthCodeController extends BaseController
 
         // 将验证码存在session
         ShiroUtils.getSession().setAttribute(GenConstants.SMS_CODE_ATTR, validateStr);
+        // 保存最近的短信发送时间 毫秒
+        ShiroUtils.getSession().setAttribute(GenConstants.SMS_CODE_SEND_TIME, System.currentTimeMillis());
 
         return success("验证码发送成功"+code);
     }

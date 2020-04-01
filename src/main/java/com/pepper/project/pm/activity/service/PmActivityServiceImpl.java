@@ -59,5 +59,9 @@ public class PmActivityServiceImpl implements IPmActivityService {
         return activityDao.updateActivity(area);
     }
 
+    @Override
+    public int updateWatchCount(Long id) {
+        return activityDao.updateWatchCount(id);
+    }
 
 }

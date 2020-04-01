@@ -26,7 +26,7 @@ public class Video extends BaseEntity{
     /** 区域名称 */
     private String videoUrl;
 
-    private Integer watchCount;
+    private Long watchCount;
 
     private String sendPoint;
 
@@ -37,17 +37,6 @@ public class Video extends BaseEntity{
     /** 区域状态（0正常 1删除） */
     private String deleteFlag;
 
-    /** 创建时间 */
-    private Date createTime;
-
-    /** 创建人 */
-    private String createBy;
-
-    /** 更新时间 */
-    private Date updateTime;
-
-    /** 更新人 */
-    private String updateBy;
 
     private Board board;
 
@@ -88,11 +77,11 @@ public class Video extends BaseEntity{
         this.videoUrl = videoUrl;
     }
 
-    public Integer getWatchCount() {
+    public Long getWatchCount() {
         return watchCount;
     }
 
-    public void setWatchCount(Integer watchCount) {
+    public void setWatchCount(Long watchCount) {
         this.watchCount = watchCount;
     }
 
@@ -151,10 +140,6 @@ public class Video extends BaseEntity{
                 ", awardPoints=" + awardPoints +
                 ", status='" + status + '\'' +
                 ", deleteFlag='" + deleteFlag + '\'' +
-                ", createTime=" + createTime +
-                ", createBy='" + createBy + '\'' +
-                ", updateTime=" + updateTime +
-                ", updateBy='" + updateBy + '\'' +
                 ", board=" + getBoard() +
                 '}';
     }

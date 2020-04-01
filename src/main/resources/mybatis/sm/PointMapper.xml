@@ -52,8 +52,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="addOrDeduct != null and addOrDeduct != ''">
 				AND p.add_or_deduct like concat('%', #{addOrDeduct}, '%')
 			</if>
+			<if test="operateProjectId != null and operateProjectId != ''">
+				AND p.operate_project_id = #{operateProjectId}
+			</if>
 			<if test="operateType != null and operateType != ''">
-				AND p.operate_type like concat('%', #{operateType}, '%')
+				AND p.operate_type  = #{operateType}
 			</if>
 		</where>
 	</select>

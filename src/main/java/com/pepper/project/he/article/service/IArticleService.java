@@ -15,4 +15,5 @@ public interface IArticleService {
 
     int updateArticle(Article article);
 
+    int updateWatchCount(Long id);
 }

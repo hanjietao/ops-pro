@@ -224,10 +224,11 @@ public class VideoController extends BaseController {
         if (id != 0L)
         {
             Video video =  videoService.selectVideoById(id);
+            // watchcount
+            videoService.updateWatchCount(id);
             if(ShiroUtils.getSysUser() != null && video != null){
                 Long clientUserId = ShiroUtils.getSysUser().getClientUser().getUserId();
                 Long userId = ShiroUtils.getSysUser().getUserId();
-
 
                 Point point = new Point();
                 point.setUserId(clientUserId);

@@ -29,23 +29,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap id="hospitalResult" type="Hospital">
-		<id     property="id"   column="id"     />
+		<id     property="id"   column="hos_id"     />
 		<result property="hosName"         column="hos_name"        />
 		<result property="hosCode"         column="hos_code"        />
 		<result property="introduction"       column="introduction"         />
 		<result property="communityIds"       column="community_ids"         />
 		<result property="areaId"       column="area_id"         />
-		<result property="status"           column="status"         />
+		<result property="status"           column="hos_status"         />
 	</resultMap>
 
 	<resultMap id="medicalProjectResult" type="MedicalProject">
-		<id     property="id"         column="id"         />
+		<id     property="id"         column="med_id"         />
 		<result property="name"         column="name"        />
 		<result property="serviceContent"         column="service_content"        />
 		<result property="price"          column="price"         />
 		<result property="fees"          column="fees"         />
 		<result property="deleteFlag"          column="delete_flag"         />
-		<result property="status"          column="status"         />
+		<result property="status"          column="med_status"         />
 		<result property="pointUseFlag"          column="point_use_flag1"         />
 		<result property="pointNum"          column="point_num1"         />
 	</resultMap>
@@ -61,8 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.user_id,a.hospital_id,
 		a.medical_project_id,a.appointment_time,a.appointment_start_time,a.appointment_end_time,a.appointment_name,
 		a.appointment_phone,a.status,a.point_use_flag,a.point_num,a.appointment_reason,a.cancel_reason,a.operate_info,
-		h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status,
-		mp.id,mp.name,mp.service_content,mp.price,mp.fees,mp.delete_flag,mp.status,mp.point_use_flag as point_use_flag1,mp.point_num as point_num1,
+		h.id as hos_id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status as hos_status,
+		mp.id as med_id,mp.name,mp.service_content,mp.price,mp.fees,mp.delete_flag,mp.status as med_status,mp.point_use_flag as point_use_flag1,mp.point_num as point_num1,
 		cu.user_id,cu.nike_name,cu.user_mobile,cu.gender
 		from ch_appointment a
 		left join ch_hospital h on a.hospital_id = h.id

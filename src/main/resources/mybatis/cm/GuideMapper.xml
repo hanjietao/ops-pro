@@ -18,16 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="Community" id="CommunityResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="com_id"         />
 		<result property="communityCode"         column="community_code"        />
 		<result property="communityName"         column="community_name"        />
 		<result property="areaId"       column="area_id"         />
-		<result property="status"           column="status"         />
+		<result property="status"           column="com_status"         />
 	</resultMap>
 
 	<sql id="selectGuideVo">
        select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id,bg.title, bg.content, bg.community_id,bg.status,
-       c.id,c.community_code,c.community_name,c.area_id,c.status
+       c.id as com_id,c.community_code,c.community_name,c.area_id,c.status as com_status
         from cm_business_guide bg
         left join cm_community c on bg.community_id = c.id
     </sql>

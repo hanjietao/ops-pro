@@ -15,4 +15,5 @@ public interface IActivityService {
 
     int updateActivity(Activity activity);
 
+    int updateWatchCount(Long id);
 }

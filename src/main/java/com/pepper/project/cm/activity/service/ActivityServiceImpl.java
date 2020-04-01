@@ -61,5 +61,9 @@ public class ActivityServiceImpl implements IActivityService {
         return activityDao.updateActivity(activity);
     }
 
+    @Override
+    public int updateWatchCount(Long id) {
+        return activityDao.updateWatchCount(id);
+    }
 
 }

@@ -15,4 +15,5 @@ public interface IPmActivityService {
 
     int updateActivity(PmActivity pmActivity);
 
+    int updateWatchCount(Long id);
 }

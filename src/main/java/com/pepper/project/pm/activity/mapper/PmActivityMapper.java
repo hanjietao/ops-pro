@@ -9,16 +9,11 @@ public interface PmActivityMapper {
     PmActivity selectActivityById(Long id);
     List<PmActivity> selectActivityList(PmActivity pmActivity);
 
-    /**
-     * 新增医院信息
-     *
-     * @param pmActivity 医院信息
-     * @return 结果
-     */
     public int insertActivity(PmActivity pmActivity);
 
     int deleteActivityByIds(String[] ids);
 
     int updateActivity(PmActivity pmActivity);
 
+    int updateWatchCount(Long id);
 }

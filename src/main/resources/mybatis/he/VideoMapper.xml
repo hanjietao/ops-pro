@@ -21,15 +21,15 @@
 	</resultMap>
 
 	<resultMap type="Board" id="BoardResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="b_id"         />
 		<result property="boardCode"         column="board_code"        />
 		<result property="boardName"         column="board_name"        />
-		<result property="status"           column="status"         />
+		<result property="status"           column="b_status"         />
 	</resultMap>
 
 	<sql id="selectVideoVo">
        select v.create_time, v.create_by, v.update_time, v.update_by, v.id,v.title, v.video_url, v.board_id,v.watch_count,v.status,v.send_point,v.award_points,
-       b.id,b.board_code,b.board_name,b.status
+       b.id as b_id,b.board_code,b.board_name,b.status as b_status
         from he_video v
         left join he_board b on v.board_id = b.id
     </sql>
@@ -98,6 +98,12 @@
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateWatchCount" parameterType="Long">
+		update he_video
+		set watch_count = watch_count + 1
 		where id = #{id}
 	</update>
 

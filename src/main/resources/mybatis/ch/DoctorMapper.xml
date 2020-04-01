@@ -22,18 +22,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap id="hospitalResult" type="Hospital">
-		<id     property="id"   column="id"     />
+		<id     property="id"   column="hos_id"     />
 		<result property="hosName"         column="hos_name"        />
 		<result property="hosCode"         column="hos_code"        />
 		<result property="introduction"       column="introduction"         />
 		<result property="communityIds"       column="community_ids"         />
 		<result property="areaId"       column="area_id"         />
-		<result property="status"           column="status"         />
+		<result property="status"           column="hos_status"         />
 	</resultMap>
 
 	<sql id="selectDoctorVo">
        select d.create_time, d.create_by,d.update_time, d.update_by, d.id,d.doctor_name,d.doctor_code, d.major_field,d.doctor_type,d.hospital_id,d.status,
-       h.id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status
+       h.id as hos_id,h.hos_name,h.hos_code,h.introduction,h.community_ids,h.area_id,h.status as hos_status
        from ch_doctor d
 	   left join ch_hospital h on d.hospital_id = h.id
     </sql>

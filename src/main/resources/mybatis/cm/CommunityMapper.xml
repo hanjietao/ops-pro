@@ -19,17 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="Area" id="AreaResult">
-		<id     property="id"         column="id"         />
+		<id     property="id"         column="area_id"         />
 		<result property="areaCode"         column="area_code"        />
 		<result property="areaName"         column="area_name"        />
 		<result property="coordinate"          column="coordinate"         />
-		<result property="status"          column="status"         />
+		<result property="status"          column="area_status"         />
 	</resultMap>
 
 	<sql id="selectCommunityVo">
        select c.create_time, c.create_by, c.update_time, c.update_by, c.id,c.community_code, c.community_name,
        c.area_id, c.introduction,c.status,
-       a.id,a.area_code,a.area_name,a.coordinate,a.status
+       a.id as area_id,a.area_code,a.area_name,a.coordinate,a.status as area_status
        from cm_community c
        left join csc_area a on c.area_id = a.id
     </sql>

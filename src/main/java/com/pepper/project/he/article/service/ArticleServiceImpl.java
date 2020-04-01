@@ -56,5 +56,9 @@ public class ArticleServiceImpl implements IArticleService {
         return articleDao.updateArticle(article);
     }
 
+    @Override
+    public int updateWatchCount(Long id) {
+        return articleDao.updateWatchCount(id);
+    }
 
 }

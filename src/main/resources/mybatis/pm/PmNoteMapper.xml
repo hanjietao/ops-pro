@@ -21,11 +21,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<resultMap type="Property" id="PropertyResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="p_id"         />
 		<result property="propertyCode"         column="property_code"        />
 		<result property="propertyName"         column="property_name"        />
 		<result property="areaId"       column="area_id"         />
-		<result property="status"           column="status"         />
+		<result property="status"           column="p_status"         />
 	</resultMap>
 
     <resultMap type="ClientUser" id="ClientUserResult">
@@ -33,14 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userName"         column="user_name"        />
         <result property="nikeName"         column="nike_name"        />
         <result property="userMobile"           column="user_mobile"         />
-        <result property="status"           column="status"         />
+        <result property="status"           column="cu_status"         />
     </resultMap>
 
 	<sql id="selectNoteVo">
        select bg.create_time, bg.create_by, bg.update_time, bg.update_by, bg.id, bg.content,bg.user_id,
        bg.property_id,bg.status,bg.reply_status,bg.reply_content,
-       p.id,p.property_code,p.property_name,p.area_id,p.status,
-       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
+       p.id as p_id,p.property_code,p.property_name,p.area_id,p.status as p_status,
+       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status as cu_status
         from pm_note bg
         left join pm_property p on bg.property_id = p.id
         left join sm_client_user cu on bg.user_id = cu.user_id

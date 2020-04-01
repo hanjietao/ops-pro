@@ -18,15 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="Property" id="PropertyResult">
-		<id     property="id"         		column="id"         />
-		<result property="propertyCode"         column="property_code"        />
-		<result property="propertyName"         column="property_name"        />
-		<result property="areaId"       column="area_id"         />
-		<result property="status"           column="status"         />
+		<id     property="id"         		column="p_id"         />
+		<result property="propertyCode"     column="property_code"        />
+		<result property="propertyName"     column="property_name"        />
+		<result property="areaId"       	column="area_id"         />
+		<result property="status"           column="p_status"         />
 	</resultMap>
 	<sql id="selectActivityVo">
        select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.property_id,a.title,a.content,a.status,
-       p.id,p.property_code,p.property_name,p.area_id,p.status
+       p.id as p_id,p.property_code,p.property_name,p.area_id,p.status as p_status
        from pm_activity a
        left join pm_property p on a.property_id = p.id
     </sql>
@@ -86,6 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateWatchCount" parameterType="Long">
+		update pm_activity
+		set watch_count = watch_count + 1
 		where id = #{id}
 	</update>
 

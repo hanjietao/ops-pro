@@ -19,10 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<resultMap type="PmActivity" id="ActivityResult">
-		<id     property="id"         		column="id"         />
+		<id     property="id"         		column="a_id"         />
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
-		<result property="status"           column="status"         />
+		<result property="status"           column="a_status"         />
 	</resultMap>
 
 	<resultMap type="ClientUser" id="ClientUserResult">
@@ -30,13 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="userName"         column="user_name"        />
 		<result property="nikeName"         column="nike_name"        />
 		<result property="userMobile"           column="user_mobile"         />
-		<result property="status"           column="status"         />
+		<result property="status"           column="cu_status"         />
 	</resultMap>
 
 	<sql id="selectActivityApplyVo">
        select aa.create_time, aa.create_by, aa.update_time, aa.update_by, aa.id,aa.activity_id,aa.user_id,aa.user_mobile,aa.status,
-       a.id,a.title,a.status,
-       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status
+       a.id as a_id,a.title,a.status as a_status,
+       cu.user_id,cu.user_name,cu.nike_name,cu.user_mobile,cu.status as cu_status
        from pm_activity_apply aa
        left join pm_activity a on aa.activity_id = a.id
        left join sm_client_user cu on aa.user_id = cu.user_id

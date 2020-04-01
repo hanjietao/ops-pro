@@ -57,5 +57,10 @@ public class VideoServiceImpl implements IVideoService {
         return videoDao.updateVideo(video);
     }
 
+    @Override
+    public int updateWatchCount(Long id) {
+        return videoDao.updateWatchCount(id);
+    }
+
 
 }

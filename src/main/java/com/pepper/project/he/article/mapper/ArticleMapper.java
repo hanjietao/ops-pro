@@ -15,4 +15,5 @@ public interface ArticleMapper {
 
     int updateArticle(Article article);
 
+    int updateWatchCount(Long id);
 }

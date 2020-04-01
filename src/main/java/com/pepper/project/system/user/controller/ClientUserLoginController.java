@@ -86,7 +86,7 @@ public class ClientUserLoginController extends BaseController
         logger.info("client ajax post login,mobilePhone={},smsCode={}",mobilePhone,smsCode);
         String validateStr = (String) ShiroUtils.getSession().getAttribute(GenConstants.SMS_CODE_ATTR);
         if(StringUtils.isEmpty(validateStr)){
-            return AjaxResult.error("请先发送短信验证码！");
+            return AjaxResult.error("已失效，请先发送短信验证码！");
         }
 
         String[] validateStrArr = validateStr.split("_");

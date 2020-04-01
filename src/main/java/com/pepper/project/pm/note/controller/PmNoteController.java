@@ -1,6 +1,7 @@
 package com.pepper.project.pm.note.controller;
 
 import com.pepper.common.utils.StringUtils;
+import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -136,5 +137,17 @@ public class PmNoteController extends BaseController {
         pmNote.setPropertyId(propertyId);
         pmNote.setContent(content);
         return AjaxResult.success(noteService.insertNote(pmNote));
+    }
+
+    @ApiOperation("我的留言列表[物业]")
+    @Log(title = "我的留言列表[物业]", businessType = BusinessType.EXPORT)
+    @PostMapping("/myNoteList")
+    @ResponseBody
+    public TableDataInfo myNoteList() {
+        startPage();
+        PmNote pmNote = new PmNote();
+        pmNote.setUserId(ShiroUtils.getSysUser().getClientUser().getUserId());
+        List<PmNote> list = noteService.selectNoteList(pmNote);
+        return getDataTable(list);
     }
 }

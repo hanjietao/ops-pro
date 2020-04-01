@@ -10,3 +10,12 @@ problem resolve：
         需要将应用上下文修改成不一样
         操作：将正式环境的服务配置application-prod.yml，context-path: /hospital，前端访问端口后加上这个/hospital
 
+   5. mybatis 的bug，如果createTime是Date对象而不是字符串类型，
+            下面判断 != ''会报错，错误：invalid comparison: java.util.Date and java.lang.String
+      <if test="createTime != null && createTime != ''">
+        AND create_time > #{createTime}
+      </if>
+      正确：去掉 != ''
+        <if test="createTime != null">
+           AND create_time > #{createTime}
+        </if>

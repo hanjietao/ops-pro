@@ -6,27 +6,28 @@ import com.pepper.framework.aspectj.lang.enums.SysUserType;
 import com.pepper.framework.web.controller.BaseController;
 import com.pepper.framework.web.domain.AjaxResult;
 import com.pepper.framework.web.page.TableDataInfo;
-import com.pepper.project.ch.doctor.domain.Doctor;
 import com.pepper.project.cm.activity.domain.Activity;
 import com.pepper.project.cm.activity.service.IActivityService;
 import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.service.ICommunityService;
-import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.service.IAreaService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @Controller
 @RequestMapping("/cm/activity")
 public class ActivityController extends BaseController {
+
+    Logger logger = LoggerFactory.getLogger(ActivityController.class);
 
     private String prefix = "cm/activity";
 
@@ -166,6 +167,7 @@ public class ActivityController extends BaseController {
     {
         if (id != 0)
         {
+            logger.info("社区活动详细id= {} client, increase watch count result= {}",id,activityService.updateWatchCount(id));;
             return activityService.selectActivityById(id);
         }
         else

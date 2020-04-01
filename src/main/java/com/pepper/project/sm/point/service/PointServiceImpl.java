@@ -50,9 +50,9 @@ public class PointServiceImpl implements IPointService {
      *  @Date: 2020/2/6 0:23
      */
     @Override
-    public List<Point> selectPointList(Point guide) {
+    public List<Point> selectPointList(Point point) {
 
-        List<Point> list = pointDao.selectPointList(guide);
+        List<Point> list = pointDao.selectPointList(point);
         return list;
     }
 

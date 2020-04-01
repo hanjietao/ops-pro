@@ -279,7 +279,7 @@ CREATE TABLE `he_article`  (
   `BOARD_ID` bigint(20) DEFAULT NULL COMMENT '板块编码',
   `TITLE` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '文章标题',
   `CONTENT` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章内容',
-  `WATCH_COUNT` int(11) DEFAULT NULL COMMENT '观看数',
+  `WATCH_COUNT` BIGINT(20) DEFAULT 0 COMMENT '观看数',
   `send_point` varchar(16) default null comment '是否奖励积分，Y-是，N-否',
   `award_points` bigint(20) default 0 comment '奖励积分数量',
   `img_urls` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url',
@@ -298,10 +298,10 @@ CREATE TABLE he_video(
     BOARD_ID BIGINT(20)    COMMENT '板块编码' ,
     TITLE VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   COMMENT '视频标题' ,
     VIDEO_URL VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '视频地址' ,
-    WATCH_COUNT INT COMMENT '观看数',
+    WATCH_COUNT BIGINT(20) DEFAULT 0 COMMENT '观看数',
     SEND_POINT varchar(16) default null comment '是否奖励积分，Y-是，N-否',
     AWARD_POINTS bigint(20) default 0 comment '奖励积分数量',
-    STATUS CHAR(1)    COMMENT '状态 状态 状态 0-正常，1-关闭' ,
+    STATUS CHAR(1)    COMMENT '状态 0-正常，1-关闭' ,
     CREATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '创建人' ,
     CREATE_TIME DATETIME    COMMENT '创建时间' ,
     UPDATE_BY VARCHAR(32)  CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  COMMENT '更新人' ,
@@ -962,7 +962,8 @@ INSERT INTO `sys_dict_data`(`dict_code`, `dict_sort`, `dict_label`, `dict_value`
 -- 2020 0329
 alter table he_video add column delete_flag varchar(8) default 0 comment '删除标志1-已删除，0-未删除';
 alter table he_article add column delete_flag varchar(8) default 0 comment '删除标志1-已删除，0-未删除';
-
+alter table cm_activity add column WATCH_COUNT BIGINT(20) DEFAULT 0 COMMENT '观看数';
+alter table pm_activity add column WATCH_COUNT BIGINT(20) DEFAULT 0 COMMENT '观看数';
 
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失

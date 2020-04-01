@@ -27,6 +27,8 @@ public class Activity extends BaseEntity{
     /** content */
     private String content;
 
+    private Long watchCount;
+
     /** 区域状态（0正常 1关闭） */
     private String status;
 
@@ -74,6 +76,14 @@ public class Activity extends BaseEntity{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Long getWatchCount() {
+        return watchCount;
+    }
+
+    public void setWatchCount(Long watchCount) {
+        this.watchCount = watchCount;
     }
 
     public String getStatus() {
@@ -142,6 +152,7 @@ public class Activity extends BaseEntity{
                 ", communityId=" + communityId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", watchCount='" + watchCount + '\'' +
                 ", status='" + status + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +

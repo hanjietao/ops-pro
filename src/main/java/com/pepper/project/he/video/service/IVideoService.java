@@ -14,5 +14,6 @@ public interface IVideoService {
     Video selectVideoById(Long id);
 
     int updateVideo(Video video);
+    int updateWatchCount(Long id);
 
 }

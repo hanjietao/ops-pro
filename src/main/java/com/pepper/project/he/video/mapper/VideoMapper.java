@@ -4,6 +4,7 @@ import com.pepper.project.he.video.domain.Video;
 
 import java.util.List;
 
+
 public interface VideoMapper {
 
     Video selectVideoById(Long id);
@@ -20,5 +21,6 @@ public interface VideoMapper {
     int deleteVideoByIds(String[] ids);
 
     int updateVideo(Video video);
+    int updateWatchCount(Long id);
 
 }
