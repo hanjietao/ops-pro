@@ -131,6 +131,7 @@ public class NoteController extends BaseController {
     @ApiOperation("新增社区留言")
     @Log(title = "新增社区留言", businessType = BusinessType.INSERT)
     @PostMapping("/addNote")
+    @ResponseBody
     public AjaxResult addNote(@RequestParam(required = true) Long communityId,
                            @RequestParam(required = true) String content)
     {

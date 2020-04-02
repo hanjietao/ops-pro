@@ -130,6 +130,7 @@ public class PmNoteController extends BaseController {
     @ApiOperation("新增物业留言")
     @Log(title = "新增物业留言", businessType = BusinessType.INSERT)
     @PostMapping("/addNote")
+    @ResponseBody
     public AjaxResult addNote(@RequestParam(required = true) Long propertyId,
                               @RequestParam(required = true) String content)
     {

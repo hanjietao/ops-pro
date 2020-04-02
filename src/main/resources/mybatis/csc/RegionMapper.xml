@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pepper.project.csc.region.mapper.RegionMapper">
+
+	<resultMap type="Region" id="RegionResult">
+		<id     property="id"         column="id"         />
+		<result property="name"         column="name"        />
+		<result property="sname"         column="sname"        />
+		<result property="level"          column="level"         />
+		<result property="cityCode"          column="city_code"         />
+		<result property="yzCode"          column="yz_code"         />
+		<result property="merName"          column="mer_name"         />
+		<result property="lng"          column="lng"         />
+		<result property="lat"          column="lat"         />
+		<result property="pinYin"          column="pin_yin"         />
+		<result property="status"          column="status"         />
+		<result property="createTime"            column="create_time"            />
+		<result property="createBy"     column="create_by"    />
+		<result property="updateTime"           column="update_time"           />
+		<result property="updateBy"                column="update_by"                />
+	</resultMap>
+
+	<sql id="selectRegionVo">
+       select create_time, create_by, update_time, update_by,
+        id,name,pid,sname,level,city_code,yz_code,mer_name,lng,lat,pin_yin,status from csc_region
+    </sql>
+
+	<select id="selectRegionById" parameterType="Integer" resultMap="RegionResult">
+		<include refid="selectRegionVo"/>
+		where id = #{id}
+	</select>
+
+ 	<select id="selectRegionList" parameterType="Region" resultMap="RegionResult">
+		<include refid="selectRegionVo"/>
+		<where>
+			<if test="level != null and level >= 0">
+				AND level = #{level}
+			</if>
+			<if test="pid != null and pid != ''">
+				AND pid  = #{pid}
+			</if>
+			<if test="name != null and name != ''">
+				AND name like concat('%', #{name}, '%')
+			</if>
+			<if test="sname != null and sname != ''">
+				AND sname like concat('%', #{sname}, '%')
+			</if>
+			<if test="cityCode != null and cityCode != ''">
+				AND city_code like concat('%', #{cityCode}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="id != null and id != 0">
+				AND id = #{id}
+			</if>
+		</where>
+		order by pid asc,id asc
+	</select>
+
+	<insert id="insertRegion" parameterType="Region">
+		insert into csc_region (
+		<if test="name != null and regionCode != '' ">region_code, </if>
+		<if test="regionName != null and regionName != '' ">region_name, </if>
+		<if test="coordinate != null and coordinate != '' ">coordinate, </if>
+		<if test="status != null and status != '' ">status, </if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		create_time,
+		update_time
+		)values(
+		<if test="regionCode != null and regionCode != ''">#{regionCode}, </if>
+		<if test="regionName != null and regionName != ''">#{regionName}, </if>
+		<if test="coordinate != null and coordinate != ''">#{coordinate}, </if>
+		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		sysdate(),
+		sysdate()
+		)
+	</insert>
+
+	<update id="updateRegion" parameterType="Region">
+		update csc_region
+		<set>
+			<if test="regionCode != null and regionCode != ''">region_code = #{regionCode}, </if>
+			<if test="regionName != null and regionName != ''">region_name = #{regionName}, </if>
+			<if test="coordinate != null">coordinate = #{coordinate}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+    <delete id="deleteRegionByIds" parameterType="String">
+        delete from csc_region where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -19,3 +19,7 @@ problem resolve：
         <if test="createTime != null">
            AND create_time > #{createTime}
         </if>
+   6. 返回json字符串的接口，没有加@ResponseBody，会报错[500]，会被识别为要返回字符串为名字的jsp或者thymeleaf模板，但是有没有这个模板页面
+    所以，
+        Error resolving template:[/cm/note/addNote],template might not exist or might not be accessible for any
+        configuration
