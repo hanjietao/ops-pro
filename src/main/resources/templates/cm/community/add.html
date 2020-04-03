@@ -5,6 +5,7 @@
 	<th:block th:include="include :: summernote-css" />
 	<th:block th:include="include :: select2-css" />
 	<th:block th:include="include :: bootstrap-select-css" />
+
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -33,7 +34,18 @@
 <!--				<textarea id="content" name="content" style="height:100px" class="form-control" ></textarea>-->
 <!--			</div>-->
 <!--		</div>-->
-
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">地图：</label>
+			<div class="col-sm-10">
+				<div id="container"></div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label is-required">经纬度：</label>
+			<div class="col-sm-10">
+				<input id="lnglat"/>
+			</div>
+		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label is-required">所属区域：</label>
 			<div class="col-sm-10">
@@ -59,6 +71,26 @@
 <th:block th:include="include :: bootstrap-select-js" />
 <script type="text/javascript">
 	var prefix = ctx + "cm/community";
+
+	var map = new AMap.Map("container", {
+		resizeEnable: true
+	});
+	//为地图注册click事件获取鼠标点击出的经纬度坐标
+	var clickEventListener = map.on('click', function(e) {
+		document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+	});
+	var auto = new AMap.Autocomplete({
+		input: "tipinput"
+	});
+	AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+	function select(e) {
+		if (e.poi && e.poi.location) {
+			map.setZoom(15);
+			map.setCenter(e.poi.location);
+		}
+	}
+
+
 
 	$('.summernote').summernote({
 		placeholder: '请输入社区介绍',

@@ -60,6 +60,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by pid asc,id asc
 	</select>
 
+	<select id="selectRegionByCityCodeAndLevel" parameterType="Region" resultMap="RegionResult">
+		<include refid="selectRegionVo"/>
+		<where>
+			<if test="level != null and level >= 0">
+				AND level = #{level}
+			</if>
+			<if test="cityCode != null and cityCode != ''">
+				AND city_code like concat('%', #{cityCode}, '%')
+			</if>
+		</where>
+		Limit 1
+	</select>
+
 	<insert id="insertRegion" parameterType="Region">
 		insert into csc_region (
 		<if test="name != null and regionCode != '' ">region_code, </if>

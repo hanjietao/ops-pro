@@ -5,47 +5,86 @@
     <th:block th:include="include :: summernote-css" />
     <th:block th:include="include :: select2-css" />
     <th:block th:include="include :: bootstrap-select-css" />
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
 </head>
+<style type="text/css">
+    html,
+    body,
+    #container {
+        width: 100%;
+        height: 100%;
+    }
+    .info {
+        position: absolute;
+    }
+</style>
 <body class="white-bg">
+
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-community-edit" th:object="${community}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
+            <input id="lnglat" name="lnglat" th:field="*{lnglat}"  type="hidden">
+            <input id="district" name="district" th:field="*{district}"  type="hidden">
+            <input id="cityCode" name="cityCode" th:field="*{cityCode}"  type="hidden">
+            <input id="provinceName" name="provinceName" th:field="*{provinceName}"  type="hidden">
+            <input id="cityName" name="cityName" th:field="*{cityName}"  type="hidden">
+            <input id="districtName" name="districtName" th:field="*{districtName}"  type="hidden">
             <div class="form-group">
                 <label class="col-sm-2 control-label is-required">社区名称：</label>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <input id="communityName" name="communityName" th:field="*{communityName}" class="form-control" type="text" required>
                 </div>
             </div>
                 <div class="form-group">
 				<label class="col-sm-2 control-label is-required">社区编码：</label>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
                     <input id="communityCode" name="communityCode" th:field="*{id}" class="form-control" type="text" disabled required>
 				</div>
 			</div>
-<!--            <div class="form-group">-->
-<!--                <label class="col-sm-2 control-label">社区介绍：</label>-->
-<!--                <div class="col-sm-10">-->
-<!--                    <input id="introduction" name="introduction" th:field="*{introduction}" type="hidden">-->
-<!--                    <div id="editor" class="summernote"></div>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="form-group">
                 <label class="col-sm-2 control-label is-required">社区介绍：</label>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <textarea id="introduction" name="introduction" style="height:100px" th:field="*{introduction}" class="form-control" required></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label is-required">所属区域：</label>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <select id="areaId" name="areaId" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
                         <option th:each="area:${areas}" th:value="${area.id}" th:text="${area.areaName}" th:field="*{areaId}"></option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label is-required">地图：</label>
+                <div class="col-sm-9" style="height:400px">
+                    <div id="container"></div>
+                    <div class="info">
+                        <div class="input-item">
+                            <div class="input-item-prepend">
+                                <span class="input-item-text" style="width:8rem;">请输入关键字</span>
+                            </div>
+                            <input id='tipinput' type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">经纬度：</label>
+                <div class="col-sm-9">
+                    <input id="lnglat1" name="lnglat1" th:field="*{lnglat}" class="form-control" type="text" disabled required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label is-required">详细地址：</label>
+                <div class="col-sm-9">
+                    <input id="address" name="address" th:field="*{address}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label is-required">医院状态：</label>
-                <div class="col-sm-8">
+                <div class="col-sm-9">
                     <div class="radio-box" th:each="dict : ${@dict.getType('sys_notice_status')}">
                         <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:field="*{status}">
                         <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
@@ -58,12 +97,127 @@
     <th:block th:include="include :: summernote-js" />
     <th:block th:include="include :: select2-js" />
     <th:block th:include="include :: bootstrap-select-js" />
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=f2122876a32b314d1e903d41b16badb7"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript">
         var prefix = ctx + "cm/community";
 
-	    $(function() {
+        var  map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [87.621172,43.82366],
+            zoom: 11
+        });
 
-		    $('.summernote').summernote({
+        var marker= new AMap.Marker({
+            map:map,
+            position: [87.621172,43.82366],
+        });
+
+        // 设置label标签
+        // label默认蓝框白底左上角显示，样式className为：amap-marker-label
+        marker.setLabel({
+            offset: new AMap.Pixel(290, -25),  //设置文本标注偏移量
+            content: "<div class='info'>当前选中位置</div>", //设置文本标注内容
+            direction: 'right' //设置文本标注方位
+        });
+
+        var clickEventListener = map.on('click', function(e) {
+            document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
+            document.getElementById("lnglat1").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
+
+            /* 点击一次新增一个标记点 */
+            map.clearMap();
+            changeMarker(e.lnglat.getLng(),e.lnglat.getLat())
+            regeoCode()
+        });
+
+        changeMarker = function (lng,lat) {
+            marker= new AMap.Marker({
+                map:map,
+                position:[lng,lat]
+            });
+            marker.setLabel({
+                offset: new AMap.Pixel(290, -25),  //设置文本标注偏移量
+                content: "<div class='info1'>当前选中位置</div>", //设置文本标注内容
+                direction: 'right' //设置文本标注方位
+            });
+        }
+        var geocoder;
+        AMap.plugin(["AMap.Geocoder"],function () {
+            geocoder = new AMap.Geocoder({
+                city: "0991", //城市设为北京，默认：“全国”
+                radius: 1000 //范围，默认：500
+            });
+        })
+
+        function regeoCode() {
+            var lnglat  = document.getElementById('lnglat').value.split(',');
+            geocoder.getAddress(lnglat, function(status, result) {
+                debugger
+                if (status === 'complete'&&result.regeocode) {
+                    document.getElementById("cityCode").value = result.regeocode.addressComponent.citycode;
+                    document.getElementById("district").value = result.regeocode.addressComponent.adcode;
+                    document.getElementById("provinceName").value = result.regeocode.addressComponent.province;
+                    document.getElementById("cityName").value = result.regeocode.addressComponent.city;
+                    document.getElementById("districtName").value = result.regeocode.addressComponent.district;
+                    var address = result.regeocode.formattedAddress;
+                    document.getElementById('address').value = address;
+                }else{
+                    log.error('根据经纬度查询地址失败')
+                }
+            });
+        }
+
+
+        // 获取搜索信息
+        function autoInput(value){
+            var keywords = value;
+            AMap.plugin('AMap.PlaceSearch', function(){
+                var autoOptions = {
+                    city: '乌鲁木齐'
+                }
+                var placeSearch = new AMap.PlaceSearch(autoOptions);
+                placeSearch.search(keywords, function(status, result) {
+                    var lng = result.poiList.pois[0].location.lng
+                    var lat = result.poiList.pois[0].location.lat
+                    map.setZoomAndCenter(16, [lng, lat]);
+                    /* 点击一次新增一个标记点 */
+                    map.clearMap();
+                    changeMarker(lng,lat)
+                    document.getElementById("lnglat").value = lng + ',' + lat;
+                    document.getElementById("lnglat1").value = lng + ',' + lat;
+                    // 搜索成功时，result即是对应的匹配数据
+                    /*var node = new PrettyJSON.view.Node({
+                        el: document.querySelector("#input-info"),
+                        data: result
+                    });*/
+                })
+            })
+        }
+
+        //autoInput();
+
+        AMap.plugin(["AMap.Autocomplete"],function () {
+            var auto = new AMap.Autocomplete({
+                input: "tipinput"
+            });
+        })
+
+        $("#tipinput").keypress(function (e) {
+            if (e.which == 13) {
+                autoInput($("#tipinput").val());
+            }
+        });
+
+        function select(e) {
+            if (e.poi && e.poi.location) {
+                map.setZoom(15);
+                map.setCenter(e.poi.location);
+            }
+        }
+
+	    $(function() {
+            $('.summernote').summernote({
 		    	placeholder: '请输入公告内容',
 		    	height : 192,
 				lang : 'zh-CN',

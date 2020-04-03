@@ -9,12 +9,6 @@ public interface CommunityMapper {
     Community selectCommunityById(Long id);
     List<Community> selectCommunityList(Community community);
 
-    /**
-     * 新增医院信息
-     *
-     * @param community 医院信息
-     * @return 结果
-     */
     public int insertCommunity(Community community);
 
     int deleteCommunityByIds(String[] ids);

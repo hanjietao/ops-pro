@@ -10,6 +10,8 @@ import com.pepper.project.cm.community.domain.Community;
 import com.pepper.project.cm.community.mapper.CommunityMapper;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.csc.region.domain.Region;
+import com.pepper.project.csc.region.mapper.RegionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class CommunityServiceImpl implements ICommunityService {
 
     @Autowired
     private AreaMapper areaDao;
+
+    @Autowired
+    private RegionMapper regionDao;
 
     @Autowired
     private IHospitalService hospitalService;
@@ -62,9 +67,16 @@ public class CommunityServiceImpl implements ICommunityService {
     }
 
     @Override
-    public int updateCommunity(Community area) {
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return communityDao.updateCommunity(area);
+    public int updateCommunity(Community community) {
+        Region region = new Region();
+        region.setLevel(2);
+        region.setCityCode(community.getCityCode());
+        Region regionCity = regionDao.selectRegionByCityCodeAndLevel(region);
+        community.setCity(regionCity.getId().toString());
+        community.setProvince(regionCity.getPid().toString());
+
+        community.setUpdateBy(ShiroUtils.getLoginName());
+        return communityDao.updateCommunity(community);
     }
 
     @Override

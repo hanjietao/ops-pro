@@ -14,4 +14,7 @@ public interface RegionMapper {
     int deleteRegionByIds(String[] ids);
 
     int updateRegion(Region region);
+
+    Region selectRegionByCityCodeAndLevel(Region region);
+
 }
