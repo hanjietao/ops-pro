@@ -101,16 +101,16 @@
     <script type="text/javascript">
         var prefix = ctx + "pm/property";
 
-        var  map = new AMap.Map("container", {
-            resizeEnable: true,
-            center: [87.621172,43.82366],
-            zoom: 11
-        });
-
         var lnglat = '[[${property.lnglat}]]'.split(",")
         if(lnglat.length < 2){
             lnglat = '87.621172,43.82366'
         }
+        var  map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [lnglat[0],lnglat[1]],
+            zoom: 11
+        });
+
         var marker= new AMap.Marker({
             map:map,
             position: [lnglat[0],lnglat[1]],
