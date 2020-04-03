@@ -5,6 +5,8 @@ import com.pepper.common.utils.text.Convert;
 import com.pepper.framework.aspectj.lang.annotation.DataScope;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.csc.region.domain.Region;
+import com.pepper.project.csc.region.mapper.RegionMapper;
 import com.pepper.project.pm.property.domain.Property;
 import com.pepper.project.pm.property.mapper.PropertyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PropertyServiceImpl implements IPropertyService {
 
     @Autowired
     private AreaMapper areaDao;
+
+    @Autowired
+    private RegionMapper regionDao;
 
     /**
      *  @Description: 列表查询
@@ -56,9 +61,17 @@ public class PropertyServiceImpl implements IPropertyService {
     }
 
     @Override
-    public int updateProperty(Property area) {
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return propertyDao.updateProperty(area);
+    public int updateProperty(Property property) {
+        Region region = new Region();
+        region.setLevel(2);
+
+        region.setCityCode(property.getCityCode());
+        Region regionCity = regionDao.selectRegionByCityCodeAndLevel(region);
+        property.setCity(regionCity.getId().toString());
+        property.setProvince(regionCity.getPid().toString());
+
+        property.setUpdateBy(ShiroUtils.getLoginName());
+        return propertyDao.updateProperty(property);
     }
 
 

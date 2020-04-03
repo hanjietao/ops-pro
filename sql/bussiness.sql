@@ -978,6 +978,30 @@ alter table cm_community add column district varchar(16) default null comment '�
 alter table cm_community add column district_name varchar(16) default null comment '县区名称高德';
 
 
+alter table ch_hospital add column address varchar(1024) default null comment '详细地址'; --
+alter table ch_hospital add column lnglat varchar(32) default null comment '经纬度'; --
+
+alter table ch_hospital add column city_code varchar(16) default null comment '城市码高德';
+alter table ch_hospital add column city varchar(16) default null comment '城市id高德';
+alter table ch_hospital add column city_name varchar(16) default null comment '城市名称高德';
+alter table ch_hospital add column province varchar(16) default null comment '省直辖市id高德';
+alter table ch_hospital add column province_name varchar(16) default null comment '省直辖市名称高德';
+alter table ch_hospital add column district varchar(16) default null comment '县区id高德';
+alter table ch_hospital add column district_name varchar(16) default null comment '县区名称高德';
+
+
+alter table pm_property add column address varchar(1024) default null comment '详细地址'; --
+alter table pm_property add column lnglat varchar(32) default null comment '经纬度'; --
+
+alter table pm_property add column city_code varchar(16) default null comment '城市码高德';
+alter table pm_property add column city varchar(16) default null comment '城市id高德';
+alter table pm_property add column city_name varchar(16) default null comment '城市名称高德';
+alter table pm_property add column province varchar(16) default null comment '省直辖市id高德';
+alter table pm_property add column province_name varchar(16) default null comment '省直辖市名称高德';
+alter table pm_property add column district varchar(16) default null comment '县区id高德';
+alter table pm_property add column district_name varchar(16) default null comment '县区名称高德';
+
+
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);

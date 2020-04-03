@@ -57,6 +57,21 @@ public class Hospital extends BaseEntity{
     /** 社区 */
     private Community community;
 
+    private String lnglat;
+
+    private String address;
+
+    private String cityCode;
+
+    private String province;
+    private String provinceName;
+
+    private String city;
+    private String cityName;
+
+    private String district;
+    private String districtName;
+
     public Long getId() {
         return id;
     }
@@ -183,6 +198,78 @@ public class Hospital extends BaseEntity{
         this.community = community;
     }
 
+    public String getLnglat() {
+        return lnglat;
+    }
+
+    public void setLnglat(String lnglat) {
+        this.lnglat = lnglat;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -199,6 +286,15 @@ public class Hospital extends BaseEntity{
                 ", updateBy='" + updateBy + '\'' +
                 ", area=" + area +
                 ", community='" + getCommunity() + '\'' +
+                ", lnglat=" + lnglat +
+                ", address=" + address +
+                ", cityCode=" + cityCode +
+                ", province=" + province +
+                ", provinceName=" + provinceName +
+                ", city=" + city +
+                ", cityName=" + cityName +
+                ", district=" + district +
+                ", districtName=" + districtName +
                 '}';
     }
 }

@@ -6,6 +6,8 @@ import com.pepper.project.ch.hospital.domain.Hospital;
 import com.pepper.project.ch.hospital.mapper.HospitalMapper;
 import com.pepper.project.csc.area.domain.Area;
 import com.pepper.project.csc.area.mapper.AreaMapper;
+import com.pepper.project.csc.region.domain.Region;
+import com.pepper.project.csc.region.mapper.RegionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class HospitalServiceImpl implements IHospitalService {
 
     @Autowired
     private AreaMapper areaDao;
+    @Autowired
+    private RegionMapper regionDao;
 
     /**
      *  @Description: 列表查询
@@ -38,10 +42,10 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public int insertHospital(Hospital area) {
-        area.setCreateBy(ShiroUtils.getLoginName());
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return hospitalDao.insertHospital(area);
+    public int insertHospital(Hospital hospital) {
+        hospital.setCreateBy(ShiroUtils.getLoginName());
+        hospital.setUpdateBy(ShiroUtils.getLoginName());
+        return hospitalDao.insertHospital(hospital);
     }
 
     @Override
@@ -55,9 +59,17 @@ public class HospitalServiceImpl implements IHospitalService {
     }
 
     @Override
-    public int updateHospital(Hospital area) {
-        area.setUpdateBy(ShiroUtils.getLoginName());
-        return hospitalDao.updateHospital(area);
+    public int updateHospital(Hospital hospital) {
+        Region region = new Region();
+        region.setLevel(2);
+
+        region.setCityCode(hospital.getCityCode());
+        Region regionCity = regionDao.selectRegionByCityCodeAndLevel(region);
+        hospital.setCity(regionCity.getId().toString());
+        hospital.setProvince(regionCity.getPid().toString());
+
+        hospital.setUpdateBy(ShiroUtils.getLoginName());
+        return hospitalDao.updateHospital(hospital);
     }
 
 

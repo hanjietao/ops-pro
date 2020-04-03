@@ -11,6 +11,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="areaId"       	column="area_id"         />
 		<result property="introduction"     column="introduction"         />
 		<result property="status"           column="status"         />
+		<result property="address"           column="address"         />
+		<result property="lnglat"           column="lnglat"         />
+		<result property="cityCode"           column="city_code"         />
+		<result property="province"           column="province"         />
+		<result property="provinceName"           column="province_name"         />
+		<result property="city"           column="city"         />
+		<result property="cityName"           column="city_name"         />
+		<result property="district"           column="district"         />
+		<result property="districtName"           column="district_name"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
@@ -28,7 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectPropertyVo">
        select p.create_time, p.create_by, p.update_time, p.update_by, p.id,p.property_code, p.property_name,
-       p.area_id, p.introduction,p.status,
+       p.area_id, p.introduction,p.status,p.address,p.lnglat,p.city_code,p.province,p.city,p.district,
+       p.province_name,p.city_name,p.district_name,
        a.id as a_id,a.area_code,a.area_name,a.coordinate,a.status as a_status
        from pm_property p
        left join csc_area a on p.area_id = a.id
@@ -67,6 +77,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="areaId != null and areaId != '' ">area_id, </if>
 		<if test="introduction != null and introduction != '' ">introduction, </if>
 		<if test="status != null and status != '' ">status, </if>
+		<if test="address != null and address != '' ">address, </if>
+		<if test="lnglat != null and lnglat != '' ">lnglat, </if>
+		<if test="cityCode != null and cityCode != '' ">city_code, </if>
+		<if test="province != null and province != '' ">province, </if>
+		<if test="provinceName != null and provinceName != '' ">province_name, </if>
+		<if test="city != null and city != '' ">city, </if>
+		<if test="cityName != null and cityName != '' ">city_name, </if>
+		<if test="district != null and district != '' ">district, </if>
+		<if test="districtName != null and districtName != '' ">district_name, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		create_time,
@@ -77,6 +96,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="areaId != null and areaId != ''">#{areaId}, </if>
 		<if test="introduction != null and introduction != ''">#{introduction}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="address != null and address != '' ">#{address}, </if>
+		<if test="lnglat != null and lnglat != '' ">#{lnglat}, </if>
+		<if test="cityCode != null and cityCode != '' ">#{cityCode}, </if>
+		<if test="province != null and province != '' ">#{province}, </if>
+		<if test="provinceName != null and provinceName != '' ">#{provinceName}, </if>
+		<if test="city != null and city != '' ">#{city}, </if>
+		<if test="cityName != null and cityName != '' ">#{cityName}, </if>
+		<if test="district != null and district != '' ">#{district}, </if>
+		<if test="districtName != null and districtName != '' ">#{districtName}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),
@@ -92,6 +120,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="areaId != null">area_id = #{areaId}, </if>
 			<if test="introduction != null">introduction = #{introduction}, </if>
 			<if test="status != null">status = #{status}, </if>
+			<if test="address != null">address = #{address}, </if>
+			<if test="lnglat != null">lnglat = #{lnglat}, </if>
+			<if test="cityCode != null">city_code = #{cityCode}, </if>
+			<if test="province != null">province = #{province}, </if>
+			<if test="provinceName != null">province_name = #{provinceName}, </if>
+			<if test="city != null">city = #{city}, </if>
+			<if test="cityName != null">city_name = #{cityName}, </if>
+			<if test="district != null">district = #{district}, </if>
+			<if test="districtName != null">district_name = #{districtName}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>
