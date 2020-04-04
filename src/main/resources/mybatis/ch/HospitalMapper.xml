@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="cityName"           column="city_name"         />
 		<result property="district"           column="district"         />
 		<result property="districtName"           column="district_name"         />
+		<result property="contactNumber"           column="contact_number"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
@@ -48,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectHospitalVo">
        select h.create_time, h.create_by, h.update_time, h.update_by, h.id,h.hos_name, h.hos_code, h.introduction,h.community_ids,h.area_id,h.status,
-       h.address,h.lnglat,h.city_code,h.province,h.city,h.district, h.province_name,h.city_name,h.district_name,
+       h.address,h.lnglat,h.city_code,h.province,h.city,h.district, h.province_name,h.city_name,h.district_name,h.contact_number,
        a.id as area_id,a.area_code,a.area_name,a.coordinate,a.status as area_status,
        c.id as com_id,c.community_code,c.community_name,c.area_id,c.introduction as introduction1,c.status as com_status
        from ch_hospital h
@@ -105,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="cityName != null and cityName != '' ">city_name, </if>
 		<if test="district != null and district != '' ">district, </if>
 		<if test="districtName != null and districtName != '' ">district_name, </if>
+		<if test="contactNumber != null and contactNumber != '' ">contact_number, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		create_time,
@@ -125,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="cityName != null and cityName != '' ">#{cityName}, </if>
 		<if test="district != null and district != '' ">#{district}, </if>
 		<if test="districtName != null and districtName != '' ">#{districtName}, </if>
+		<if test="contactNumber != null and contactNumber != '' ">#{contactNumber}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),
@@ -150,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="cityName != null">city_name = #{cityName}, </if>
 			<if test="district != null">district = #{district}, </if>
 			<if test="districtName != null">district_name = #{districtName}, </if>
+			<if test="contactNumber != null">contact_number = #{contactNumber}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>

@@ -49,6 +49,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label is-required">联系电弧：</label>
+                <div class="col-sm-9">
+                    <input id="contactNumber" name="contactNumber" th:field="*{contactNumber}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label is-required">所属区域：</label>
                 <div class="col-sm-9">
                     <select id="areaId" name="areaId" class="form-control noselect2 selectpicker" data-none-selected-text="请选择所属区域">
@@ -77,7 +83,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label is-required">详细地址：</label>
+                <label class="col-sm-2 control-label is-required">详细地址(地图点选定后可以修改)：</label>
                 <div class="col-sm-9">
                     <input id="address" name="address" th:field="*{address}" class="form-control" type="text" required>
                 </div>
@@ -103,8 +109,9 @@
         var prefix = ctx + "cm/community";
 
         var lnglat = '[[${community.lnglat}]]'.split(",")
+        var address = '[[${community.address}]]'
         if(lnglat.length < 2){
-            lnglat = '87.621172,43.82366'
+            lnglat = '87.621172,43.82366'.split(",")
         }
         var  map = new AMap.Map("container", {
             resizeEnable: true,
@@ -120,8 +127,8 @@
         // 设置label标签
         // label默认蓝框白底左上角显示，样式className为：amap-marker-label
         marker.setLabel({
-            offset: new AMap.Pixel(290, -25),  //设置文本标注偏移量
-            content: "<div class='info'>当前选中位置</div>", //设置文本标注内容
+            offset: new AMap.Pixel(25, -25),  //设置文本标注偏移量
+            content: "<div class='info'>"+address&&address!=''?address:'初始值中心点'+"</div>", //设置文本标注内容
             direction: 'right' //设置文本标注方位
         });
 
@@ -140,16 +147,18 @@
                 map:map,
                 position:[lng,lat]
             });
+            var address1 = $("#address").val()
+            var content = "<div class='info1'>" + address1 + "</div>"
             marker.setLabel({
-                offset: new AMap.Pixel(290, -25),  //设置文本标注偏移量
-                content: "<div class='info1'>当前选中位置</div>", //设置文本标注内容
+                offset: new AMap.Pixel(25, -25),  //设置文本标注偏移量
+                content: content, //设置文本标注内容
                 direction: 'right' //设置文本标注方位
             });
         }
         var geocoder;
         AMap.plugin(["AMap.Geocoder"],function () {
             geocoder = new AMap.Geocoder({
-                city: "0991", //城市设为北京，默认：“全国”
+                city: "0991", //城市设为乌鲁木齐，默认：“全国”
                 radius: 1000 //范围，默认：500
             });
         })
@@ -157,7 +166,6 @@
         function regeoCode() {
             var lnglat  = document.getElementById('lnglat').value.split(',');
             geocoder.getAddress(lnglat, function(status, result) {
-                debugger
                 if (status === 'complete'&&result.regeocode) {
                     document.getElementById("cityCode").value = result.regeocode.addressComponent.citycode;
                     document.getElementById("district").value = result.regeocode.addressComponent.adcode;
@@ -190,6 +198,7 @@
                     changeMarker(lng,lat)
                     document.getElementById("lnglat").value = lng + ',' + lat;
                     document.getElementById("lnglat1").value = lng + ',' + lat;
+                    regeoCode()
                     // 搜索成功时，result即是对应的匹配数据
                     /*var node = new PrettyJSON.view.Node({
                         el: document.querySelector("#input-info"),
@@ -210,6 +219,7 @@
         $("#tipinput").keypress(function (e) {
             if (e.which == 13) {
                 autoInput($("#tipinput").val());
+                regeoCode()
             }
         });
 

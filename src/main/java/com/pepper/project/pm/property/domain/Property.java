@@ -46,6 +46,7 @@ public class Property extends BaseEntity{
 
     private String district;
     private String districtName;
+    private String contactNumber;
 
     /** 创建时间 */
     private Date createTime;
@@ -241,6 +242,14 @@ public class Property extends BaseEntity{
         this.districtName = districtName;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
     @Override
     public String toString() {
         return "PmActivity{" +
@@ -265,6 +274,7 @@ public class Property extends BaseEntity{
                 ", cityName=" + cityName +
                 ", district=" + district +
                 ", districtName=" + districtName +
+                ", contactNumber=" + contactNumber +
                 '}';
     }
 }

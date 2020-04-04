@@ -71,6 +71,7 @@ public class Hospital extends BaseEntity{
 
     private String district;
     private String districtName;
+    private String contactNumber;
 
     public Long getId() {
         return id;
@@ -270,6 +271,14 @@ public class Hospital extends BaseEntity{
         this.districtName = districtName;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
@@ -295,6 +304,7 @@ public class Hospital extends BaseEntity{
                 ", cityName=" + cityName +
                 ", district=" + district +
                 ", districtName=" + districtName +
+                ", contactNumber=" + contactNumber +
                 '}';
     }
 }

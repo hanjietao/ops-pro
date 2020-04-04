@@ -65,6 +65,9 @@ public class Community extends BaseEntity{
     private String district;
     private String districtName;
 
+    /**联系号码*/
+    private String contactNumber;
+
     /** 是否存在此区域 默认不存在 */
     private boolean flag = false;
 
@@ -252,6 +255,14 @@ public class Community extends BaseEntity{
         this.districtName = districtName;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
     @Override
     public String toString() {
         return "PmActivity{" +
@@ -277,6 +288,7 @@ public class Community extends BaseEntity{
                 ", cityName=" + cityName +
                 ", district=" + district +
                 ", districtName=" + districtName +
+                ", contactNumber=" + contactNumber +
                 '}';
     }
 }

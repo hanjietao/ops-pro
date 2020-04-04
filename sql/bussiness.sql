@@ -1002,6 +1002,10 @@ alter table pm_property add column district varchar(16) default null comment '�
 alter table pm_property add column district_name varchar(16) default null comment '县区名称高德';
 
 
+alter table cm_community add column contact_number varchar(32) default null comment '联系电话';
+alter table pm_property add column contact_number varchar(32) default null comment '联系电话';
+alter table ch_hospital add column contact_number varchar(32) default null comment '联系电话';
+
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);
