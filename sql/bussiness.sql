@@ -1006,6 +1006,11 @@ alter table cm_community add column contact_number varchar(32) default null comm
 alter table pm_property add column contact_number varchar(32) default null comment '联系电话';
 alter table ch_hospital add column contact_number varchar(32) default null comment '联系电话';
 
+-- 活动
+alter table cm_activity add column img_urls text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url';
+alter table pm_activity add column img_urls text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  default null comment '存放图文混排的所有图片url';
+
+
 
 -- TODO 这个不能单独通过alter在自增主键上修改，会导致AUTO_INCREMENT自增消失
 -- alter table cm_community modify column id bigint(20);

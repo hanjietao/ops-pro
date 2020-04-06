@@ -2,7 +2,6 @@ package com.pepper.project.cm.activity.domain;
 
 import com.pepper.framework.web.domain.BaseEntity;
 import com.pepper.project.cm.community.domain.Community;
-import com.pepper.project.csc.area.domain.Area;
 
 import java.util.Date;
 
@@ -31,6 +30,9 @@ public class Activity extends BaseEntity{
 
     /** 区域状态（0正常 1关闭） */
     private String status;
+
+    /** 图文混排所有的图片列表 */
+    private String imgUrls;
 
     /** 创建时间 */
     private Date createTime;
@@ -94,6 +96,14 @@ public class Activity extends BaseEntity{
         this.status = status;
     }
 
+    public String getImgUrls() {
+        return imgUrls;
+    }
+
+    public void setImgUrls(String imgUrls) {
+        this.imgUrls = imgUrls;
+    }
+
     @Override
     public Date getCreateTime() {
         return createTime;
@@ -154,6 +164,7 @@ public class Activity extends BaseEntity{
                 ", content='" + content + '\'' +
                 ", watchCount='" + watchCount + '\'' +
                 ", status='" + status + '\'' +
+                ", imgUrls='" + imgUrls + '\'' +
                 ", createTime=" + createTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateTime=" + updateTime +

@@ -129,14 +129,24 @@ public class FriendsController extends BaseController {
         return friendsService.applyFriends(userId,friendUserId);
     }
 
-    @ApiOperation("同意好友[logon]")
-    @Log(title = "同意好友", businessType = BusinessType.INSERT)
+    @ApiOperation("同意加好友[logon]")
+    @Log(title = "同意加好友", businessType = BusinessType.INSERT)
     @PostMapping("/agreeApply")
     @ResponseBody
     public AjaxResult agreeApply(@RequestParam(required = true) Long id) {
         Long userId = ShiroUtils.getSysUser().getClientUser().getUserId();
         logger.info("FriendsController::agreeApply, request: id={}", id);
         return friendsService.agreeApply(id, userId);
+    }
+
+    @ApiOperation("拒绝加好友[logon]")
+    @Log(title = "拒绝加好友", businessType = BusinessType.INSERT)
+    @PostMapping("/disagreeApply")
+    @ResponseBody
+    public AjaxResult disagreeApply(@RequestParam(required = true) Long id) {
+        Long userId = ShiroUtils.getSysUser().getClientUser().getUserId();
+        logger.info("FriendsController::disagreeApply, request: id={}", id);
+        return friendsService.disagreeApply(id, userId);
     }
 
     /**
@@ -151,6 +161,7 @@ public class FriendsController extends BaseController {
     public TableDataInfo getFriendsList() {
         startPage();
         Friends friends = new Friends();
+        friends.setStatus("3");// 不查询已拒绝的
         friends.setUserId(ShiroUtils.getSysUser().getClientUser().getUserId());
         List<Friends> list = friendsService.selectFriendsList(friends);
         return getDataTable(list);

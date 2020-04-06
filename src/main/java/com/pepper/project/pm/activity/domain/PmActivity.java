@@ -29,6 +29,9 @@ public class PmActivity extends BaseEntity{
     /** 区域状态（0正常 1关闭） */
     private String status;
 
+    /** 图文混排里面的所有图片，都好分割 */
+    private String imgUrls;
+
     /** 创建时间 */
     private Date createTime;
 
@@ -127,11 +130,40 @@ public class PmActivity extends BaseEntity{
         this.updateBy = updateBy;
     }
 
-    public Property getProperty() {
+    public Property getProperty()
+    {
+        if(property == null){
+            property = new Property();
+        }
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public String getImgUrls() {
+        return imgUrls;
+    }
+
+    public void setImgUrls(String imgUrls) {
+        this.imgUrls = imgUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "PmActivity{" +
+                "id=" + id +
+                ", propertyId=" + propertyId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", status='" + status + '\'' +
+                ", imgUrls='" + imgUrls + '\'' +
+                ", createTime=" + createTime +
+                ", createBy='" + createBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", property=" + getProperty() +
+                '}';
     }
 }

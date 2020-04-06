@@ -22,4 +22,6 @@ public interface IFriendsService {
     AjaxResult applyFriends(Long userId, Long friendUserId);
 
     AjaxResult agreeApply(Long id, Long userId);
+
+    AjaxResult disagreeApply(Long id, Long userId);
 }

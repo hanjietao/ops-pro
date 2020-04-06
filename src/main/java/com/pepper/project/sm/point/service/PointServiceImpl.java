@@ -115,8 +115,8 @@ public class PointServiceImpl implements IPointService {
         }
 
         clientUserService.addClientUserPoint(clientUser);
-        point.setCreateBy(ShiroUtils.getLoginName());
-        point.setUpdateBy(ShiroUtils.getLoginName());
+        point.setCreateBy(ShiroUtils.getLoginName()+"_sysUserId="+ShiroUtils.getSysUser().getUserId());
+        point.setUpdateBy(ShiroUtils.getLoginName()+"_sysUserId="+ShiroUtils.getSysUser().getUserId());
         pointDao.insertPoint(point);
         return AjaxResult.success("操作成功！");
     }

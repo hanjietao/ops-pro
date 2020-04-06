@@ -137,6 +137,8 @@ public class ClientUserLoginController extends BaseController
 
             // 这个是在岗位管理里面新增的给客户端用户得岗位类型，这个配置不能删除
             user.setPostIds(new Long[]{5L});
+            // 性别未知
+            user.setSex("2");
 
             // 客户端用户登陆权限，这个是在权限管理里面配置新增得角色，也是不能删除得配置
             user.setRoleId(107L);

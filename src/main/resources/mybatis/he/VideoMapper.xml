@@ -28,7 +28,8 @@
 	</resultMap>
 
 	<sql id="selectVideoVo">
-       select v.create_time, v.create_by, v.update_time, v.update_by, v.id,v.title, v.video_url, v.board_id,v.watch_count,v.status,v.send_point,v.award_points,
+       select v.create_time, v.create_by, v.update_time, v.update_by, v.id,v.title,
+        v.video_url, v.board_id,v.watch_count,v.status,v.send_point,v.award_points,
        b.id as b_id,b.board_code,b.board_name,b.status as b_status
         from he_video v
         left join he_board b on v.board_id = b.id

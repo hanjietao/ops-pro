@@ -60,7 +60,7 @@
             if ($.validate.form()) {
                 var operateTypeInfo = $('#operateTypeInfo').val();
                 var warnYou = ''
-                if(operateTypeInfo || operateTypeInfo == ''){
+                if(operateTypeInfo == undefined || operateTypeInfo == ''){
                     warnYou = "\n发现未填写赠送描述，关闭填写，方便比对数据！"
                 }
                 $.modal.confirm("确认赠送积分吗？"+warnYou, function() {

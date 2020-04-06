@@ -81,16 +81,32 @@ public class FriendsServiceImpl implements IFriendsService {
             Friends friends1 = new Friends();
             friends1.setFriendUserId(userId);
             friends1.setUserId(friendUserId);
-            List<Friends> list1 = friendsDao.selectFriendsList(friends);
+            List<Friends> list1 = friendsDao.selectFriendsList(friends1);
 
             if(list1.size() != 1){
                 return AjaxResult.error("数据异常！");
             }
             friends1 = list1.get(0);
-            if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.waitagree.getType()))){
+            if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.waitagree.getType().toString()))){
                 return AjaxResult.success("申请已经提交，等待对方同意，请勿重复申请！");
-            }else if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.success.getType()))){
+            }else if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.success.getType().toString()))){
                 return AjaxResult.success("你与对方已经是好友了，不用再次添加！");
+            }else if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.reject.getType().toString()))){
+                friends.setStatus(FriendsStatusEnum.apply.getType().toString()); // 自己
+                friends1.setStatus(FriendsStatusEnum.waitagree.getType().toString()); // 好友
+
+                friendsDao.updateFriends(friends);
+                friendsDao.updateFriends(friends1);
+
+                return AjaxResult.success("申请已提交，等待对方同意！");
+
+            }else if(friends1.getStatus().equals(String.valueOf(FriendsStatusEnum.bereject.getType().toString()))){
+                friends.setStatus(FriendsStatusEnum.apply.getType().toString()); // 自己
+                friends1.setStatus(FriendsStatusEnum.waitagree.getType().toString()); // 好友
+
+                friendsDao.updateFriends(friends);
+                friendsDao.updateFriends(friends1);
+                return AjaxResult.success("申请已提交，等待对方同意！");
             }else{
                 return AjaxResult.success("申请失败！");
             }
@@ -128,9 +144,38 @@ public class FriendsServiceImpl implements IFriendsService {
             return AjaxResult.error("数据异常 ！");
         }else if(list.size() == 1){
             friends1 = list.get(0);
-            friends1.setStatus("0");
+            friends1.setStatus(FriendsStatusEnum.success.getType().toString());
             friendsDao.updateFriends(friends1);
-            friends.setStatus("0");
+            friends.setStatus(FriendsStatusEnum.success.getType().toString());
+            friendsDao.updateFriends(friends);
+            return AjaxResult.success("操作成功！");
+        }else{
+            return AjaxResult.error("数据异常，请刷新重试！");
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public AjaxResult disagreeApply(Long id, Long userId){
+        Friends friends = friendsDao.selectFriendsById(id);
+        if(friends == null){
+            return AjaxResult.error("该条申请不存在！");
+        }
+        if(friends.getUserId().longValue() != userId.longValue()){ // 判断数据是否正常
+            return AjaxResult.error("数据异常，请刷新重试！");
+        }
+        Friends friends1 = new Friends();
+        friends1.setUserId(friends.getFriendUserId());
+        friends1.setFriendUserId(userId);
+        List<Friends> list = friendsDao.selectFriendsList(friends1);
+        if(list.size() == 0){
+            return AjaxResult.error("数据异常 ！");
+        }else if(list.size() == 1){
+            friends1 = list.get(0);
+            friends1.setStatus(FriendsStatusEnum.bereject.getType().toString());
+            friendsDao.updateFriends(friends1);
+            friends.setStatus(FriendsStatusEnum.reject.getType().toString());
             friendsDao.updateFriends(friends);
             return AjaxResult.success("操作成功！");
         }else{

@@ -1,5 +1,6 @@
 package com.pepper.project.pm.activity.controller;
 
+import com.pepper.common.utils.JsoupUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -85,6 +86,9 @@ public class PmActivityController extends BaseController {
                 !SysUserType.padmin.getType().equals(getSysUser().getMerchantFlag())){
             return AjaxResult.error("非物业业务系统无法添加物业活动");
         }
+        String content = pmActivity.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        pmActivity.setImgUrls(result);
         pmActivity.setPropertyId(getMerchantId());
         return toAjax(activityService.insertActivity(pmActivity));
     }
@@ -110,6 +114,9 @@ public class PmActivityController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(PmActivity pmActivity)
     {
+        String content = pmActivity.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        pmActivity.setImgUrls(result);
         return toAjax(activityService.updateActivity(pmActivity));
     }
 

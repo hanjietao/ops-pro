@@ -54,6 +54,10 @@ public class Point extends BaseEntity {
 
     private String userMobile;
 
+    private String createBy;
+
+    //private String
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

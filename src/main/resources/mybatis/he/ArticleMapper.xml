@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="title"         column="title"        />
 		<result property="content"         column="content"        />
 		<result property="boardId"       column="board_id"         />
+		<result property="watchCount"       column="watch_count"         />
 		<result property="sendPoint"       column="send_point"         />
 		<result property="awardPoints"       column="award_points"         />
 		<result property="imgUrls"       column="img_urls"         />
@@ -28,7 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectArticleVo">
-       select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.title, a.content, a.board_id,a.status,a.send_point,a.award_points,img_urls,
+       select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.title,
+        a.content, a.board_id,a.status,a.send_point,a.award_points,a.img_urls,a.watch_count,
        b.id as b_id,b.board_code,b.board_name,b.status as b_status
         from he_article a
         left join he_board b on a.board_id = b.id

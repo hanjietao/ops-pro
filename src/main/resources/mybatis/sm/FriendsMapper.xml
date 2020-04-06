@@ -13,29 +13,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createBy"     	 column="create_by"       />
 		<result property="updateTime"        column="update_time"     />
 		<result property="updateBy"          column="update_by"       />
+		<association property="clientUser"    column="userId" javaType="ClientUser" resultMap="ClientUserResult" />
+	</resultMap>
+
+	<resultMap type="ClientUser" id="ClientUserResult">
+		<id     property="userId"         	 column="user_id"         />
+		<result property="nikeName"          column="nike_name"         />
+		<result property="userCurrentPoints" column="user_current_points"        />
+		<result property="userAccPoints"     column="user_acc_points"        />
+		<result property="userUsedPoints"    column="user_used_points"        />
+		<result property="userName"          column="user_name"         />
+		<result property="userMobile"        column="user_mobile"         />
+		<result property="gender"          column="gender"         />
+		<result property="avatarUrl"          column="avatar_url"         />
 	</resultMap>
 
 	<sql id="selectFriendsVo">
-       select id, user_id, friend_user_id,status,create_time,update_time,update_by,create_by
-       from sm_friends
+       select f.id, f.user_id, f.friend_user_id,f.status,f.create_time,f.update_time,f.update_by,f.create_by,
+       cu.user_id,cu.nike_name, cu.user_current_points,cu.user_acc_points,cu.user_used_points,cu.user_name,
+       cu.user_mobile,cu.gender,cu.avatar_url
+       from sm_friends f
+       left join sm_client_user cu on cu.user_id = f.friend_user_id
     </sql>
 
 	<select id="selectFriendsById" parameterType="Long" resultMap="FriendsResult">
 		<include refid="selectFriendsVo"/>
-		where id = #{id}
+		where f.id = #{id}
 	</select>
 
  	<select id="selectFriendsList" parameterType="Friends" resultMap="FriendsResult">
 		<include refid="selectFriendsVo"/>
 		<where>
 			<if test="id != null and id != ''">
-				AND id = #{id}
+				AND f.id = #{id}
 			</if>
 			<if test="userId != null and userId != ''">
-				AND user_id = #{userId}
+				AND f.user_id = #{userId}
+			</if>
+			<if test="friendUserId != null and friendUserId != ''">
+				AND f.friend_user_id = #{friendUserId}
 			</if>
 			<if test="status != null and status != ''">
-				AND status = #{status}
+				AND f.status != '3'
 			</if>
 		</where>
 	</select>

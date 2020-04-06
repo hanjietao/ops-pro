@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="title"            column="title"        />
 		<result property="content"          column="content"        />
 		<result property="status"           column="status"         />
+		<result property="imgUrls"           column="img_urls"         />
 		<result property="createTime"       column="create_time"            />
 		<result property="createBy"     	column="create_by"    />
 		<result property="updateTime"       column="update_time"           />
@@ -25,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="status"           column="com_status"         />
 	</resultMap>
 	<sql id="selectActivityVo">
-       select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.community_id,a.title,a.content,a.status,
+       select a.create_time, a.create_by, a.update_time, a.update_by, a.id,a.community_id,
+       a.title,a.content,a.status,a.img_urls,
        c.id as com_id,c.community_code,c.community_name,c.area_id,c.status as com_status
        from cm_activity a
        left join cm_community c on a.community_id = c.id
@@ -60,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="title != null and title != '' ">title, </if>
 		<if test="content != null and content != '' ">content, </if>
 		<if test="status != null and status != '' ">status, </if>
+		<if test="imgUrls != null and imgUrls != '' ">img_urls, </if>
 		<if test="createBy != null and createBy != ''">create_by,</if>
 		<if test="updateBy != null and updateBy != ''">update_by,</if>
 		create_time,
@@ -69,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="title != null and title != ''">#{title}, </if>
 		<if test="content != null and content != ''">#{content}, </if>
 		<if test="status != null and status != '' ">#{status}, </if>
+		<if test="imgUrls != null and imgUrls != '' ">#{imgUrls}, </if>
 		<if test="createBy != null and createBy != ''">#{createBy},</if>
 		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
 		sysdate(),
@@ -83,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="title != null and title != ''">title = #{title}, </if>
 			<if test="content != null and content != ''">content = #{content}, </if>
 			<if test="status != null">status = #{status}, </if>
+			<if test="imgUrls != null">img_urls = #{imgUrls}, </if>
 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
 		</set>

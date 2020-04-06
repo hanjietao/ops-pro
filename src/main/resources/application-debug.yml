@@ -16,8 +16,8 @@ pepper:
   #loginType client
   clientLoginType: p-client
   ehcache: C:\home\hospital\test\ehcache
-  #短信发送间隔时间(毫秒数 当前设置60秒)
-  smsIntervalMiliSec: 60000
+  #短信发送间隔时间(毫秒数 当前设置60秒)60000
+  smsIntervalMiliSec: 1000
   #每个手机号每天最大短信发送次数
   smsMobileDayMaxSendCount: 10
 

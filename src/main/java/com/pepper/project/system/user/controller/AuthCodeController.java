@@ -65,6 +65,8 @@ public class AuthCodeController extends BaseController
             codeType = SMSCodeEnum.R.toString();
         }else if("client_login".equals(smsCodeType)){
             codeType = SMSCodeEnum.L.toString();
+        }else if("change_mobile".equals(smsCodeType)){
+            codeType = SMSCodeEnum.C.toString();
         }else {
             return error("非法的短信获取短信验证码的方式！");
         }

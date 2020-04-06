@@ -1,5 +1,8 @@
 package com.pepper.project.sm;
 
+import com.pepper.common.constant.GenConstants;
+import com.pepper.common.constant.SMSCodeEnum;
+import com.pepper.common.utils.StringUtils;
 import com.pepper.common.utils.security.ShiroUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
@@ -96,6 +99,7 @@ public class UserInfoController extends BaseController {
             map.put("msgCount",sysMessageService.unReadCount(sysMessage));
             map.put("notes",notes);
             map.put("pmNotes",pmNotes);
+            map.put("userInfo",clientUserService.selectClientUserById(user.getClientUser().getUserId()));
 
             return AjaxResult.success(map);
 
@@ -106,8 +110,113 @@ public class UserInfoController extends BaseController {
 
     }
 
+    @ApiOperation("修改个人信息[性别gender:0-男，1-女,2-未知，birthday:格式-yyyy-MM-dd，手机号：11位数字]")
+    @Log(title = "个人中心客户数据", businessType = BusinessType.UPDATE)
+    @PostMapping("/updateUserInfo")
+    @ResponseBody
+    public AjaxResult updateUserInfo(String gender,String birthday, String smsCode,String mobilePhone)
+    {
+        try {
+            User user = getSysUser();
+            Long userId = user.getUserId();
+            Long clientUserId = user.getClientUser().getUserId();
+            // 系统用户
+            User newUser = userService.selectUserById(userId);
+            ClientUser clientUser = clientUserService.selectClientUserById(clientUserId);
+
+            if(!StringUtils.isEmpty(gender) && !gender.equals(newUser.getSex())){
+                newUser.setSex(gender);
+                clientUser.setGender(gender);
+            }
+
+            // 生日
+            if(!StringUtils.isEmpty(birthday)){
+                clientUser.setBirthday(birthday);
+            }
+
+            // 手机号
+            if(!StringUtils.isEmpty(mobilePhone) && !mobilePhone.equals(newUser.getPhonenumber())){
+                User mobilePhoneUser = userService.selectUserByPhoneNumber(mobilePhone);
+                if(mobilePhoneUser != null && mobilePhoneUser.getUserId().longValue() != user.getUserId().longValue()){
+                    return AjaxResult.error("手机号已经被注册，不能绑定到当前账号");
+                }
+
+                if(StringUtils.isEmpty(smsCode)){
+                    return AjaxResult.error("请先获取短信验证码！");
+                }
+                String validateStr = (String) ShiroUtils.getSession().getAttribute(GenConstants.SMS_CODE_ATTR);
+                if(StringUtils.isEmpty(validateStr)){
+                    return AjaxResult.error("已失效，请重新获取短信验证码！");
+                }
+                String[] validateStrArr = validateStr.split("_");
+                String mobile = validateStrArr[0];
+                String smsCode1 = validateStrArr[1];
+                String timeStr = validateStrArr[2];
+                String codeType = validateStrArr[3];
+
+                if(!SMSCodeEnum.L.toString().equals(codeType)){
+                    return AjaxResult.error("验证码非法，请重新发送！");
+                }
+
+                long time = System.currentTimeMillis();
+                if(time - Long.valueOf(timeStr) > 3 * 60 * 1000){
+                    return AjaxResult.error("验证码已过期，时效3分钟！请重新发送短信验证码！");
+                }
+
+                if(!mobile.equals(mobilePhone)){
+                    return AjaxResult.error("短信验证码与手机号不一致，请重新发送短信验证码！");
+                }
+
+                if(!smsCode1.equals(smsCode)){
+                    return error("验证码错误！请校对验证码！");
+                }
+
+                logger.info("history mobilePhone,userId={},mobilePhone={}",user.getUserId(),user.getPhonenumber());
+                String salt = newUser.getSalt();
+                newUser.setLoginName(mobilePhone);
+                newUser.setPhonenumber(mobilePhone);
+                newUser.setPassword(passwordService.encryptPassword(newUser.getLoginName(), user.getPwdMd5(), salt));
+                clientUser.setUserMobile(mobilePhone);
+            }
+
+            userService.updateUserInfo(newUser);
+            clientUserService.updateClientUser(clientUser);
+
+            clientUser = clientUserService.selectClientUserById(clientUserId);
+            newUser = userService.selectUserById(userId);
+            newUser.setClientUser(clientUser);
+            ShiroUtils.setSysUser(newUser);
+            return AjaxResult.success("更新成功");
+        }catch (Exception e){
+            logger.error(org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(e));
+            return success("error");
+        }
+
+    }
+
+    @ApiOperation("修改密码[请前端自动将明文密码加密32位md5传输]")
+    @Log(title = "个人中心客户数据", businessType = BusinessType.UPDATE)
+    @PostMapping("/updatePwd")
+    @ResponseBody
+    public AjaxResult updatePwd(String oldPwd,String newPwd)
+    {
+        try {
+            User user = getSysUser();
+            User user1 = userService.selectUserById(user.getUserId());
+            String salt = user1.getSalt();
+            user1.setPwdMd5(user.getPassword()); // record
+            user1.setPassword(passwordService.encryptPassword(user1.getLoginName(), newPwd, salt));
+            return AjaxResult.success(userService.updateUserInfo(user1));
+
+        }catch (Exception e){
+            logger.error(org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(e));
+            return success("error");
+        }
+
+    }
+
     @ApiOperation("修改个人信息[性别gender:0-男，1-女,2-未知]")
-    @Log(title = "个人中心客户数据", businessType = BusinessType.INSERT)
+    @Log(title = "个人中心客户数据", businessType = BusinessType.UPDATE)
     @PostMapping("/updateGender")
     @ResponseBody
     public AjaxResult updateGender(String gender)
@@ -131,7 +240,7 @@ public class UserInfoController extends BaseController {
     }
 
     @ApiOperation("修改个人信息[生日 yyyy-MM-dd]")
-    @Log(title = "个人中心客户数据", businessType = BusinessType.INSERT)
+    @Log(title = "个人中心客户数据", businessType = BusinessType.UPDATE)
     @PostMapping("/updateBirthday")
     @ResponseBody
     public AjaxResult updateBirthday(String birthday)
@@ -150,26 +259,7 @@ public class UserInfoController extends BaseController {
 
     }
 
-    @ApiOperation("修改密码[请前端自动将明文密码加密32位md5传输]")
-    @Log(title = "个人中心客户数据", businessType = BusinessType.INSERT)
-    @PostMapping("/updatePwd")
-    @ResponseBody
-    public AjaxResult updatePwd(String oldPwd,String newPwd)
-    {
-        try {
-            User user = getSysUser();
-            User user1 = userService.selectUserById(user.getUserId());
-            String salt = user1.getSalt();
-            user1.setPwdMd5(user.getPassword()); // record
-            user1.setPassword(passwordService.encryptPassword(user1.getLoginName(), newPwd, salt));
-            return AjaxResult.success(userService.updateUserInfo(user1));
 
-        }catch (Exception e){
-            logger.error(org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(e));
-            return success("error");
-        }
-
-    }
 
     @ApiOperation("修改手机号")
     @Log(title = "修改手机号", businessType = BusinessType.INSERT)

@@ -9,7 +9,8 @@ public enum FriendsStatusEnum {
     apply(1, "apply"),
     waitagree(2, "waitagree"),
     reject(3, "reject"),
-    delete(4, "delete");
+    bereject(4, "bereject"),
+    delete(5, "delete");
 
     private Integer type;
     private String desc;

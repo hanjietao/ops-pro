@@ -1,5 +1,6 @@
 package com.pepper.project.cm.activity.controller;
 
+import com.pepper.common.utils.JsoupUtils;
 import com.pepper.framework.aspectj.lang.annotation.Log;
 import com.pepper.framework.aspectj.lang.enums.BusinessType;
 import com.pepper.framework.aspectj.lang.enums.SysUserType;
@@ -86,6 +87,9 @@ public class ActivityController extends BaseController {
                 !SysUserType.cadmin.getType().equals(getSysUser().getMerchantFlag())){
             return AjaxResult.error("非社区业务系统用户 无法添加社区活动");
         }
+        String content = activity.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        activity.setImgUrls(result);
         activity.setCommunityId(getMerchantId());
         return toAjax(activityService.insertActivity(activity));
     }
@@ -111,6 +115,9 @@ public class ActivityController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(Activity activity)
     {
+        String content = activity.getContent();
+        String result = JsoupUtils.getAllImgSrcUrlFromContent(content);
+        activity.setImgUrls(result);
         return toAjax(activityService.updateActivity(activity));
     }
 
