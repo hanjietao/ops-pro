@@ -180,7 +180,8 @@ public class ClientUserLoginController extends BaseController
             }
             sysUser.setClientUser(clientUser);// 将用户信息表存入系统用户对象中，方便session中获取用户信息
             setSysUser(sysUser);
-            // TODO need empty the session sms code before
+            logger.info("sysUser: {}, clientUser: {}",sysUser,clientUser);
+            logger.info("sysUserId: {},clientUserId: {}",sysUser.getUserId(),sysUser.getClientUser().getUserId());
             return success("login success client");
         }
         catch (AuthenticationException e)
