@@ -160,7 +160,10 @@ public class PointController extends BaseController {
     public AjaxResult agreeApply(@RequestParam(required = true) Long id,Long points) {
         Friends friends = friendsService.selectFriendsById(id);
         if(friends == null){
-            return AjaxResult.error("该好友关系不存在，请稍后尝试！");
+            return AjaxResult.error("抱歉！该好友关系不存在，请稍后尝试！");
+        }
+        if(points == null || points <= 0L){
+            return AjaxResult.error("抱歉！您输入的积分值不满足要求！");
         }
         Long youUserId = ShiroUtils.getSysUser().getClientUser().getUserId();
         Long friendUserId = friends.getFriendUserId();

@@ -296,6 +296,7 @@ public class ShiroConfig
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        // 客户端用户登陆失效判断拦截
         filters.put("outSession", shiroLoginRedirectFilter());
         filters.put("onlineSession", onlineSessionFilter());
         filters.put("syncOnlineSession", syncOnlineSessionFilter());
