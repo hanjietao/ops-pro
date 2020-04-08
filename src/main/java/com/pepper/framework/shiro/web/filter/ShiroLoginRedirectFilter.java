@@ -1,6 +1,7 @@
 package com.pepper.framework.shiro.web.filter;
 
 import com.pepper.common.constant.ShiroConstants;
+import com.pepper.common.utils.security.ShiroUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -39,7 +40,10 @@ public class ShiroLoginRedirectFilter extends FormAuthenticationFilter {
 
         String loginType = httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE);
         logger.info("loginType={}",loginType);
-        if (clientLoginType.equals(loginType)) {
+        // 解决，session里面的用户信息被shiro的定人清理去掉导致的问题
+        if (clientLoginType.equals(loginType) || ShiroUtils.getSysUser() == null
+                || ShiroUtils.getSysUser().getClientUser() == null || ShiroUtils.getSysUser().getClientUser().getUserId() == null
+                || ShiroUtils.getSysUser().getClientUser().getUserId() == 0L) {
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("application/json");
 
