@@ -42,7 +42,8 @@ public class ShiroLoginRedirectFilter extends FormAuthenticationFilter {
         logger.info("loginType={}",loginType);
         // 解决，session里面的用户信息被shiro的定人清理去掉导致的问题
         if (clientLoginType.equals(loginType) || ShiroUtils.getSysUser() == null
-                || ShiroUtils.getSysUser().getClientUser() == null || ShiroUtils.getSysUser().getClientUser().getUserId() == null
+                || ShiroUtils.getSysUser().getClientUser() == null
+                || ShiroUtils.getSysUser().getClientUser().getUserId() == null
                 || ShiroUtils.getSysUser().getClientUser().getUserId() == 0L) {
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("application/json");
