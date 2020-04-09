@@ -157,7 +157,7 @@ public class PointController extends BaseController {
     }
 
     @ApiOperation("赠送好友积分")
-    @Log(title = "同意好友", businessType = BusinessType.INSERT)
+    @Log(title = "赠送好友积分", businessType = BusinessType.INSERT)
     @PostMapping("/sendPointToFrd")
     @ResponseBody
     public AjaxResult agreeApply(@RequestParam(required = true) Long id,String pointsSec)
