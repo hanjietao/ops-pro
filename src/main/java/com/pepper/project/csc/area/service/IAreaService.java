@@ -11,7 +11,7 @@ public interface IAreaService {
 
     int deleteAreaByIds(String ids);
 
-    Area selectAreaById(Integer id);
+    Area selectAreaById(Long id);
 
     int updateArea(Area area);
 

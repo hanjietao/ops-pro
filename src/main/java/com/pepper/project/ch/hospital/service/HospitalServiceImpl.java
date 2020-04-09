@@ -35,7 +35,7 @@ public class HospitalServiceImpl implements IHospitalService {
 
         List<Hospital> list = hospitalDao.selectHospitalList(hospital);
         for (Hospital hos:list) {
-            Area area = areaDao.selectAreaById(Integer.valueOf(hos.getAreaId()));
+            Area area = areaDao.selectAreaById(Long.valueOf(hos.getAreaId()));
             hos.setAreaName(area.getAreaName());
         }
         return list;

@@ -1,5 +1,6 @@
 package com.pepper.project.sm.point.controller;
 
+import com.mysql.cj.util.Base64Decoder;
 import com.pepper.common.constant.GenConstants;
 import com.pepper.common.constant.PointOperateAddOrDeductConstant;
 import com.pepper.common.constant.SysMsgTypeConstant;
@@ -32,7 +33,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Decoder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +160,10 @@ public class PointController extends BaseController {
     @Log(title = "同意好友", businessType = BusinessType.INSERT)
     @PostMapping("/sendPointToFrd")
     @ResponseBody
-    public AjaxResult agreeApply(@RequestParam(required = true) Long id,Long points) {
+    public AjaxResult agreeApply(@RequestParam(required = true) Long id,String pointsSec)
+            throws IOException {
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        Long points = Long.valueOf(new String(base64Decoder.decodeBuffer(pointsSec)));
         Friends friends = friendsService.selectFriendsById(id);
         if(friends == null){
             return AjaxResult.error("抱歉！该好友关系不存在，请稍后尝试！");
@@ -324,6 +330,12 @@ public class PointController extends BaseController {
             return success("error");
         }
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        Long points = Long.valueOf(new String(base64Decoder.decodeBuffer("MTg4ODg4")));
+        System.out.println(points);
     }
 
 }

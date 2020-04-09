@@ -102,6 +102,11 @@ public class CommunityController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(Community community)
     {
+        if(!community.getDistrict().equals(community.getAreaId())){
+            Area area = areaService.selectAreaById(Long.valueOf(community.getAreaId()));
+            String str = String.format("所属区域与地图选择的区域不一致，地图选点所在区：%s，而您选择的【所属区域】为：%s，不一致，请修改！",community.getDistrictName(),area.getAreaName());
+            return AjaxResult.error(str);
+        }
         return toAjax(communityService.updateCommunity(community));
     }
 

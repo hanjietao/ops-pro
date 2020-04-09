@@ -108,6 +108,15 @@
     <script type="text/javascript">
         var prefix = ctx + "cm/community";
 
+        debugger
+        var areas = '[[${areas}]]'
+        areas = areas.replace(new RegExp("Area","gm"),"")
+            .replace(new RegExp("=","gm"),":").replace(new RegExp(";","gm"),"");
+        /*var areaMap = {};
+        for (var i = 0; i < areas.length; i++) {
+            areaMap[areas[i].id,areas[i]]
+        }*/
+
         var lnglat = '[[${community.lnglat}]]'.split(",")
         var address = '[[${community.address}]]'
         if(lnglat.length < 2){
@@ -116,7 +125,7 @@
         var  map = new AMap.Map("container", {
             resizeEnable: true,
             center: [lnglat[0],lnglat[1]],
-            zoom: 11
+            zoom: 16
         });
 
         var marker= new AMap.Marker({
@@ -283,8 +292,14 @@
 
 		function submitHandler() {
             if ($.validate.form()) {
-                // var sHTML = $('.summernote').summernote('code');
-                // $("#introduction").val(sHTML);
+                var areaCode = $("#areaCode").val()
+                var district = $("#district").val()
+                var districtName = $("#districtName").val()
+                /*if(areaCode != district){
+                    $.modal.alertWarning("地图选择的地址所在区为："+districtName+"，与所属区域，不一致");
+                    return
+                }*/
+
                 $.operate.save(prefix + "/edit", $('#form-community-edit').serialize());
             }
 	    }

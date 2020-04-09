@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.shiro.session.Session;
@@ -34,6 +35,9 @@ public class OnlineSessionFilter extends AccessControlFilter
      */
     @Value("${shiro.user.loginUrl}")
     private String loginUrl;
+
+    @Value("${pepper.clientLoginType}")
+    private String clientLoginType;
 
     @Autowired
     private OnlineSessionDAO onlineSessionDAO;
@@ -90,6 +94,23 @@ public class OnlineSessionFilter extends AccessControlFilter
 
             if (onlineSession.getStatus() == OnlineSession.OnlineStatus.off_line)
             {
+                return false;
+            }
+
+            String loginType = httpServletRequest.getHeader(ShiroConstants.LOGIN_TYPE);
+            if(clientLoginType.equals(loginType) && (ShiroUtils.getSysUser() == null
+                    || ShiroUtils.getSysUser().getClientUser() == null
+                    || ShiroUtils.getSysUser().getClientUser().getUserId() == null
+                    || ShiroUtils.getSysUser().getClientUser().getUserId() == 0L)){
+                logger.info("loginType={}, shiroUtils: sysUser={} , clientUser={}, clientUserId={},special condition"
+                        ,loginType
+                        ,ShiroUtils.getSysUser().toString(),ShiroUtils.getSysUser().getClientUser()
+                        ,ShiroUtils.getSysUser().getClientUser().getUserId());
+                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.setContentType("application/json");
+
+                httpServletResponse.getWriter().write("{\"code\":\"101\",\"msg\":\"未登录或登录超时。请重新登录\"}");
                 return false;
             }
         }

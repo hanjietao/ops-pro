@@ -68,7 +68,7 @@ public class AreaController extends BaseController{
      * 修改区域
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         mmap.put("area", areaService.selectAreaById(id));
         return prefix + "/edit";

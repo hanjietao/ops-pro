@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        select create_time, create_by, update_time, update_by, id,area_code, area_name, coordinate,status from csc_area
     </sql>
 
-	<select id="selectAreaById" parameterType="Integer" resultMap="AreaResult">
+	<select id="selectAreaById" parameterType="Long" resultMap="AreaResult">
 		<include refid="selectAreaVo"/>
 		where id = #{id}
 	</select>

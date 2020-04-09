@@ -98,6 +98,11 @@ public class PropertyController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(Property property)
     {
+        if(!property.getDistrict().equals(property.getAreaId())){
+            Area area = areaService.selectAreaById(Long.valueOf(property.getAreaId()));
+            String str = String.format("所属区域与地图选择的区域不一致，地图选点所在区：%s，而您选择的【所属区域】为：%s，不一致，请修改！",property.getDistrictName(),area.getAreaName());
+            return AjaxResult.error(str);
+        }
         return toAjax(propertyService.updateProperty(property));
     }
 
