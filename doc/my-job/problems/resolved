@@ -23,3 +23,6 @@ problem resolve：
     所以，
         Error resolving template:[/cm/note/addNote],template might not exist or might not be accessible for any
         configuration
+   7. js 替换所有  （这里g表示执行全局匹配，m表示执行多次匹配）
+            var dogs = 'dog=;dog=;dog=;dog=;dog'
+            dogs = dogs.replace(new RegExp("dog","gm"),"").replace(new RegExp("=","gm"),":").replace(new RegExp(";","gm"),"");
